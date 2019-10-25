@@ -1,0 +1,126 @@
+:global {
+    .ant-layout {
+        min-height: 100vh;
+        background-color: #fafafa;
+    }
+
+    .ant-layout-footer {
+        background-color: transparent;
+    }
+
+    .ant-form-item {
+        margin: 0;
+    }
+
+    .ant-divider-horizontal.ant-divider-with-text-left {
+        &:before {
+            width: 0;
+        }
+
+        .ant-divider-inner-text {
+            padding-left: 0;
+        }
+    }
+
+    .ant-divider-horizontal.ant-divider-with-text-right {
+        &:after {
+            width: 0;
+        }
+
+        .ant-divider-inner-text {
+            padding-right: 0;
+        }
+    }
+
+    .ant-tabs.ant-tabs-card {
+        .ant-tabs-card-bar {
+            margin-bottom: 32px;
+
+            .ant-tabs-tab:not(.ant-tabs-tab-active) {
+                border-color: transparent;
+                border-bottom-color: #e6e6e6;
+            }
+
+            .ant-tabs-tab-active {
+                background-color: transparent;
+                border-bottom-color: #fafafa;
+            }
+        }
+    }
+
+    .app-header {
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        background-color: #262626;
+        box-shadow: 0 2px 8px #f0f1f2;
+
+        .app-logo {
+            color: #fff;
+            font-weight: 600;
+
+            img {
+                width: 32px;
+            }
+
+            span {
+                margin-left: 8px;
+            }
+        }
+
+        .ant-menu {
+            margin: 0 auto 0 35px;
+            border-bottom: none;
+            line-height: 60px;
+            background-color: transparent;
+
+            .ant-menu-item {
+                padding: 0 14px;
+                color: #fff;
+            }
+
+            .ant-menu-item-selected {
+                color: #69c0ff;
+                border-color: #69c0ff;
+            }
+        }
+
+        .app-user-menu {
+            margin-left: auto;
+            line-height: 1;
+            text-transform: uppercase;
+            cursor: pointer;
+
+            .ant-avatar {
+                background-color: #fff;
+                color: #262626;
+            }
+        }
+    }
+
+    .app-content {
+        margin-top: 35px;
+        padding: 0 50px;
+    }
+
+    .app-footer {
+        display: flex;
+        justify-content: space-between;
+
+        .app-quick-links {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            li {
+                display: inline-block;
+                margin-left: 14px;
+            }
+        }
+    }
+
+    .app-container {
+        max-width: 960px;
+        margin: 0 auto;
+    }
+}
