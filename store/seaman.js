@@ -2,21 +2,18 @@
  * External dependencies
  */
 import React, { createContext, useState } from 'react';
-import useForm from 'react-hook-form';
 
 export const SeamanContext = createContext();
 
-export const SeamanProvider = ( { children, data } ) => {
-  const [ seamanData, setSeamanData ] = useState( data );
-  const { register, handleSubmit, formState, reset, setValue } = useForm();
+export const SeamanProvider = ( { children, data, form } ) => {
+  const [ seaman, setSeaman ] = useState( data );
+  const [ isSeamanTouched, setIsSeamanTouched ] = useState( false );
   const store = {
-    seamanData,
-    setSeamanData,
-    register,
-    handleSubmit,
-    formState,
-    setValue,
-    reset
+    seaman,
+    setSeaman,
+    isSeamanTouched,
+    setIsSeamanTouched,
+    ...form
   };
 
   return (

@@ -1,7 +1,7 @@
 /**
  * Internal dependencies.
  */
-import styles from './style.less';
+import './styles.less';
 
 const Container = ( { children } ) => (
   <div className="app-container">

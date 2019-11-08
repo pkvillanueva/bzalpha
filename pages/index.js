@@ -1,7 +1,7 @@
 /**
  * Internal dependencies.
  */
-import App from '../components/layout/App';
+import App from '../components/App';
 import withAuth from '../utils/withAuth';
 
 const Dashboard = () => (

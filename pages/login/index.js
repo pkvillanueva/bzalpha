@@ -10,7 +10,7 @@ import Router from 'next/router';
 /**
  * Internal dependencies.
  */
-import styles from './style.less';
+import styles from './styles.less';
 
 const Login = ( { form } ) => {
   const [ loading, setLoading ] = useState( false );
@@ -19,15 +19,11 @@ const Login = ( { form } ) => {
 
   const handleSubmit = ( event ) => {
     event.preventDefault();
-
-    // Prevent multiple request.
     if ( loading ) {
       return;
     }
 
     setLoading( true );
-
-    // Start logging in.
     validateFields( async ( err, values ) => {
       if ( err ) {
         setLoading( false );

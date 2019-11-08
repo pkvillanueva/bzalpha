@@ -9,16 +9,16 @@ const { Item: MenuItem } = Menu;
 /**
  * Internal dependencies.
  */
-import { UserContext } from '../../../store/user';
-import UserMenu from '../UserMenu';
-import Container from '../Container';
-import styles from './style.less';
+import { UserContext } from '~/store/user';
+import Container from '~/components/Container';
+import UserMenu from './UserMenu';
+import styles from './styles.less';
 
 const App = ( { children } ) => {
   const { display_name } = useContext( UserContext );
 
   return (
-    <div className={ styles['page-wrapper'] }>
+    <div className={ styles.pageWrapper }>
       <Layout>
         <Header className="app-header">
           <a className="app-logo" href="/">

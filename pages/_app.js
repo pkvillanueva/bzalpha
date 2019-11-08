@@ -15,11 +15,7 @@ class _App extends App {
 
     if ( Component.getInitialProps ) {
       const props = await Component.getInitialProps( ctx );
-
-      return {
-        ...props,
-        cookies
-      };
+      return { ...props, cookies };
     } else {
       return { cookies };
     }
