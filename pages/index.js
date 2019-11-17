@@ -1,11 +1,13 @@
 /**
  * Internal dependencies.
  */
-import App from '../components/App';
-import withAuth from '../utils/withAuth';
+import Layout from '~/components/Layout';
+import withAuth from '~/utils/withAuth';
 
 const Dashboard = () => (
-  <App>Dashboard!</App>
+  <Layout>
+    Dashboard!
+  </Layout>
 );
 
 export default withAuth( Dashboard );

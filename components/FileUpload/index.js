@@ -1,12 +1,14 @@
 /**
  * External dependencies.
  */
-import React, { Component } from 'react';
-import { Upload, Button, Icon } from 'antd';
+import React, { Component, useContext, forwardRef } from 'react';
+import { Upload, Button } from 'antd';
+import { parseCookies } from 'nookies';
 
 /**
  * Internal dependencies.
  */
+import { UserContext } from '~/store/user';
 import { isEmpty, pick, isEqual } from 'lodash';
 
 class FileUpload extends Component {
@@ -68,8 +70,10 @@ class FileUpload extends Component {
   };
 
   render() {
-    let { token, onChange, ...props } = this.props;
+    let { onChange, block, text, ...props } = this.props;
+    const { token } = parseCookies();
 
+    text = text || 'Click to Upload';
     props = {
       ...props,
       onChange: this.handleChange,
@@ -80,18 +84,23 @@ class FileUpload extends Component {
       method: 'POST',
       headers: {
         'X-Requested-With': null,
-        'Authorization': `Bearer ${ this.props.token }`
+        'Authorization': `Bearer ${ token }`
       },
     };
 
     return (
       <Upload { ...props } fileList={ this.state.fileList }>
-        <Button>
-          <Icon type="upload" /> Click to Upload
+        <Button icon="upload" block>
+          { text }
         </Button>
       </Upload>
     );
   }
 }
 
-export default FileUpload;
+const wrapFileUpload = ( props, ref ) => {
+  const { token } = useContext( UserContext );
+  return <FileUpload { ...props } token={ token } ref={ ref } />
+};
+
+export default forwardRef( wrapFileUpload );

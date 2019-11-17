@@ -28,7 +28,9 @@
     "node-sass": "^4.12.0",
     "nookies": "^2.0.8",
     "null-loader": "^3.0.0",
+    "parse-full-name": "^1.2.4",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "react-responsive": "^8.0.1"
   }
 }

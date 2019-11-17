@@ -1,0 +1,46 @@
+.stats {
+    display: flex;
+    flex-flow: row wrap;
+
+    :global(.ant-statistic) {
+        margin: 0 34px 16px 0;
+    }
+
+    @media (min-width: 768px) {
+        margin: 0 -28px;
+
+        :global(.ant-statistic) {
+            position: relative;
+            margin: 7px 0;
+            padding: 0 28px;
+
+            &:not(:last-child):after {
+                position: absolute;
+                top: 8px;
+                right: 0;
+                width: 1px;
+                height: 40px;
+                background-color: #e8e8e8;
+                content: '';
+            }
+        }
+
+        &.alignRight {
+            justify-content: flex-end;
+            text-align: right;
+        }
+
+        &.alignCenter {
+            justify-content: center;
+            text-align: center;
+        }
+    }
+
+    :global(.ant-statistic-content) {
+        font-size: 22px;
+
+        @media (max-width: 767px) {
+            font-size: 20px;
+        }
+    }
+}

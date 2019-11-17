@@ -1,4 +1,4 @@
-export default [
+export const ranks = [
   { value: 'MST', name: 'Master' },
   { value: 'C/O', name: 'Chief Officer' },
   { value: '2/0', name: 'Second Officer' },

@@ -10,6 +10,7 @@ import Router from 'next/router';
 /**
  * Internal dependencies.
  */
+import withNoAuth from '~/utils/withNoAuth';
 import styles from './styles.less';
 
 const Login = ( { form } ) => {
@@ -102,4 +103,4 @@ const Login = ( { form } ) => {
   );
 };
 
-export default Form.create( { name: 'login' } )( Login );
+export default withNoAuth( Form.create( { name: 'login' } )( Login ) );

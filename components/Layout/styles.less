@@ -1,0 +1,152 @@
+.header {
+    position: relative;
+    z-index: 5;
+    height: 64px;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15)
+}
+
+.headerInner {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.headerTrigger {
+    height: 64px;
+    padding: 0 24px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all .3s, padding 0s;
+    color: #fff;
+}
+
+.headerRight {
+    float: right;
+    height: 100%;
+    margin-left: auto;
+    overflow: hidden;
+}
+
+.headerAction {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 12px;
+    cursor: pointer;
+    transition: all .3s;
+    color: hsla(0,0%,100%,.85);
+
+    &:hover {
+        background-color: #1890ff;
+    }
+}
+
+.headerAvatar {
+    margin-right: 8px;
+    color: #001529;
+    // background: rgba(0,0,0,.08);
+}
+
+.headerDropdown {
+    :global(.ant-menu) {
+        background-color: #fff;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    }
+}
+
+.headerMenu {
+    flex: 0 1 0;
+    max-width: 60%;
+    margin-left: 20px;
+    line-height: 64px;
+}
+
+.drawer {
+    :global(.ant-drawer-body) {
+        padding: 0;
+    }
+}
+
+.sider {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    box-shadow: 2px 0 6px rgba(0,21,41,.35);
+
+    :global {
+        .ant-menu {
+            padding: 16px 0;
+        }
+    }
+}
+
+.siderLogo {
+    position: relative;
+    height: 64px;
+    padding-left: 24px;
+    overflow: hidden;
+    line-height: 64px;
+    background: #001529;
+    cursor: pointer;
+    transition: all .3s;
+
+    :global {
+        img {
+            display: inline-block;
+            height: 32px;
+            vertical-align: middle;
+        }
+
+        h1 {
+            display: inline-block;
+            margin: 0 0 0 12px;
+            color: #fff;
+            font-weight: 400;
+            font-size: 16px;
+            vertical-align: top;
+        }
+    }
+}
+
+.logo {
+    display: inline-block;
+    cursor: pointer;
+    transition: all .3s;
+
+    :global {
+        img {
+            display: inline-block;
+            height: 32px;
+            vertical-align: middle;
+        }
+
+        h1 {
+            display: inline-block;
+            margin: 0 0 0 12px;
+            color: #fff;
+            font-weight: 400;
+            font-size: 16px;
+            vertical-align: top;
+        }
+    }
+}
+
+.pageHeader {
+    margin: -24px 0 24px;
+    background-color: #fff;
+}
+
+.pageHeaderInner {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.content {
+    margin: 24px 0;
+}
+
+.layout {
+    min-height: 100vh;
+    background-color: #f0f2f5;
+}
