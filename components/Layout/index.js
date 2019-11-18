@@ -12,15 +12,14 @@ const { Header, Sider, Content } = Layout;
 import Container from '~/components/Container';
 import { UserContext } from '~/store/user';
 import { map, pickBy, identity, isEmpty } from 'lodash';
-import { setCookie } from 'nookies'
 import styles from './styles.less';
 
 const headerMenu = [
   { icon: 'dashboard', title: 'Dashboard', href: '/' },
   { icon: 'database', title: 'BZ Works', href: '/works' },
   { icon: 'team', title: 'Seaman', href: '/seaman' },
-  { icon: 'appstore', title: 'Vessels', href: '/vessels' },
-  { icon: 'profile', title: 'Principals', href: '/principals' }
+  { icon: 'appstore', title: 'Vessels', href: '/vessel' },
+  { icon: 'profile', title: 'Principals', href: '/principal' }
 ];
 
 const userMenu = [

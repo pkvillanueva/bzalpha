@@ -12,6 +12,7 @@ import { map } from 'lodash';
 import { SeamanContext } from '~/store/seaman';
 import DataCollection from '~/components/DataCollection';
 import { ranks } from '~/utils/ranks';
+import { getRankName } from '~/utils/seaman';
 import countries from '~/utils/countries';
 
 const Experiences = () => {
@@ -20,9 +21,11 @@ const Experiences = () => {
   const columns = [
     { title: 'Date Start', dataIndex: 'date_start', key: 'date_start' },
     { title: 'Date End', dataIndex: 'date_end', key: 'date_end' },
-    { title: 'Rank', dataIndex: 'rank', key: 'rank' },
+    { title: 'Rank', dataIndex: 'rank', key: 'rank', render: ( r ) => getRankName( r ) },
     { title: 'Vessel', dataIndex: 'vessel', key: 'vessel' },
     { title: 'Type', dataIndex: 'type', key: 'type' },
+    { title: 'IMO', dataIndex: 'imo', key: 'imo' },
+    { title: 'MMSI', dataIndex: 'mmsi', key: 'mmsi' },
     { title: 'GRT', dataIndex: 'grt', key: 'grt' },
     { title: 'DWT', dataIndex: 'dwt', key: 'dwt' },
     { title: 'Flag', dataIndex: 'flag', key: 'flag' },
@@ -76,6 +79,16 @@ const Experiences = () => {
         <Form.Item key="type" label="Type">
           { getFieldDecorator( 'type', {
             initialValue: initialValues.type
+          } )( <Input /> ) }
+        </Form.Item>,
+        <Form.Item key="imo" label="IMO">
+          { getFieldDecorator( 'imo', {
+            initialValue: initialValues.imo
+          } )( <Input /> ) }
+        </Form.Item>,
+        <Form.Item key="mmsi" label="MMSI">
+          { getFieldDecorator( 'mmsi', {
+            initialValue: initialValues.mmsi
           } )( <Input /> ) }
         </Form.Item>,
         <Form.Item key="grt" label="GRT">

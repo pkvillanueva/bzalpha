@@ -19,7 +19,7 @@ const EditMinWage = () => {
     setIsSeamanTouched( true );
   }
 
-  getFieldDecorator( 'min_wage', { initialValue: seaman.rank } );
+  getFieldDecorator( 'min_wage', { initialValue: seaman.min_wage } );
 
   return (
     <ModalForm
