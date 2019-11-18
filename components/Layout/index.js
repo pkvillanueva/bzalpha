@@ -2,6 +2,7 @@
  * External dependencies.
  */
 import React, { useState, useContext } from 'react';
+import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive'
 import { Layout, Menu, Icon, Drawer, Dropdown, Avatar, PageHeader } from 'antd';
 const { Header, Sider, Content } = Layout;
@@ -26,7 +27,25 @@ const userMenu = [
   { title: 'Logout', href: '/logout' },
 ];
 
+const getActiveKeys = ( pathname ) => {
+  let activeKeys = [];
+
+  headerMenu.forEach( ( menuItem ) => {
+    if ( pathname.length === 0 || pathname === '/' ) {
+      activeKeys.push( 'dashboard' );
+    } else if ( menuItem.href === '/' ) {
+      return;
+    } else if ( pathname.search( menuItem.href ) === 0 ) {
+      activeKeys.push( menuItem.icon );
+    }
+  } );
+
+  return activeKeys;
+};
+
 const LayoutSider = ( { collapsed, isMobile } ) => {
+  const { pathname } = useRouter();
+  const activeKeys = getActiveKeys( pathname );
   const props = {
     trigger: null,
     collapsible: true,
@@ -34,7 +53,7 @@ const LayoutSider = ( { collapsed, isMobile } ) => {
     collapsedWidth: isMobile ? 256 : 80,
     width: 256,
     className: styles.sider
-  }
+  };
 
   return (
     <Sider { ...props }>
@@ -44,9 +63,9 @@ const LayoutSider = ( { collapsed, isMobile } ) => {
           <h1>BZ Alpha</h1>
         </a>
       </div>
-      <Menu theme="dark" mode="inline">
-        { map( headerMenu, ( menu, i ) => (
-          <Menu.Item key={ i }>
+      <Menu selectedKeys={ activeKeys } theme="dark" mode="inline">
+        { map( headerMenu, ( menu ) => (
+          <Menu.Item key={ menu.icon }>
             <a href={ menu.href }>
               <Icon type={ menu.icon } />
               <span>{ menu.title }</span>
@@ -77,10 +96,13 @@ const withMobileDrawer = ( Component, props ) => {
 };
 
 const LayoutHeader = ( { isMobile, display_name, collapsed, handleCollapsed, triggerProps } ) => {
+  const { pathname } = useRouter();
+  const activeKeys = getActiveKeys( pathname );
+
   const UserMenu = () => (
     <Menu>
-      { map( userMenu, ( menu, i ) => (
-        <Menu.Item key={ i }>
+      { map( userMenu, ( menu ) => (
+        <Menu.Item key={ menu.icon }>
           <a href={ menu.href }>{ menu.title }</a>
         </Menu.Item>
       ) ) }
@@ -100,9 +122,9 @@ const LayoutHeader = ( { isMobile, display_name, collapsed, handleCollapsed, tri
           { isMobile && <span className={ styles.headerTrigger } onClick={ () => handleCollapsed( ! collapsed ) }>
             <Icon { ...triggerProps } />
           </span> }
-          { ! isMobile && <Menu className={ styles.headerMenu } theme="dark" mode="horizontal">
-            { map( headerMenu, ( menu, i ) => (
-              <Menu.Item key={ i }>
+          { ! isMobile && <Menu selectedKeys={ activeKeys } className={ styles.headerMenu } theme="dark" mode="horizontal">
+            { map( headerMenu, ( menu ) => (
+              <Menu.Item key={ menu.icon }>
                 <a href={ menu.href }>
                   <Icon type={ menu.icon } />
                   <span>{ menu.title }</span>
