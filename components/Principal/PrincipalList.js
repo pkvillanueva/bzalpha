@@ -33,7 +33,7 @@ const columns = [
     align: 'center',
     render: ( t, r ) => {
       if ( ! r.count ) {
-        return '-';
+        return '(0)';
       }
       return `(${ r.count }) `;
     }

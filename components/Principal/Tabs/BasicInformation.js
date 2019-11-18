@@ -33,9 +33,10 @@ const BasicInformation = () => {
         </Form.Item>
         <Form.Item label="Country">
           { getFieldDecorator( 'country', {
-            initialValue: principal.country
+            initialValue: principal.country,
+            rules: [ { required: true, message: 'Country is required.' } ],
           } )(
-            <Select showSearch>
+            <Select placeholder="Select country" showSearch>
               { map( countries, ( country ) => <Select.Option key={ country.code } value={ country.code }>{ country.name }</Select.Option> ) }
             </Select>
           ) }

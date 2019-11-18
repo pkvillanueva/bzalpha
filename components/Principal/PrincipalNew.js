@@ -5,10 +5,17 @@ import React, { useState } from 'react';
 import Router from 'next/router';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
-import { Modal, Form, Input } from 'antd';
+import { map } from 'lodash';
+import { Modal, Form, Input, Select } from 'antd';
+import ReactCountryFlag from 'react-country-flag';
+
+/**
+ * Internal dependencies.
+ */
+import { countries } from '~/utils/countries';
 
 const VesselNew = Form.create()( ( { form, visible, onCancel } ) => {
-  const { getFieldDecorator, validateFields, resetFields } = form;
+  const { getFieldDecorator, validateFields, resetFields, getFieldValue } = form;
   const [ isLoading, setIsLoading ] = useState( false );
 
   const handleOk = () => {
@@ -22,6 +29,7 @@ const VesselNew = Form.create()( ( { form, visible, onCancel } ) => {
       values = {
         status: 'publish',
         name: values.name,
+        country: values.country,
       };
 
       axios.post( `http://bzalpha.test/wp-json/bzalpha/v1/principal`, values, {
@@ -59,11 +67,21 @@ const VesselNew = Form.create()( ( { form, visible, onCancel } ) => {
       onOk={ handleOk }
       okButtonProps={ { loading: isLoading } }
     >
-      <Form layout="vertical">
+      <Form layout="horizontal">
         <Form.Item label="Name">
           { getFieldDecorator( 'name', {
             rules: [ { required: true, message: 'Name is required.' } ],
           } )( <Input placeholder="Enter name" /> ) }
+        </Form.Item>
+        <Form.Item label="Country">
+          { getFieldDecorator( 'country', {
+            rules: [ { required: true, message: 'Country is required.' } ],
+          } )(
+            <Select placeholder="Select country" showSearch>
+              { map( countries, ( country ) => <Select.Option key={ country.code } value={ country.code }>{ country.name }</Select.Option> ) }
+            </Select>
+          ) }
+          { getFieldValue( 'country' ) && <ReactCountryFlag code={ getFieldValue( 'country' ).toLowerCase() } svg /> }
         </Form.Item>
       </Form>
     </Modal>
