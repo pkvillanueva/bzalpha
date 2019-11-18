@@ -12,8 +12,8 @@ import { Row, Col, Statistic, Badge, Button, Card, Tag, Tooltip, Icon } from 'an
  */
 import Layout from '~/components/Layout';
 import SeamanEdit from '~/components/Seaman/SeamanEdit';
-import EditRank from '~/components/Seaman/modals/EditRank';
-import EditMinWage from '~/components/Seaman/modals/EditMinWage';
+import EditRank from '~/components/Seaman/Modals/EditRank';
+import EditMinWage from '~/components/Seaman/Modals/EditMinWage';
 import AvatarUpload from '~/components/AvatarUpload';
 import Stats from '~/components/Stats';
 import BlockCard from '~/components/BlockCard';

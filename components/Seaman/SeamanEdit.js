@@ -9,15 +9,15 @@ const { TabPane } = Tabs;
  * Internal dependencies.
  */
 import BlockCard from '~/components/BlockCard';
-import PersonalInformation from './tabs/PersonalInformation';
-import ContactInformation from './tabs/ContactInformation';
-import Relatives from './tabs/Relatives';
-import Educations from './tabs/Educations';
-import Passports from './tabs/Passports';
-import Visas from './tabs/Visas';
-import Experiences from './tabs/Experiences';
-import Documents from './tabs/Documents';
-import BMI from './tabs/BMI';
+import PersonalInformation from './Tabs/PersonalInformation';
+import ContactInformation from './Tabs/ContactInformation';
+import Relatives from './Tabs/Relatives';
+import Educations from './Tabs/Educations';
+import Passports from './Tabs/Passports';
+import Visas from './Tabs/Visas';
+import Experiences from './Tabs/Experiences';
+import Documents from './Tabs/Documents';
+import BMI from './Tabs/BMI';
 
 const SeamanEdit = () => {
   return (

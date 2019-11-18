@@ -14,7 +14,6 @@ const { Item: FormItem } = Form;
  * Internal dependencies.
  */
 import Block from '~/components/Block';
-import { getCountryName } from '~/utils/countries';
 import VesselNew from './VesselNew';
 
 const columns = [
