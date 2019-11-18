@@ -21,14 +21,11 @@ class SelectFetch extends Component {
   state = {
     data: [],
     fetching: false,
-    value: {
-      key: '',
-      label: ''
-    }
+    value: ''
   };
 
   componentDidMount = () => {
-    const { value, initialData } = this.props;
+    const { value, initialData, placeholder } = this.props;
 
     if ( value && ! isEmpty( initialData ) ) {
       this.setState( { value: {
@@ -81,7 +78,7 @@ class SelectFetch extends Component {
     } );
 
     if ( this.props.onChange ) {
-      this.props.onChange( value.key );
+      this.props.onChange( value ? value.key : '' );
     }
   };
 
@@ -91,19 +88,25 @@ class SelectFetch extends Component {
 
   render() {
     const { fetching, data, value } = this.state;
-    const { placeholder } = this.props;
+    const { placeholder, allowClear, className, style } = this.props;
+    const selectProps = {};
+    if ( value ) {
+      selectProps.value = value;
+    }
 
     return (
       <Select
+        { ...selectProps }
+        className={ className }
+        allowClear={ allowClear || false }
         labelInValue={ true }
-        value={ value }
         placeholder={ placeholder }
         notFoundContent={ fetching && <Spin size="small" /> }
         showSearch={ true }
-        onFocus={ this.handleFocus }
+        onDropdownVisibleChange={ this.handleFocus }
         onSearch={ this.fetchData }
         onChange={ this.handleChange }
-        style={ { width: '100%' } }
+        style={ style }
       >
         { data.map( d => (
           <Option key={ d.value }>

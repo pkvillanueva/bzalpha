@@ -14,7 +14,9 @@ const { Item: FormItem } = Form;
  * Internal dependencies.
  */
 import Block from '~/components/Block';
+import SelectFetch from '~/components/SelectFetch';
 import VesselNew from './VesselNew';
+import styles from './styles.less';
 
 const columns = [
   {
@@ -127,6 +129,13 @@ const VesselsList = ( { basePrincipal, customParams = {} } ) => {
     } );
   };
 
+  const handleOwner = ( value ) => {
+    fetchData( {
+      principal: value,
+      page: 1
+    } );
+  };
+
   const handleDelete = ( id ) => {
     const { token } = parseCookies();
 
@@ -166,6 +175,17 @@ const VesselsList = ( { basePrincipal, customParams = {} } ) => {
       <Form layout="inline">
         <FormItem label="Search">
           <Search onSearch={ handleSearch } placeholder="Name..." />
+        </FormItem>
+        <FormItem label="Owner">
+          <SelectFetch
+            className={ styles.selectStatus }
+            allowClear={ true }
+            onChange={ handleOwner }
+            placeholder="Select owner"
+            dataKey="id"
+            labelKey="name"
+            action='http://bzalpha.test/wp-json/bzalpha/v1/principal'
+          />
         </FormItem>
       </Form>
     </Block>
