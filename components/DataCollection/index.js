@@ -92,7 +92,7 @@ const DataCollection = Form.create()( ( props ) => {
         onCancel={ handleCancel }
         maskClosable={ false }
       >
-        { modalForm( getFieldDecorator, edit ) }
+        { modalForm( getFieldDecorator, edit, form ) }
       </Modal>
       <Card title={ title }>
         <Table className={ styles.table } dataSource={ records } columns={ columns } pagination={ false } scroll={ { x: 'max-content' } } { ...table } />

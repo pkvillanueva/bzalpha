@@ -5,6 +5,7 @@ import React, { useContext } from 'react';
 import { Form, Input, DatePicker, Select } from 'antd';
 import moment from 'moment';
 import { map } from 'lodash';
+import ReactCountryFlag from 'react-country-flag';
 
 /**
  * Internal dependencies.
@@ -14,6 +15,7 @@ import DataCollection from '~/components/DataCollection';
 import { ranks } from '~/utils/ranks';
 import { getRankName } from '~/utils/seaman';
 import { countries } from '~/utils/countries';
+import { vesselType } from '~/utils/vessel';
 
 const Experiences = () => {
   const { seaman, setFieldsValue, setIsSeamanTouched } = useContext( SeamanContext );
@@ -24,11 +26,11 @@ const Experiences = () => {
     { title: 'Rank', dataIndex: 'rank', key: 'rank', render: ( r ) => getRankName( r ) },
     { title: 'Vessel', dataIndex: 'vessel', key: 'vessel' },
     { title: 'Type', dataIndex: 'type', key: 'type' },
+    { title: 'Flag', dataIndex: 'flag', key: 'flag', render: ( r ) => r && <ReactCountryFlag code={ r.toLowerCase() } svg /> },
     { title: 'IMO', dataIndex: 'imo', key: 'imo' },
     { title: 'MMSI', dataIndex: 'mmsi', key: 'mmsi' },
     { title: 'GRT', dataIndex: 'grt', key: 'grt' },
     { title: 'DWT', dataIndex: 'dwt', key: 'dwt' },
-    { title: 'Flag', dataIndex: 'flag', key: 'flag' },
     { title: 'Owner', dataIndex: 'owner', key: 'owner' },
   ];
 
@@ -53,7 +55,7 @@ const Experiences = () => {
       modalTitle="Experience"
       onChange={ handleSave }
       formatRecord={ handleFormatRecord }
-      modalForm={ ( getFieldDecorator, initialValues ) => [
+      modalForm={ ( getFieldDecorator, initialValues, { getFieldValue } ) => [
         <Form.Item key="date_start" label="Issue Date">
           { getFieldDecorator( 'date_start', {
             initialValue: moment( initialValues.date_start )
@@ -79,7 +81,19 @@ const Experiences = () => {
         <Form.Item key="type" label="Type">
           { getFieldDecorator( 'type', {
             initialValue: initialValues.type
-          } )( <Input /> ) }
+          } )(
+            <Select style={ { width: '100%' } }>
+              { map( vesselType, ( type ) => <Select.Option key={ type.value } value={ type.value }>{ type.name }</Select.Option> ) }
+            </Select>
+          ) }
+        </Form.Item>,
+        <Form.Item key="flag" label="Flag">
+          { getFieldDecorator( 'flag', {
+            initialValue: initialValues.flag
+          } )( <Select style={ { width: '100%' } }>
+            { map( countries, ( country ) => <Select.Option value={ country.code } key={ country.code }>{ country.name }</Select.Option> ) }
+          </Select> ) }
+          { getFieldValue( 'flag' ) && <ReactCountryFlag code={ getFieldValue( 'flag' ).toLowerCase() } svg /> }
         </Form.Item>,
         <Form.Item key="imo" label="IMO">
           { getFieldDecorator( 'imo', {
@@ -100,13 +114,6 @@ const Experiences = () => {
           { getFieldDecorator( 'dwt', {
             initialValue: initialValues.dwt
           } )( <Input /> ) }
-        </Form.Item>,
-        <Form.Item key="flag" label="Flag">
-          { getFieldDecorator( 'flag', {
-            initialValue: initialValues.flag
-          } )( <Select style={ { width: '100%' } }>
-            { map( countries, ( country ) => <Select.Option value={ country.code } key={ country.code }>{ country.name }</Select.Option> ) }
-          </Select> ) }
         </Form.Item>,
         <Form.Item key="owner" label="Owner">
           { getFieldDecorator( 'owner', {
