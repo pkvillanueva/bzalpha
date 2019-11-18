@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { map } from 'lodash';
-import { Form, Input, Select, Button, Table, Popconfirm, Divider, Badge, Tag } from 'antd';
+import { Form, Input, Select, Button, Table, Popconfirm, Divider, Badge, Avatar } from 'antd';
 const { Search } = Input;
 const { Option } = Select;
 const { Item: FormItem } = Form;
@@ -23,9 +23,12 @@ const columns = [
     title: 'Name',
     dataIndex: 'name',
     render: ( t, r ) => (
-      <a href={ `/seaman/${ r.id }` }>
-        { r.first_name || r.last_name ? `${ r.first_name } ${ r.last_name }` : '<No Name>' }
-      </a>
+      <>
+        <Avatar className={ styles.tableAvatar } src={ r.avatar } shape="square" />
+        <a href={ `/seaman/${ r.id }` }>
+          { r.first_name || r.last_name ? `${ r.first_name } ${ r.last_name }` : '<No Name>' }
+        </a>
+      </>
     )
   },
   {
@@ -58,10 +61,6 @@ const columns = [
     title: 'Contact',
     dataIndex: 'contact',
     render: ( t, r ) => r.phone || r.email || r.skype || r.tel || '—'
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address'
   }
 ];
 
@@ -185,7 +184,7 @@ const SeamenList = () => {
         icon="plus"
         onClick={ handleNew }
       >
-        New
+        New Seaman
       </Button>
     </Block>
     <Table

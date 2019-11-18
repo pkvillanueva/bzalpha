@@ -1,23 +1,37 @@
 /**
  * External dependencies.
  */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import axios from 'axios';
-import { Form, Button, Card, Input, Select } from 'antd';
-import { map } from 'lodash';
-import ReactCountryFlag from 'react-country-flag';
+import { Button, Tabs } from 'antd';
+const { TabPane } = Tabs;
 
 /**
  * Internal dependencies
  */
 import Layout from '~/components/Layout';
+import BasicInformation from '~/components/Principal/Tabs/BasicInformation';
+import Vessels from '~/components/Principal/Tabs/Vessels';
 import { PrincipalProvider, PrincipalContext } from '~/store/principal';
 import withAuth from '~/utils/withAuth';
 import withProvider from '~/utils/withProvider';
 import formatBreadcrumb from '~/utils/formatBreadcrumb';
-import countries from '~/utils/countries';
+
+const tabContent = {
+  information: <BasicInformation />,
+  vessels: <Vessels />
+};
+
+const PageHeaderFooter = ( { onChange } ) => {
+  return (
+    <Tabs defaultActiveKey="information" onChange={ onChange }>
+    <TabPane tab="Information" key="information" />
+      <TabPane tab="Vessels" key="vessels" />
+    </Tabs>
+  );
+};
 
 const Page = () => {
   const {
@@ -26,14 +40,20 @@ const Page = () => {
     validateFields,
     isSaving,
     setIsSaving,
-    getFieldDecorator,
     resetFields,
     isFieldsTouched,
     isPrincipalTouched,
     setIsPrincipalTouched,
-    getFieldValue
   } = useContext( PrincipalContext );
+  const [ tab, setTab ] = useState( 'information' );
   const { query } = useRouter();
+
+  const getBreadcrumb = () => {
+    return [
+      { path: '/principal', breadcrumbName: 'Principals List' },
+      { breadcrumbName: principal.name }
+    ]
+  };
 
   const handleSave = () => {
     if ( isSaving ) {
@@ -68,55 +88,20 @@ const Page = () => {
     } );
   };
 
-  const getBreadcrumb = () => {
-    return [
-      { path: '/principal', breadcrumbName: 'Principals List' },
-      { breadcrumbName: principal.name }
-    ]
+  const handleTabChange = ( value ) => {
+    setTab( value );
   };
 
   return (
     <Layout
-      title={
-        <>
-          { principal.name }
-          { principal.country && <span style={ { marginLeft: '8px', verticalAlign: 'text-bottom' } }>
-            <ReactCountryFlag code={ principal.country.toLowerCase() } svg />
-          </span> }
-        </>
-      }
+      title={ principal.name }
       breadcrumb={ formatBreadcrumb( getBreadcrumb() ) }
       extra={ [
         <Button type="primary" key="save" onClick={ handleSave } disabled={ ( ! isPrincipalTouched && ! isFieldsTouched() ) } loading={ isSaving }>Save</Button>
       ] }
+      footer={ <PageHeaderFooter onChange={ handleTabChange } /> }
     >
-      <Card title="Basic Information">
-        <Form style={ { maxWidth: '400px', margin: '0 auto' } }>
-          <Form.Item label="Name">
-            { getFieldDecorator( 'name', {
-              initialValue: principal.name,
-              rules: [
-                {
-                  required: true,
-                  message: 'Name is required!',
-                },
-              ],
-            } )(
-              <Input />
-            ) }
-          </Form.Item>
-          <Form.Item label="Country">
-            { getFieldDecorator( 'country', {
-              initialValue: principal.country
-            } )(
-              <Select showSearch>
-                { map( countries, ( country ) => <Select.Option key={ country.code } value={ country.code }>{ country.name }</Select.Option> ) }
-              </Select>
-            ) }
-            { getFieldValue( 'country' ) && <ReactCountryFlag code={ getFieldValue( 'country' ).toLowerCase() } svg /> }
-          </Form.Item>
-        </Form>
-      </Card>
+      { tabContent[ tab ] }
     </Layout>
   );
 };

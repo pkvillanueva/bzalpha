@@ -59,17 +59,21 @@ const PageHeader = () => {
         <Stats align="right">
           <Statistic
             title="Age"
+            groupSeparator=""
             value={ getCurrentAge( seaman.birth_date ) }
           />
           <Statistic
             title="Contact"
+            groupSeparator=""
             value={ getContact( seaman ) }
           />
           <Statistic
             title="Total Sea Time"
+            groupSeparator=""
             value={ getTotalSeaTime( seaman.experiences ) }
           />
           { seaman.rank && <Statistic
+            groupSeparator=""
             title={ `As ${ getRankName( seaman.rank ) }` }
             value={ getRankTotalSeaTime( seaman.rank, seaman.experiences ) }
           /> }

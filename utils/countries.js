@@ -1,4 +1,6 @@
-export default [
+import { filter } from 'lodash';
+
+export const countries = [
   {name: 'Afghanistan', code: 'AF'},
   {name: 'Åland Islands', code: 'AX'},
   {name: 'Albania', code: 'AL'},
@@ -243,3 +245,13 @@ export default [
   {name: 'Zambia', code: 'ZM'},
   {name: 'Zimbabwe', code: 'ZW'}
 ];
+
+export const getCountryName = code => {
+  const country = filter( countries, [ 'code', code ] );
+
+  if ( country.length ) {
+    return country[0].name;
+  } else {
+    return '';
+  }
+};

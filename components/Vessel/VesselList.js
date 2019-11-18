@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { map } from 'lodash';
+import ReactCountryFlag from 'react-country-flag';
 import { Form, Input, Button, Table, Popconfirm, Divider } from 'antd';
 const { Search } = Input;
 const { Item: FormItem } = Form;
@@ -13,6 +14,7 @@ const { Item: FormItem } = Form;
  * Internal dependencies.
  */
 import Block from '~/components/Block';
+import { getCountryName } from '~/utils/countries';
 import VesselNew from './VesselNew';
 
 const columns = [
@@ -25,44 +27,53 @@ const columns = [
       </a>
     )
   },
-  // {
-  //   title: 'Status',
-  //   dataIndex: 'status',
-  //   render: ( t, r ) => {
-  //     let status = {};
+  {
+    title: 'Type',
+    dataIndex: 'type',
+    render: ( r ) => r || '-'
+  },
+  {
+    title: 'Flag',
+    dataIndex: 'flag',
+    align: 'center',
+    render: ( r ) => {
+      if ( ! r ) {
+        return '-';
+      }
 
-  //     switch ( r.job_status ) {
-  //       case 'onboard': status = { status: 'success', name: 'On Board' }; break;
-  //       default: status = { status: 'default', name: 'Stand By' }; break;
-  //     }
+      return (
+        <ReactCountryFlag code={ r.toLowerCase() } svg />
+      );
+    }
+  },
+  {
+    title: 'Owner',
+    dataIndex: 'owner',
+    render: ( t, r ) => {
+      if (  r.principal.length < 1 ) {
+        return '-';
+      }
 
-  //     return ( <>
-  //       <Badge status={ status.status } /> { status.name }
-  //     </> );
-  //   }
-  // },
-  // {
-  //   title: 'Rank',
-  //   dataIndex: 'rank',
-  //   render: ( t, r ) => getRankName( r.rank ) || '—'
-  // },
-  // {
-  //   title: 'Age',
-  //   dataIndex: 'age',
-  //   render: ( t, r ) => getCurrentAge( r.birth_date ) || '—'
-  // },
-  // {
-  //   title: 'Contact',
-  //   dataIndex: 'contact',
-  //   render: ( t, r ) => r.phone || r.email || r.skype || r.tel || '—'
-  // },
-  // {
-  //   title: 'Address',
-  //   dataIndex: 'address'
-  // }
+      return (
+        <a href={ `/principal/${ r.principal[0].term_id }` }>
+          { r.principal[0].name || '<No Name>' }
+        </a>
+      );
+    }
+  },
+  {
+    title: 'IMO',
+    dataIndex: 'imo',
+    render: ( r ) => r || '-'
+  },
+  {
+    title: 'MMSI',
+    dataIndex: 'mmsi',
+    render: ( r ) => r || '-'
+  },
 ];
 
-const VesselsList = () => {
+const VesselsList = ( { basePrincipal, customParams = {} } ) => {
   const [ isCreating, setIsCreating ] = useState( false );
   const [ isLoading, setIsLoading ] = useState( false );
   const [ total, setTotal ] = useState( 0 );
@@ -75,7 +86,7 @@ const VesselsList = () => {
 
     axios.get( `http://bzalpha.test/wp-json/bzalpha/v1/vessel`, {
       headers: { 'Authorization': `Bearer ${ token }` },
-      params: { ...filters, ...params }
+      params: { ...filters, ...params, ...customParams }
     } )
     .then( ( res ) => {
       const newData = map( res.data, ( data ) => {
@@ -161,6 +172,7 @@ const VesselsList = () => {
     </Block>
     <Block>
       <VesselNew
+        basePrincipal={ basePrincipal }
         visible={ isCreating }
         onCancel={ handleNew }
       />
@@ -169,7 +181,7 @@ const VesselsList = () => {
         icon="plus"
         onClick={ handleNew }
       >
-        New
+        New Vessel
       </Button>
     </Block>
     <Table

@@ -14,6 +14,7 @@ const { Item: FormItem } = Form;
  * Internal dependencies.
  */
 import Block from '~/components/Block';
+import { getCountryName } from '~/utils/countries';
 import PrincipalNew from './PrincipalNew';
 
 const columns = [
@@ -27,31 +28,32 @@ const columns = [
     )
   },
   {
+    title: 'Vessels',
+    dataIndex: 'count',
+    align: 'center',
+    render: ( t, r ) => {
+      if ( ! r.count ) {
+        return '-';
+      }
+      return `(${ r.count }) `;
+    }
+  },
+  {
     title: 'Country',
     dataIndex: 'country',
-    render: ( t, r ) => ( <>
-    { r.country && <ReactCountryFlag code={ r.country.toLowerCase() } svg /> }
-    </> )
-  },
-  // {
-  //   title: 'Rank',
-  //   dataIndex: 'rank',
-  //   render: ( t, r ) => getRankName( r.rank ) || '—'
-  // },
-  // {
-  //   title: 'Age',
-  //   dataIndex: 'age',
-  //   render: ( t, r ) => getCurrentAge( r.birth_date ) || '—'
-  // },
-  // {
-  //   title: 'Contact',
-  //   dataIndex: 'contact',
-  //   render: ( t, r ) => r.phone || r.email || r.skype || r.tel || '—'
-  // },
-  // {
-  //   title: 'Address',
-  //   dataIndex: 'address'
-  // }
+    render: ( r ) => {
+      if ( ! r ) {
+        return '-';
+      }
+
+      return (
+        <>
+          <span style={ { marginRight: 16 } }>{ <ReactCountryFlag code={ r.toLowerCase() } svg /> }</span>
+          { getCountryName( r ) }
+        </>
+      );
+    }
+  }
 ];
 
 const PrincipalsList = () => {
@@ -165,7 +167,7 @@ const PrincipalsList = () => {
         icon="plus"
         onClick={ handleNew }
       >
-        New
+        New Principal
       </Button>
     </Block>
     <Table

@@ -7,7 +7,12 @@ import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { Modal, Form, Input } from 'antd';
 
-const VesselNew = Form.create()( ( { form, visible, onCancel } ) => {
+/**
+ * Internal dependencies.
+ */
+import SelectFetch from '~/components/SelectFetch';
+
+const VesselNew = Form.create()( ( { form, visible, onCancel, basePrincipal } ) => {
   const { getFieldDecorator, validateFields, resetFields } = form;
   const [ isLoading, setIsLoading ] = useState( false );
 
@@ -22,6 +27,7 @@ const VesselNew = Form.create()( ( { form, visible, onCancel } ) => {
       values = {
         status: 'publish',
         title: values.name,
+        principal: basePrincipal ? basePrincipal : values.principal
       };
 
       axios.post( `http://bzalpha.test/wp-json/bzalpha/v1/vessel`, values, {
@@ -60,6 +66,18 @@ const VesselNew = Form.create()( ( { form, visible, onCancel } ) => {
       okButtonProps={ { loading: isLoading } }
     >
       <Form layout="vertical">
+        { ! basePrincipal ? <Form.Item label="Owner">
+          { getFieldDecorator( 'principal', {
+            rules: [ { required: true, message: 'Owner is required.' } ],
+          } )(
+            <SelectFetch
+              placeholder="Select owner"
+              dataKey="id"
+              labelKey="name"
+              action='http://bzalpha.test/wp-json/bzalpha/v1/principal'
+            />
+          ) }
+        </Form.Item> : null }
         <Form.Item label="Name">
           { getFieldDecorator( 'name', {
             rules: [ { required: true, message: 'Name is required.' } ],

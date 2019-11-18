@@ -13,7 +13,7 @@ import { SeamanContext } from '~/store/seaman';
 import DataCollection from '~/components/DataCollection';
 import { ranks } from '~/utils/ranks';
 import { getRankName } from '~/utils/seaman';
-import countries from '~/utils/countries';
+import { countries } from '~/utils/countries';
 
 const Experiences = () => {
   const { seaman, setFieldsValue, setIsSeamanTouched } = useContext( SeamanContext );
