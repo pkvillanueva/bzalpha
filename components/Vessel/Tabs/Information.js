@@ -65,28 +65,28 @@ const Information = () => {
             ) }
             { getFieldValue( 'flag' ) && <ReactCountryFlag code={ getFieldValue( 'flag' ).toLowerCase() } svg /> }
           </Form.Item>
-          <Form.Item label="International Maritime Organization (IMO)">
+          <Form.Item label="(IMO) International Maritime Organization">
             { getFieldDecorator( 'imo', {
               initialValue: vessel.imo
             } )(
               <Input />
             ) }
           </Form.Item>
-          <Form.Item label="Maritime Mobile Service Identity (MMSI)">
+          <Form.Item label="(MMSI) Maritime Mobile Service Identity">
             { getFieldDecorator( 'mmsi', {
               initialValue: vessel.mmsi
             } )(
               <Input />
             ) }
           </Form.Item>
-          <Form.Item label="Gross Register Tonnage (GRT)">
+          <Form.Item label="(GRT) Gross Register Tonnage">
             { getFieldDecorator( 'grt', {
               initialValue: vessel.grt
             } )(
               <Input />
             ) }
           </Form.Item>
-          <Form.Item label="Deadweight Tonnage (DWT)">
+          <Form.Item label="(DWT) Deadweight Tonnage">
             { getFieldDecorator( 'dwt', {
               initialValue: vessel.dwt
             } )(
