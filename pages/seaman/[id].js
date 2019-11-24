@@ -113,7 +113,10 @@ const Page = () => {
       setIsSaving( true );
       values = {
         ...values,
-        birth_date: values['birth_date'] && values['birth_date'].format( 'YYYY-MM-DD' )
+        birth_date: values['birth_date'] && values['birth_date'].format( 'YYYY-MM-DD' ),
+        documents: values.documents && values.documents.map( ( d ) => ( { ...d, file: ( d.file && d.file.id ) ? d.file.id : null } ) ),
+        visas: values.visas && values.visas.map( ( d ) => ( { ...d, file: ( d.file && d.file.id ) ? d.file.id : null } ) ),
+        passports: values.passports && values.passports.map( ( d ) => ( { ...d, file: ( d.file && d.file.id ) ? d.file.id : null } ) ),
       };
 
       const cookies = parseCookies();
