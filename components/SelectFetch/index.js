@@ -9,106 +9,113 @@ import { Select, Spin } from 'antd';
 const { Option } = Select;
 
 class SelectFetch extends Component {
-  constructor(props) {
+  constructor( props ) {
     super( props );
-    this.lastFetchId = 0;
     this.fetchData = debounce( this.fetchData );
     this.dataKey = props.dataKey || 'id';
     this.labelKey = props.labelKey || 'title';
-    this.action = props.action;
   }
 
   state = {
+    value: [],
     data: [],
     fetching: false,
-    value: ''
+    loading: true
   };
 
   componentDidMount = () => {
-    const { value, initialData, placeholder } = this.props;
+    this.setState( { loading: false } );
 
-    if ( value && ! isEmpty( initialData ) ) {
-      this.setState( { value: {
-        key: initialData[0][ this.dataKey ],
-        label: initialData[0][ this.labelKey ]
-      } } );
+    const { value, initialData } = this.props;
+    if ( ! value || isEmpty( initialData ) ) {
+      return;
     }
-  }
 
-  fetchData = ( value ) => {
-    this.lastFetchId += 1;
+    let data = {};
+    if ( isArray( initialData ) ) {
+      data = initialData[0];
+    } else {
+      data = initialData;
+    }
 
-    const fetchId = this.lastFetchId;
+    this.setState( { value: {
+      key: data[ this.dataKey ],
+      label: data[ this.labelKey ]
+    } } );
+  };
+
+  fetchData = ( params = {} ) => {
     const { token } = parseCookies();
 
     this.setState( {
-      data: [],
-      fetching: true
+      fetching: true,
+      data: []
     } );
 
-    axios.get( this.action, {
+    axios.get( this.props.action, {
       headers: { 'Authorization': `Bearer ${ token }` },
-      params: { search: value }
+      params: { ...params, ...this.props.customParams }
     } )
     .then( ( res ) => {
-      if ( fetchId !== this.lastFetchId ) {
-        return;
-      }
-
       const data = map( res.data, ( d ) => ( {
         value: d[ this.dataKey ],
-        text: d[ this.labelKey ]
+        text: this.labelKey === 'title' ? d[ this.labelKey ].rendered : d[ this.labelKey ]
       } ) );
 
-      this.setState( { data } );
+      this.setState( { data: data, fetching: false } );
     } )
     .catch( () => {
-      this.setState( { data: [] } );
-    } )
-    .finally( () => {
-      this.setState( { fetching: false } );
+      this.setState( { data: [], fetching: false } );
+    } );
+  };
+
+  handleSearch = ( value ) => {
+    this.fetchData( {
+      search: value
     } );
   };
 
   handleChange = ( value ) => {
     this.setState( {
       value,
-      data: [],
-      fetching: false,
+      fetching: false
     } );
 
-    if ( this.props.onChange ) {
+    if ( this.props.onChange && this.props.multiple ) {
+      value = map( value, v => v.key );
+      this.props.onChange( value );
+    } else if ( this.props.onChange ) {
       this.props.onChange( value ? value.key : '' );
     }
   };
 
-  handleFocus = () => {
-    this.fetchData();
+  handleDropdownVisibleChange = ( open ) => {
+    if ( open ) {
+      this.fetchData();
+    }
   };
 
   render() {
-    const { fetching, data, value } = this.state;
     const { placeholder, allowClear, className, style } = this.props;
-    const selectProps = {};
-    if ( value ) {
-      selectProps.value = value;
-    }
 
     return (
       <Select
-        { ...selectProps }
-        className={ className }
-        allowClear={ allowClear || false }
-        labelInValue={ true }
-        placeholder={ placeholder }
-        notFoundContent={ fetching && <Spin size="small" /> }
-        showSearch={ true }
-        onDropdownVisibleChange={ this.handleFocus }
-        onSearch={ this.fetchData }
+        notFoundContent={ this.state.fetching && <Spin size="small" /> }
+        mode={ this.props.multiple ? 'multiple' : 'default' }
+        value={ this.state.value }
+        loading={ this.state.loading }
+        onDropdownVisibleChange={ this.handleDropdownVisibleChange }
+        onSearch={ this.handleSearch }
         onChange={ this.handleChange }
+        className={ className }
+        allowClear={ allowClear }
+        placeholder={ placeholder }
         style={ style }
+        showSearch={ true }
+        labelInValue={ true }
+        filterOption={ false }
       >
-        { data.map( d => (
+        { this.state.data.map( d => (
           <Option key={ d.value }>
             { d.text }
           </Option>
