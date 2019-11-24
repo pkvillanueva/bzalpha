@@ -5,20 +5,36 @@ import React, { useState, cloneElement } from 'react';
 import { Modal, Form } from 'antd';
 
 const ModalForm = Form.create()( ( props ) => {
-  const { modalForm, title, form, children, onChange } = props;
-  const { getFieldDecorator, getFieldsValue } = form;
+  const { modalForm, title, form, children, onChange, onCancel } = props;
+  const { getFieldDecorator, validateFields } = form;
   const [ visible, setVisible ] = useState( false );
+  const [ loading, setLoading ] = useState( false );
 
   const handleOk = () => {
-    let values = getFieldsValue();
-    setVisible( false );
-    if ( onChange ) {
-      onChange( values );
-    }
+    validateFields( ( errors, values ) => {
+      if ( errors ) {
+        return;
+      }
+
+      setLoading( true );
+
+      if ( onChange ) {
+        onChange( values, () => {
+          setVisible( false );
+          setLoading( false );
+        } );
+      } else {
+        setVisible( false );
+      }
+    } );
   };
 
   const handleCancel = () => {
     setVisible( false );
+
+    if ( onCancel ) {
+      onCancel();
+    }
   };
 
   return (
@@ -30,6 +46,9 @@ const ModalForm = Form.create()( ( props ) => {
         onOk={ handleOk }
         onCancel={ handleCancel }
         maskClosable={ false }
+        okButtonProps={ {
+          loading: loading
+        } }
       >
         { modalForm( getFieldDecorator ) }
       </Modal>
