@@ -56,12 +56,12 @@ const Experiences = () => {
       onChange={ handleSave }
       formatRecord={ handleFormatRecord }
       modalForm={ ( getFieldDecorator, initialValues, { getFieldValue } ) => [
-        <Form.Item key="date_start" label="Issue Date">
+        <Form.Item key="date_start" label="Date Start">
           { getFieldDecorator( 'date_start', {
             initialValue: moment( initialValues.date_start )
           } )( <DatePicker style={ { width: '100%' } } /> ) }
         </Form.Item>,
-        <Form.Item key="date_end" label="Valid Till">
+        <Form.Item key="date_end" label="Date End">
           { getFieldDecorator( 'date_end', {
             initialValue: moment( initialValues.date_end )
           } )( <DatePicker style={ { width: '100%' } } /> ) }
