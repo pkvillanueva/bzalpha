@@ -136,7 +136,7 @@ const LayoutHeader = ( { isMobile, display_name, collapsed, handleCollapsed, tri
             <Dropdown overlayClassName={ styles.headerDropdown } overlay={ UserMenu } placement="bottomRight">
               <div className={ styles.headerAction }>
                 <Avatar size="small" className={ styles.headerAvatar }>
-                  { display_name.charAt( 0 ).toUpperCase() }
+                  { display_name && display_name.charAt( 0 ).toUpperCase() }
                 </Avatar>
                 <span>{ display_name }</span>
               </div>
