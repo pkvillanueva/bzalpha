@@ -8,25 +8,12 @@ class MyDocument extends Document {
 
   render () {
     return (
-      <Html>
-        <Head>
-          <style>
-            { `html {
-              visibility: hidden;
-              opacity: 0;
-            }` }
-          </style>
-        </Head>
+      <Html className="no-trans">
+        <Head />
         <body>
           <Main />
           <NextScript />
-          <style>
-            { `html {
-              visibility: visible;
-              opacity: 1;
-            }` }
-          </style>
-          <script> </script>
+          <script src="/static/chrome-fix.js" />
         </body>
       </Html>
     )
