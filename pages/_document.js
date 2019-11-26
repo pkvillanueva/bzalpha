@@ -10,11 +10,22 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <script> </script>
+          <style>
+            { `html {
+              visibility: hidden;
+              opacity: 0;
+            }` }
+          </style>
         </Head>
         <body>
           <Main />
           <NextScript />
+          <style>
+            { `html {
+              visibility: visible;
+              opacity: 1;
+            }` }
+          </style>
           <script> </script>
         </body>
       </Html>
