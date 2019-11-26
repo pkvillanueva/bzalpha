@@ -49,7 +49,7 @@ class Page extends Component {
                     } )(
                       <SelectFetch
                         placeholder="Select vessel"
-                        action='http://bzalpha.test/wp-json/bzalpha/v1/vessel'
+                        action='http://api.bzalpha.com/wp-json/bzalpha/v1/vessel'
                       />
                     ) }
                   </Form.Item>
@@ -60,7 +60,7 @@ class Page extends Component {
                       <SelectFetch
                         multiple={ true }
                         placeholder="Select seaman"
-                        action='http://bzalpha.test/wp-json/bzalpha/v1/seaman'
+                        action='http://api.bzalpha.com/wp-json/bzalpha/v1/seaman'
                         customParams={ {
                           job_status: 'standby'
                         } }

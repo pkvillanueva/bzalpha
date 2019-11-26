@@ -32,7 +32,7 @@ const VesselNew = Form.create()( ( { form, visible, onCancel } ) => {
         country: values.country,
       };
 
-      axios.post( `http://bzalpha.test/wp-json/bzalpha/v1/principal`, values, {
+      axios.post( `http://api.bzalpha.com/wp-json/bzalpha/v1/principal`, values, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${ token }`

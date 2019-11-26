@@ -12,7 +12,7 @@ const withAuth = ( Component ) => class extends React.Component {
 
     // Check token.
     try {
-      await axios.post( 'http://bzalpha.test/wp-json/jwt-auth/v1/token/validate', {}, {
+      await axios.post( 'http://api.bzalpha.com/wp-json/jwt-auth/v1/token/validate', {}, {
         headers: {
           'Authorization': `Bearer ${ cookies.token }`
         }

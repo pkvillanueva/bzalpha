@@ -75,7 +75,7 @@ const SeamenList = () => {
     const { token } = parseCookies();
     setIsLoading( true );
 
-    axios.get( `http://bzalpha.test/wp-json/bzalpha/v1/seaman`, {
+    axios.get( `http://api.bzalpha.com/wp-json/bzalpha/v1/seaman`, {
       headers: { 'Authorization': `Bearer ${ token }` },
       params: { ...filters, ...params }
     } )
@@ -129,7 +129,7 @@ const SeamenList = () => {
   const handleDelete = ( id ) => {
     const { token } = parseCookies();
 
-    axios.delete( `http://bzalpha.test/wp-json/bzalpha/v1/seaman/${ id }`, {
+    axios.delete( `http://api.bzalpha.com/wp-json/bzalpha/v1/seaman/${ id }`, {
       headers: { 'Authorization': `Bearer ${ token }` }
     } )
     .finally( () => {

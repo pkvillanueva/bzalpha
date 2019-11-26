@@ -85,7 +85,7 @@ class AvatarUpload extends Component {
         className={ className }
         showUploadList={ false }
         name="file"
-        action="http://bzalpha.test/wp-json/wp/v2/media"
+        action="http://api.bzalpha.com/wp-json/wp/v2/media"
         method="POST"
         headers={ {
           'X-Requested-With': null,
