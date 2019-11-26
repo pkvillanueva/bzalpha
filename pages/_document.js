@@ -9,11 +9,13 @@ class MyDocument extends Document {
   render () {
     return (
       <Html>
-        <Head />
+        <Head>
+          <script> </script>
+        </Head>
         <body>
           <Main />
           <NextScript />
-          <script src="/static/chrome-fix.js" />
+          <script> </script>
         </body>
       </Html>
     )
