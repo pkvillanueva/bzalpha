@@ -10,13 +10,11 @@ const withNoAuth = ( Component ) => class extends React.Component {
   static async getInitialProps( ctx ) {
     const cookies = parseCookies( ctx );
 
-    try {
-      await axios.post( 'http://api.bzalpha.com/wp-json/jwt-auth/v1/token/validate', {}, {
-        headers: {
-          'Authorization': `Bearer ${ cookies.token }`
-        }
-      } );
-
+    await axios.post( 'http://api.bzalpha.com/wp-json/jwt-auth/v1/token/validate', {}, {
+      headers: {
+        'Authorization': `Bearer ${ cookies.token }`
+      }
+    } ).then( () => {
       if ( ctx.res ) {
         ctx.res.writeHead( 302, {
           Location: '/'
@@ -25,9 +23,9 @@ const withNoAuth = ( Component ) => class extends React.Component {
       } else {
         Router.push( '/' );
       }
-    } catch( err ) {
+    } ).catch( () => {
       // Do nothing.
-    }
+    } );
 
     if ( Component.getInitialProps ) {
       const props = await Component.getInitialProps( ctx );
