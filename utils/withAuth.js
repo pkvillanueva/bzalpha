@@ -11,13 +11,13 @@ const withAuth = ( Component ) => class extends React.Component {
     const cookies = parseCookies( ctx );
 
     // Check token.
-    try {
-      await axios.post( 'http://api.bzalpha.com/wp-json/jwt-auth/v1/token/validate', {}, {
-        headers: {
-          'Authorization': `Bearer ${ cookies.token }`
-        }
-      } );
-    } catch( err ) {
+    await axios.post( 'http://api.bzalpha.com/wp-json/jwt-auth/v1/token/validate', {}, {
+      headers: {
+        'Authorization': `Bearer ${ cookies.token }`
+      }
+    } ).then( () => {
+      // Do nothing.
+    } ).catch( () => {
       if ( ctx.res ) {
         ctx.res.writeHead( 302, {
           Location: '/login'
@@ -26,7 +26,7 @@ const withAuth = ( Component ) => class extends React.Component {
       } else {
         Router.push( '/login' );
       }
-    }
+    } );
 
     if ( Component.getInitialProps ) {
       const props = await Component.getInitialProps( ctx );
