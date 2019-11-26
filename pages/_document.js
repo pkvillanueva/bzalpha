@@ -13,7 +13,7 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <script>/* © 2019 BZ Alpha Navigation */</script>
+          <script> </script>
         </body>
       </Html>
     )
