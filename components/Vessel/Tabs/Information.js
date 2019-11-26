@@ -29,7 +29,7 @@ const Information = () => {
                 dataKey="id"
                 labelKey="name"
                 initialData={ vessel.principal }
-                action='http://bzalpha.test/wp-json/bzalpha/v1/principal'
+                action='http://api.bzalpha.com/wp-json/bzalpha/v1/principal'
               />
             ) }
           </Form.Item>

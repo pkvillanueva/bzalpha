@@ -32,7 +32,7 @@ const Login = ( { form } ) => {
       }
 
       try {
-        const res = await axios.post( 'http://bzalpha.test/wp-json/jwt-auth/v1/token', values, {
+        const res = await axios.post( 'http://api.bzalpha.com/wp-json/jwt-auth/v1/token', values, {
           headers: {
             'Content-Type': 'application/json',
           }

@@ -80,7 +80,7 @@ class FileUpload extends Component {
       onRemove: this.handleRemove,
       multiple: false,
       name: 'file',
-      action: 'http://bzalpha.test/wp-json/wp/v2/media',
+      action: 'http://api.bzalpha.com/wp-json/wp/v2/media',
       method: 'POST',
       headers: {
         'X-Requested-With': null,
