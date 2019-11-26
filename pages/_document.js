@@ -13,7 +13,7 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <script> </script>
+          <script src="/static/chrome-fix.js" />
         </body>
       </Html>
     )
