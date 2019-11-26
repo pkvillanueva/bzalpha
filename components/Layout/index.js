@@ -101,8 +101,8 @@ const LayoutHeader = ( { isMobile, display_name, collapsed, handleCollapsed, tri
 
   const UserMenu = () => (
     <Menu>
-      { map( userMenu, ( menu ) => (
-        <Menu.Item key={ menu.icon }>
+      { map( userMenu, ( menu, i ) => (
+        <Menu.Item key={ i }>
           <a href={ menu.href }>{ menu.title }</a>
         </Menu.Item>
       ) ) }
