@@ -19,8 +19,8 @@ const headerMenu = [
   { icon: 'dashboard', title: 'Dashboard', href: '/' },
   { icon: 'database', title: 'BZ Works', href: '/works' },
   { icon: 'team', title: 'Seaman', href: '/seaman' },
-  { icon: 'appstore', title: 'Vessels', href: '/vessel' },
-  { icon: 'profile', title: 'Principals', href: '/principal' }
+  { icon: 'profile', title: 'Principals', href: '/principal' },
+  { icon: 'appstore', title: 'Vessels', href: '/vessel' }
 ];
 
 const userMenu = [
