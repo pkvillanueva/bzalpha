@@ -72,13 +72,6 @@ const Information = () => {
               <Input />
             ) }
           </Form.Item>
-          <Form.Item label="(MMSI) Maritime Mobile Service Identity">
-            { getFieldDecorator( 'mmsi', {
-              initialValue: vessel.mmsi
-            } )(
-              <Input />
-            ) }
-          </Form.Item>
           <Form.Item label="(GRT) Gross Register Tonnage">
             { getFieldDecorator( 'grt', {
               initialValue: vessel.grt

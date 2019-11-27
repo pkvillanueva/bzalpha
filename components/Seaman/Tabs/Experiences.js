@@ -100,11 +100,6 @@ const Experiences = () => {
             initialValue: initialValues.imo
           } )( <Input /> ) }
         </Form.Item>,
-        <Form.Item key="mmsi" label="MMSI">
-          { getFieldDecorator( 'mmsi', {
-            initialValue: initialValues.mmsi
-          } )( <Input /> ) }
-        </Form.Item>,
         <Form.Item key="grt" label="GRT">
           { getFieldDecorator( 'grt', {
             initialValue: initialValues.grt
