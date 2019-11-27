@@ -67,7 +67,7 @@ const Page = () => {
 
       setIsSaving( true );
       const cookies = parseCookies();
-      axios.post( `http://api.bzalpha.com/wp-json/bzalpha/v1/principal/${ query.id }`, values, {
+      axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/principal/${ query.id }`, values, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${ cookies.token }`,

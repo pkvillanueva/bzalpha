@@ -34,7 +34,7 @@ const SeamanNew = Form.create()( ( { form, visible, onCancel } ) => {
         job_status: 'standby'
       };
 
-      axios.post( `http://api.bzalpha.com/wp-json/bzalpha/v1/seaman`, values, {
+      axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/seaman`, values, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${ token }`

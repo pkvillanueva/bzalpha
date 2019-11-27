@@ -32,7 +32,7 @@ export const VesselProvider = Form.create()( ( { children, data, form } ) => {
 VesselProvider.getInitialProps = async ( ctx ) => {
   const { id } = ctx.query;
   const cookies = parseCookies( ctx );
-  const res = await axios.get( `http://api.bzalpha.com/wp-json/bzalpha/v1/vessel/${ id }`, {
+  const res = await axios.get( `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel/${ id }`, {
     headers: {
       'Authorization': `Bearer ${ cookies.token }`
     }

@@ -10,7 +10,7 @@ const withNoAuth = ( Component ) => class extends React.Component {
   static async getInitialProps( ctx ) {
     const cookies = parseCookies( ctx );
 
-    await axios.post( 'http://api.bzalpha.com/wp-json/jwt-auth/v1/token/validate', {}, {
+    await axios.post( `${ process.env.API_URL }/wp-json/jwt-auth/v1/token/validate`, {}, {
       headers: {
         'Authorization': `Bearer ${ cookies.token }`
       }
