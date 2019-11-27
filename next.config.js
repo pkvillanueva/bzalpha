@@ -6,6 +6,9 @@ if ( typeof require !== 'undefined' ) {
 }
 
 module.exports = antdLessLoader( {
+  env: {
+    API_URL: process.env.NODE_ENV === 'production' ? 'http://api.bzalpha.com' : 'http://bzalpha.test'
+  },
   cssModules: true,
   cssLoaderOptions: {
     importLoaders: 1,

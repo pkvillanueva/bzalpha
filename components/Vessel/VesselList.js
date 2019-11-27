@@ -85,7 +85,7 @@ const VesselsList = ( { basePrincipal, customParams = {} } ) => {
     const { token } = parseCookies();
     setIsLoading( true );
 
-    axios.get( `http://api.bzalpha.com/wp-json/bzalpha/v1/vessel`, {
+    axios.get( `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel`, {
       headers: { 'Authorization': `Bearer ${ token }` },
       params: { ...filters, ...params, ...customParams }
     } )
@@ -139,7 +139,7 @@ const VesselsList = ( { basePrincipal, customParams = {} } ) => {
   const handleDelete = ( id ) => {
     const { token } = parseCookies();
 
-    axios.delete( `http://api.bzalpha.com/wp-json/bzalpha/v1/vessel/${ id }`, {
+    axios.delete( `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel/${ id }`, {
       headers: { 'Authorization': `Bearer ${ token }` }
     } )
     .finally( () => {
@@ -184,7 +184,7 @@ const VesselsList = ( { basePrincipal, customParams = {} } ) => {
             placeholder="Select owner"
             dataKey="id"
             labelKey="name"
-            action='http://api.bzalpha.com/wp-json/bzalpha/v1/principal'
+            action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/principal` }
           />
         </FormItem>
       </Form>

@@ -67,7 +67,7 @@ const PrincipalsList = () => {
     const { token } = parseCookies();
     setIsLoading( true );
 
-    axios.get( `http://api.bzalpha.com/wp-json/bzalpha/v1/principal`, {
+    axios.get( `${ process.env.API_URL }/wp-json/bzalpha/v1/principal`, {
       headers: { 'Authorization': `Bearer ${ token }` },
       params: { ...filters, ...params }
     } )
@@ -114,7 +114,7 @@ const PrincipalsList = () => {
   const handleDelete = ( id ) => {
     const { token } = parseCookies();
 
-    axios.delete( `http://api.bzalpha.com/wp-json/bzalpha/v1/principal/${ id }`, {
+    axios.delete( `${ process.env.API_URL }/wp-json/bzalpha/v1/principal/${ id }`, {
       headers: { 'Authorization': `Bearer ${ token }` },
       data: {
         id: id,

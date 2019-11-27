@@ -32,7 +32,7 @@ export const SeamanProvider = Form.create()( ( { children, data, form } ) => {
 SeamanProvider.getInitialProps = async ( ctx ) => {
   const { id } = ctx.query;
   const cookies = parseCookies( ctx );
-  const res = await axios.get( `http://api.bzalpha.com/wp-json/bzalpha/v1/seaman/${ id }`, {
+  const res = await axios.get( `${ process.env.API_URL }/wp-json/bzalpha/v1/seaman/${ id }`, {
     headers: {
       'Authorization': `Bearer ${ cookies.token }`
     }

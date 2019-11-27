@@ -30,7 +30,7 @@ const VesselNew = Form.create()( ( { form, visible, onCancel, basePrincipal } ) 
         principal: basePrincipal ? basePrincipal : values.principal
       };
 
-      axios.post( `http://api.bzalpha.com/wp-json/bzalpha/v1/vessel`, values, {
+      axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel`, values, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${ token }`
@@ -74,7 +74,7 @@ const VesselNew = Form.create()( ( { form, visible, onCancel, basePrincipal } ) 
               placeholder="Select owner"
               dataKey="id"
               labelKey="name"
-              action='http://api.bzalpha.com/wp-json/bzalpha/v1/principal'
+              action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/principal` }
             />
           ) }
         </Form.Item> : null }
