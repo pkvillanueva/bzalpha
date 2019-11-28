@@ -86,6 +86,27 @@ const Information = () => {
               <Input />
             ) }
           </Form.Item>
+          <Form.Item label="(HP) Horse Power">
+            { getFieldDecorator( 'hp', {
+              initialValue: vessel.hp
+            } )(
+              <Input />
+            ) }
+          </Form.Item>
+          <Form.Item label="(KW) Kilowatt">
+            { getFieldDecorator( 'kw', {
+              initialValue: vessel.kw
+            } )(
+              <Input />
+            ) }
+          </Form.Item>
+          <Form.Item label="Engine">
+            { getFieldDecorator( 'engine', {
+              initialValue: vessel.engine
+            } )(
+              <Input />
+            ) }
+          </Form.Item>
         </Form>
       </Card>
   );
