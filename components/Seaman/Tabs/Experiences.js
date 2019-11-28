@@ -27,11 +27,10 @@ const Experiences = () => {
     { title: 'Vessel', dataIndex: 'vessel', key: 'vessel' },
     { title: 'Type', dataIndex: 'type', key: 'type' },
     { title: 'Flag', dataIndex: 'flag', key: 'flag', render: ( r ) => r && <ReactCountryFlag code={ r.toLowerCase() } svg /> },
+    { title: 'Owner', dataIndex: 'owner', key: 'owner' },
     { title: 'IMO', dataIndex: 'imo', key: 'imo' },
-    { title: 'MMSI', dataIndex: 'mmsi', key: 'mmsi' },
     { title: 'GRT', dataIndex: 'grt', key: 'grt' },
     { title: 'DWT', dataIndex: 'dwt', key: 'dwt' },
-    { title: 'Owner', dataIndex: 'owner', key: 'owner' },
   ];
 
   const handleSave = ( records ) => {
