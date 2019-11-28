@@ -11,7 +11,7 @@ import { map, filter, find, isEmpty } from 'lodash';
 import styles from './styles.less';
 
 const DataCollection = Form.create()( ( props ) => {
-  const { title, data, columns, modalTitle, modalForm, form, onChange, formatRecord, ...table } = props;
+  const { title, data, columns, modalTitle, modalForm, form, onChange, formatRecord, addPosition, ...table } = props;
   const { getFieldDecorator, getFieldsValue, resetFields } = form;
   const [ records, setRecords ] = useState( map( data, ( record, id ) => ( { id: id, key: id, ...record } ) ) );
   const [ visible, setVisible ] = useState( false );
@@ -95,8 +95,9 @@ const DataCollection = Form.create()( ( props ) => {
         { modalForm( getFieldDecorator, edit, form ) }
       </Modal>
       <Card title={ title }>
+        { addPosition !== 'bottom' && <Button className={ styles.newButton } block type="dashed" icon="plus" onClick={ handleNew }>Add New</Button> }
         <Table className={ styles.table } dataSource={ records } columns={ columns } pagination={ false } scroll={ { x: 'max-content' } } { ...table } />
-        <Button className={ styles.newButton } block type="dashed" icon="plus" onClick={ handleNew }>Add New</Button>
+        { addPosition === 'bottom' && <Button className={ styles.newButton } block type="dashed" icon="plus" onClick={ handleNew }>Add New</Button> }
       </Card>
     </>
   );

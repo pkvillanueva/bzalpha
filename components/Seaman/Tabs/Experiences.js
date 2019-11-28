@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form, Input, DatePicker, Select } from 'antd';
 import moment from 'moment';
 import { map } from 'lodash';
@@ -13,16 +13,30 @@ import ReactCountryFlag from 'react-country-flag';
 import { SeamanContext } from '~/store/seaman';
 import DataCollection from '~/components/DataCollection';
 import { ranks } from '~/utils/ranks';
-import { getRankName } from '~/utils/seaman';
+import { getRankName, getTotalTime } from '~/utils/seaman';
 import { countries } from '~/utils/countries';
 import { vesselType } from '~/utils/vessel';
 
 const Experiences = () => {
   const { seaman, setFieldsValue, setIsSeamanTouched } = useContext( SeamanContext );
 
+  const [ experiences, setExperiences ] = useState( seaman.experiences || [] );
+
   const columns = [
     { title: 'Date Start', dataIndex: 'date_start', key: 'date_start' },
     { title: 'Date End', dataIndex: 'date_end', key: 'date_end' },
+    {
+      title: 'Sea Time',
+      dataIndex: 'seatime',
+      key: 'seatime',
+      render: ( t, r, i ) => {
+        const index = i;
+        const prevIndex = index - 1;
+        const seaTime = getTotalTime( r.date_start, r.date_end );
+        const vacantTime = getTotalTime( r.date_end, i === 0 ? moment() : experiences[ prevIndex ].date_start );
+        return `${ seaTime }${ vacantTime ? `/ ${ vacantTime }` : '' }`;
+      }
+    },
     { title: 'Rank', dataIndex: 'rank', key: 'rank', render: ( r ) => getRankName( r ) },
     { title: 'Vessel', dataIndex: 'vessel', key: 'vessel' },
     { title: 'Type', dataIndex: 'type', key: 'type' },
@@ -39,6 +53,12 @@ const Experiences = () => {
   ];
 
   const handleSave = ( records ) => {
+    // Sort before save.
+    records = records.sort( ( a, b ) => {
+      return moment( b.date_start ).unix() - moment( a.date_start ).unix();
+    } );
+
+    setExperiences( records );
     setFieldsValue( { experiences: records } );
     setIsSeamanTouched( true );
   };
@@ -55,7 +75,7 @@ const Experiences = () => {
     <DataCollection
       title="Experiences"
       columns={ columns }
-      data={ seaman.experiences }
+      data={ experiences }
       modalTitle="Experience"
       onChange={ handleSave }
       formatRecord={ handleFormatRecord }
