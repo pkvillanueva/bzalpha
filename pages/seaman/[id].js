@@ -114,7 +114,7 @@ const Page = () => {
       values = {
         ...values,
         birth_date: values['birth_date'] && values['birth_date'].format( 'YYYY-MM-DD' ),
-        documents: values.documents && values.documents.map( ( d ) => ( { ...d, file: ( d.file && d.file.id ) ? d.file.id : null } ) ),
+        licenses: values.licenses && values.licenses.map( ( d ) => ( { ...d, file: ( d.file && d.file.id ) ? d.file.id : null } ) ),
         visas: values.visas && values.visas.map( ( d ) => ( { ...d, file: ( d.file && d.file.id ) ? d.file.id : null } ) ),
         passports: values.passports && values.passports.map( ( d ) => ( { ...d, file: ( d.file && d.file.id ) ? d.file.id : null } ) ),
       };
@@ -153,7 +153,7 @@ const Page = () => {
   getFieldDecorator( 'passports', { initialValue: seaman.passports } );
   getFieldDecorator( 'visas', { initialValue: seaman.visas } );
   getFieldDecorator( 'experiences', { initialValue: seaman.experiences } );
-  getFieldDecorator( 'documents', { initialValue: seaman.documents } );
+  getFieldDecorator( 'licenses', { initialValue: seaman.licenses } );
 
   return (
     <Layout

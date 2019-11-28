@@ -13,7 +13,7 @@ import DataCollection from '~/components/DataCollection';
 import FileUpload from '~/components/FileUpload';
 import { isEmpty } from 'lodash';
 
-const Documents = () => {
+const Licenses = () => {
   const { seaman, setFieldsValue, setIsSeamanTouched } = useContext( SeamanContext );
 
   const columns = [
@@ -31,7 +31,7 @@ const Documents = () => {
   ];
 
   const handleSave = ( records ) => {
-    setFieldsValue( { documents: records } );
+    setFieldsValue( { licenses: records } );
     setIsSeamanTouched( true );
   };
 
@@ -45,9 +45,9 @@ const Documents = () => {
 
   return (
     <DataCollection
-      title="Documents"
+      title="Licenses"
       columns={ columns }
-      data={ seaman.documents }
+      data={ seaman.licenses }
       modalTitle="Document"
       onChange={ handleSave }
       formatRecord={ handleFormatRecord }
@@ -89,4 +89,4 @@ const Documents = () => {
   );
 };
 
-export default Documents;
+export default Licenses;
