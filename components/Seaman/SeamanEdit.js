@@ -16,7 +16,7 @@ import Educations from './Tabs/Educations';
 import Passports from './Tabs/Passports';
 import Visas from './Tabs/Visas';
 import Experiences from './Tabs/Experiences';
-import Documents from './Tabs/Documents';
+import Licenses from './Tabs/Licenses';
 import BMI from './Tabs/BMI';
 
 const SeamanEdit = () => {
@@ -43,9 +43,9 @@ const SeamanEdit = () => {
           <Visas />
         </BlockCard>
       </TabPane>
-      <TabPane tab="Documents" key="documents">
+      <TabPane tab="Licenses" key="documents">
         <BlockCard>
-          <Documents />
+          <Licenses />
         </BlockCard>
       </TabPane>
       <TabPane tab="Educations" key="educations">
