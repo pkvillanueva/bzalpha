@@ -2,7 +2,7 @@
  * External dependencies.
  */
 import React, { useContext } from 'react';
-import { Form, Input, DatePicker, Button } from 'antd';
+import { Form, Input, DatePicker, Button, Select } from 'antd';
 import moment from 'moment';
 
 /**
@@ -25,7 +25,7 @@ const Passports = () => {
     {
       title: 'File',
       dataIndex: 'file',
-      key: 'file_2',
+      key: 'file',
       render: ( record ) => record && record.url && <Button icon="file" size="small" href={ record.url } target="_blank" />
     },
   ];
@@ -56,7 +56,14 @@ const Passports = () => {
           <Form.Item key="type" label="Type">
             { getFieldDecorator( 'type', {
               initialValue: initialValues.type
-            } )( <Input /> ) }
+            } )( <Select placeholder="Select type" style={ { width: '100%' } }>
+              <Select.Option value="S/Book">S/Book</Select.Option>
+              <Select.Option value="Travel Passport">Travel Passport</Select.Option>
+              <Select.Option value="Travel Passport BIO">Travel Passport BIO</Select.Option>
+              <Select.Option value="UA">UA</Select.Option>
+              <Select.Option value="Inn">Inn</Select.Option>
+              <Select.Option value="E-REG (Manila)">E-REG (Manila)</Select.Option>
+            </Select> ) }
           </Form.Item>,
           <Form.Item key="num" label="Number">
             { getFieldDecorator( 'num', {
@@ -78,7 +85,7 @@ const Passports = () => {
               initialValue: initialValues.issued_by
             } )( <Input /> ) }
           </Form.Item>,
-          <Form.Item key="file_2" label="File">
+          <Form.Item key="file" label="File">
             { getFieldDecorator( 'file', {
               initialValue: initialValues.file,
               valuePropName: 'file',
