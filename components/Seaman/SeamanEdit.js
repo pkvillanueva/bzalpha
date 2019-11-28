@@ -30,14 +30,9 @@ const SeamanEdit = () => {
           <ContactInformation />
         </BlockCard>
       </TabPane>
-      <TabPane tab="Relatives" key="relatives">
+      <TabPane tab="Experiences" key="experiences">
         <BlockCard>
-          <Relatives />
-        </BlockCard>
-      </TabPane>
-      <TabPane tab="Educations" key="educations">
-        <BlockCard>
-          <Educations />
+          <Experiences />
         </BlockCard>
       </TabPane>
       <TabPane tab="Passports" key="passports">
@@ -48,14 +43,19 @@ const SeamanEdit = () => {
           <Visas />
         </BlockCard>
       </TabPane>
-      <TabPane tab="Experiences" key="experiences">
-        <BlockCard>
-          <Experiences />
-        </BlockCard>
-      </TabPane>
       <TabPane tab="Documents" key="documents">
         <BlockCard>
           <Documents />
+        </BlockCard>
+      </TabPane>
+      <TabPane tab="Educations" key="educations">
+        <BlockCard>
+          <Educations />
+        </BlockCard>
+      </TabPane>
+      <TabPane tab="Relatives" key="relatives">
+        <BlockCard>
+          <Relatives />
         </BlockCard>
       </TabPane>
       <TabPane tab="BMI" key="bmi">
