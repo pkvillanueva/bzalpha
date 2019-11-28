@@ -42,10 +42,9 @@ const Educations = () => {
           { getFieldDecorator( 'level', {
             initialValue: initialValues.level
           } )( <Select showSearch style={ { width: '100%' } }>
-            <Select.Option value="Elementary">Elementary</Select.Option>
-            <Select.Option value="High School">High School</Select.Option>
-            <Select.Option value="College">College</Select.Option>
-            <Select.Option value="Doctorate">Doctorate</Select.Option>
+            <Select.Option value="Higher">Higher</Select.Option>
+            <Select.Option value="Secondary">Secondary</Select.Option>
+            <Select.Option value="Vocational">Vocational</Select.Option>
           </Select> ) }
         </Form.Item>,
         <Form.Item key="from" label="From">
