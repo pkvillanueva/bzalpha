@@ -13,11 +13,10 @@ import { SeamanContext } from '~/store/seaman';
 const EditMinWage = () => {
   const { seaman, setSeaman, setFieldsValue, setIsSeamanTouched, getFieldDecorator } = useContext( SeamanContext );
 
-  const handleChange = ( values, callback ) => {
+  const handleChange = ( values ) => {
     setSeaman( { ...seaman, ...values } );
     setFieldsValue( values );
     setIsSeamanTouched( true );
-    callback();
   }
 
   getFieldDecorator( 'min_wage', { initialValue: seaman.min_wage } );

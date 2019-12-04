@@ -19,10 +19,9 @@ const ModalForm = Form.create()( ( props ) => {
       setLoading( true );
 
       if ( onChange ) {
-        onChange( values, () => {
-          setVisible( false );
-          setLoading( false );
-        } );
+        onChange( values );
+        setVisible( false );
+        setLoading( false );
       } else {
         setVisible( false );
       }
