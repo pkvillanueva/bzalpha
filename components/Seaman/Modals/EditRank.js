@@ -15,10 +15,11 @@ import { SeamanContext } from '~/store/seaman';
 const EditRank = () => {
   const { seaman, setSeaman, setFieldsValue, setIsSeamanTouched, getFieldDecorator } = useContext( SeamanContext );
 
-  const handleChange = ( values ) => {
+  const handleChange = ( values, callback ) => {
     setSeaman( { ...seaman, ...values } );
     setFieldsValue( values );
     setIsSeamanTouched( true );
+    callback();
   }
 
   getFieldDecorator( 'rank', { initialValue: seaman.rank } );
