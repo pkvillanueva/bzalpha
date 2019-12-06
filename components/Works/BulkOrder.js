@@ -3,7 +3,9 @@
  */
 import React, { useState } from 'react';
 import { map } from 'lodash';
-import { Row, Col, Form, Card, Button, Input, InputNumber, Select, Checkbox, DatePicker } from 'antd';
+import axios from 'axios';
+import { parseCookies } from 'nookies';
+import { Row, Col, Form, Card, Button, Input, InputNumber, Select, Checkbox, DatePicker, message } from 'antd';
 
 /**
  * Internal dependencies.
@@ -15,11 +17,29 @@ import ModalForm from '~/components/ModalForm';
 import styles from './styles.less';
 
 const BulkOrder = () => {
+  const handleSave = ( { values }, done, error ) => {
+    const { token } = parseCookies();
+
+    axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/order/bulk`, values, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${ token }`
+      },
+    } ).then( () => {
+      done();
+      message.success( 'Order created.' );
+    } ).catch( () => {
+      error();
+      message.error( 'Failed to create an order.' );
+    } );
+  };
+
   return (
     <ModalForm
-      title="Add New Orders"
+      title="Add New Order"
       className={ styles.bulkOrder }
       width={ '100%' }
+      onSave={ handleSave }
       modalForm={ ( getFieldDecorator ) => (
         <Form>
           <Row gutter={ 36 }>
