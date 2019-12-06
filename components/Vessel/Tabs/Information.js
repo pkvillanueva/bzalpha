@@ -22,13 +22,12 @@ const Information = () => {
         <Form style={ { maxWidth: '400px', margin: '0 auto' } }>
           <Form.Item label="Owner">
             { getFieldDecorator( 'principal', {
-              initialValue: vessel.principal.length ? vessel.principal[0].id : '',
+              initialValue: vessel.principal,
               rules: [ { required: true, message: 'Owner is required.' } ]
             } )(
               <SelectFetch
                 dataKey="id"
                 labelKey="name"
-                initialData={ vessel.principal }
                 action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/principal` }
               />
             ) }

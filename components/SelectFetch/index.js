@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import axios from 'axios';
-import { debounce, map, isEmpty, isArray } from 'lodash';
+import { debounce, map, isEmpty, isArray, isPlainObject } from 'lodash';
 import { parseCookies } from 'nookies';
 import { Select, Spin } from 'antd';
 const { Option } = Select;
@@ -20,29 +20,85 @@ class SelectFetch extends Component {
     value: [],
     data: [],
     fetching: false,
-    loading: true
+    loading: false
   };
 
-  componentDidMount = () => {
-    this.setState( { loading: false } );
+  static getDerivedStateFromProps = ( nextProps, prevState ) => {
+    // Initial state.
+    if ( isArray( prevState.value ) && ! prevState.value.length ) {
+      const dataKey = nextProps.dataKey || 'id';
+      const labelKey = nextProps.labelKey || 'title';
 
-    const { value, initialData } = this.props;
-    if ( ! value || isEmpty( initialData ) ) {
-      return;
+      if ( nextProps.value && isPlainObject( nextProps.value ) ) {
+
+        console.log( isPlainObject( nextProps.value ) );
+
+        return {
+          value: {
+            key: nextProps.value[ dataKey ],
+            label: nextProps.value[ labelKey ]
+          }
+        };
+      } else if ( nextProps.value && isArray( nextProps.value ) && nextProps.value.length ) {
+        let data = {};
+
+        if ( nextProps.multiple ) {
+          data = nextProps.value.map( v => ( {
+            key: v[ dataKey ],
+            label: v[ labelKey ]
+          } ) );
+        } else {
+          data = {
+            key: nextProps.value[0][ dataKey ],
+            label: nextProps.value[0][ labelKey ]
+          }
+        }
+
+        console.log( data );
+        return {
+          value: data
+        }
+      }
     }
 
-    let data = {};
-    if ( isArray( initialData ) ) {
-      data = initialData[0];
-    } else {
-      data = initialData;
-    }
+    // if ( isPlainObject( prevState.value ) && nextProps.value !== prevState.value.key ) {
+    //   console.log( {
+    //     value: {
+    //       ...prevState.value,
+    //       key: nextProps.value
+    //     }
+    //   } );
+    //   return {
+    //     value: {
+    //       ...prevState.value,
+    //       key: nextProps.value
+    //     }
+    //   };
+    // }
 
-    this.setState( { value: {
-      key: data[ this.dataKey ],
-      label: data[ this.labelKey ]
-    } } );
+    return null;
   };
+
+  // componentDidMount = () => {
+  //   this.setState( { loading: false } );
+
+  //   const { value, initialData } = this.props;
+  //   if ( ! value || isEmpty( initialData ) ) {
+  //     return;
+  //   }
+
+  //   let data = {};
+  //   if ( isArray( initialData ) ) {
+  //     data = initialData[0];
+  //   } else {
+  //     data = initialData;
+  //   }
+
+  //   this.setState( { value: {
+  //     key: data[ this.dataKey ],
+  //     label: data[ this.labelKey ]
+  //   } } );
+  // };
 
   fetchData = ( params = {} ) => {
     const { token } = parseCookies();
