@@ -24,81 +24,36 @@ class SelectFetch extends Component {
   };
 
   static getDerivedStateFromProps = ( nextProps, prevState ) => {
-    // Initial state.
-    if ( isArray( prevState.value ) && ! prevState.value.length ) {
-      const dataKey = nextProps.dataKey || 'id';
-      const labelKey = nextProps.labelKey || 'title';
-
-      if ( nextProps.value && isPlainObject( nextProps.value ) ) {
-
-        console.log( isPlainObject( nextProps.value ) );
-
-        return {
-          value: {
-            key: nextProps.value[ dataKey ],
-            label: nextProps.value[ labelKey ]
-          }
-        };
-      } else if ( nextProps.value && isArray( nextProps.value ) && nextProps.value.length ) {
-        let data = {};
-
-        if ( nextProps.multiple ) {
-          data = nextProps.value.map( v => ( {
-            key: v[ dataKey ],
-            label: v[ labelKey ]
-          } ) );
-        } else {
-          data = {
-            key: nextProps.value[0][ dataKey ],
-            label: nextProps.value[0][ labelKey ]
-          }
-        }
-
-        console.log( data );
-        return {
-          value: data
-        }
-      }
+    // Allow clear value from props.
+    if ( isPlainObject( prevState.value ) && ! isEmpty( prevState.value ) && ! nextProps.value ) {
+      return {
+        value: undefined
+      };
     }
-
-    // if ( isPlainObject( prevState.value ) && nextProps.value !== prevState.value.key ) {
-    //   console.log( {
-    //     value: {
-    //       ...prevState.value,
-    //       key: nextProps.value
-    //     }
-    //   } );
-    //   return {
-    //     value: {
-    //       ...prevState.value,
-    //       key: nextProps.value
-    //     }
-    //   };
-    // }
 
     return null;
   };
 
-  // componentDidMount = () => {
-  //   this.setState( { loading: false } );
+  componentDidMount = () => {
+    this.setState( { loading: false } );
 
-  //   const { value, initialData } = this.props;
-  //   if ( ! value || isEmpty( initialData ) ) {
-  //     return;
-  //   }
+    const { value, initialData } = this.props;
+    if ( ! value || isEmpty( initialData ) ) {
+      return;
+    }
 
-  //   let data = {};
-  //   if ( isArray( initialData ) ) {
-  //     data = initialData[0];
-  //   } else {
-  //     data = initialData;
-  //   }
+    let data = {};
+    if ( isArray( initialData ) ) {
+      data = initialData[0];
+    } else {
+      data = initialData;
+    }
 
-  //   this.setState( { value: {
-  //     key: data[ this.dataKey ],
-  //     label: data[ this.labelKey ]
-  //   } } );
-  // };
+    this.setState( { value: {
+      key: data[ this.dataKey ],
+      label: data[ this.labelKey ]
+    } } );
+  };
 
   fetchData = ( params = {} ) => {
     const { token } = parseCookies();
@@ -137,10 +92,7 @@ class SelectFetch extends Component {
       fetching: false
     } );
 
-    if ( this.props.onChange && this.props.multiple ) {
-      value = map( value, v => v.key );
-      this.props.onChange( value );
-    } else if ( this.props.onChange ) {
+    if ( this.props.onChange ) {
       this.props.onChange( value ? value.key : '' );
     }
   };
@@ -157,7 +109,6 @@ class SelectFetch extends Component {
     return (
       <Select
         notFoundContent={ this.state.fetching && <Spin size="small" /> }
-        mode={ this.props.multiple ? 'multiple' : 'default' }
         value={ this.state.value }
         loading={ this.state.loading }
         onDropdownVisibleChange={ this.handleDropdownVisibleChange }
