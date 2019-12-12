@@ -56,7 +56,7 @@ const columns = [
       }
 
       return (
-        <a href={ `/principal/${ r.principal[0].term_id }` }>
+        <a href={ `/principal/${ r.principal[0].id }` }>
           { r.principal[0].name || '<No Name>' }
         </a>
       );
