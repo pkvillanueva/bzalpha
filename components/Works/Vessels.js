@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Collapse, Icon } from 'antd';
+import { Collapse, Icon, Avatar } from 'antd';
 import { parseCookies } from 'nookies';
 import axios from 'axios';
+import { map } from 'lodash';
+import ReactCountryFlag from 'react-country-flag';
 import styles from './styles.less';
 
 const text = `
@@ -28,8 +30,9 @@ const Vessels = ( { principalId, vesselId } ) => {
     setLoading( true );
 
     if ( vesselId ) {
-      params.id = vesselId;
+      params.include = [ vesselId ];
     } else if ( principalId ) {
+      params.posts_per_page = -1;
       params.principal = principalId;
     }
 
@@ -48,11 +51,11 @@ const Vessels = ( { principalId, vesselId } ) => {
 
   if ( loading ) {
     return (
-      <Icon type="loading" />
+      <div className={ styles.vesselsLoading }>
+        <Icon type="loading" />
+      </div>
     );
   }
-
-  console.log( vessels );
 
   return (
     <div className={ styles.vessels }>
@@ -60,15 +63,24 @@ const Vessels = ( { principalId, vesselId } ) => {
         bordered={ false }
         expandIcon={ ( { isActive } ) => <Icon type="caret-right" rotate={ isActive ? 90 : 0 } /> }
       >
-        <Collapse.Panel header="This is panel header 1" key="1" style={ customPanelStyle }>
-          <p>{ text }</p>
-        </Collapse.Panel>
-        <Collapse.Panel header="This is panel header 2" key="2" style={ customPanelStyle }>
-          <p>{ text }</p>
-        </Collapse.Panel>
-        <Collapse.Panel header="This is panel header 3" key="3" style={ customPanelStyle }>
-          <p>{ text }</p>
-        </Collapse.Panel>
+        { map( vessels, ( vessel, key ) => (
+          <Collapse.Panel
+            className={ styles.vessel }
+            header={ <>
+              <div className={ styles.vesselName }>
+                <span className={ styles.vesselNumber }>{ ++key }</span>
+                <strong>{ vessel.title.rendered }</strong>
+              </div>
+              <div className={ styles.vesselPositions }>
+                { map( vessel.orders, ( order ) => <Avatar size={ 36 }>{ order.position }</Avatar> ) }
+              </div>
+            </> }
+            key={ key }
+            extra={ <span className={ styles.vesselFlag }><ReactCountryFlag code={ vessel.flag } svg /></span> }
+          >
+            <p>{ text }</p>
+          </Collapse.Panel>
+        ) ) }
       </Collapse>
     </div>
   );

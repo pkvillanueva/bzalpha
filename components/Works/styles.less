@@ -1,3 +1,7 @@
+.filters {
+    margin-bottom: 36px;
+}
+
 .newBulkOrder {
     margin-top: 4px;
     float: right;
@@ -20,8 +24,68 @@
     margin: 0 10px;
 }
 
+.vesselsLoading {
+    font-size: 36px;
+    text-align: center;
+}
+
 .vessels {
     :global(.ant-collapse) {
         background-color: transparent;
     }
+}
+
+.vessel {
+    margin-bottom: 24px;
+    background-color: #fff;
+    border-radius: 4px !important;
+    border: 1px solid #e8e8e8 !important;
+    box-shadow: 0 1px 0px rgba(0, 0, 0, 0.15);
+
+    :global(.ant-collapse-header) {
+        display: flex;
+        align-items: center;
+        padding: 16px 16px 16px 40px !important;
+        font-size: 16px;
+
+        :global(.ant-collapse-extra) {
+            margin-left: auto;
+        }
+    }
+
+    &:global(.ant-collapse-item-active .ant-collapse-header) {
+        border-bottom: 1px solid #e8e8e8;
+        margin-bottom: 16px;
+    }
+}
+
+.vesselName {
+    flex-basis: 20%;
+}
+
+.vesselPositions {
+    :global(.ant-avatar) {
+        margin-right: 4px;
+        background-color: #e8e8e8;
+        color: #222;
+        font-size: 14px !important;
+    }
+}
+
+.vesselNumber {
+    float: left;
+    display: block;
+    font-size: 14px;
+    width: 24px;
+    height: 24px;
+    margin: 0 10px 0 0;
+    border: 1px solid;
+    line-height: 21px;
+    text-align: center;
+    background-color: #e6f7ff;
+    border: 1px solid #91d5ff;
+}
+
+.vesselFlag {
+    float: right;
 }

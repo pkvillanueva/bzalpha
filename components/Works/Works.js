@@ -2,7 +2,7 @@
  * External dependencies.
  */
 import React, { useState } from 'react';
-import { Form, Card } from 'antd';
+import { Form, Card, Result } from 'antd';
 
 /**
  * Internal dependencies.
@@ -18,7 +18,7 @@ const Works = () => {
 
   return (
     <>
-      <Card>
+      <Card className={ styles.filters }>
         <Form layout="inline">
           <Form.Item label="Owner">
             <SelectFetch
@@ -43,12 +43,23 @@ const Works = () => {
               placeholder="Enter vessel name"
               action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel` }
               onChange={ ( value ) => setVesselId( value ) }
+              customParams= { {
+                principal: principalId
+              } }
             />
           </Form.Item>
           <BulkOrder />
         </Form>
       </Card>
-      { ( principalId || vesselId ) ? <Vessels principalId={ principalId } vesselId={ vesselId } /> : null }
+      { ( principalId || vesselId ) ?
+        <Vessels
+          principalId={ principalId }
+          vesselId={ vesselId }
+        /> :
+        <Result
+          title="Select an owner or a vessel"
+        />
+      }
     </>
   );
 };
