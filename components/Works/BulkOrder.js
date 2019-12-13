@@ -20,7 +20,7 @@ const BulkOrder = () => {
   const handleSave = ( { values }, done, error ) => {
     const { token } = parseCookies();
 
-    axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/order/bulk`, values, {
+    axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/bulk`, values, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${ token }`
