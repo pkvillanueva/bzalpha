@@ -13,8 +13,8 @@ import Vessels from './Vessels';
 import styles from './styles.less';
 
 const Works = () => {
-  const [ principalId, setPrincipalId ] = useState( '' );
-  const [ vesselId, setVesselId ] = useState( '' );
+  const [ principal, setPrincipal ] = useState( {} );
+  const [ vessel, setVessel ] = useState( {} );
 
   return (
     <>
@@ -22,7 +22,8 @@ const Works = () => {
         <Form layout="inline">
           <Form.Item label="Owner">
             <SelectFetch
-              value={ principalId }
+              withLabelValue={ true }
+              value={ principal.key }
               style={ { width: 170 } }
               allowClear={ true }
               placeholder="Enter owner name"
@@ -30,31 +31,35 @@ const Works = () => {
               labelKey="name"
               action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/principal` }
               onChange={ ( value ) => {
-                setPrincipalId( value )
-                setVesselId( '' )
+                setPrincipal( value || {} );
+                setVessel( {} );
               } }
             />
           </Form.Item>
           <Form.Item label="Vessel">
             <SelectFetch
-              value={ vesselId }
+              withLabelValue={ true }
+              value={ vessel.key }
               style={ { width: 170 } }
               allowClear={ true }
               placeholder="Enter vessel name"
               action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel` }
-              onChange={ ( value ) => setVesselId( value ) }
+              onChange={ ( value ) => setVessel( value || {} ) }
               customParams= { {
-                principal: principalId
+                principal: principal.key
               } }
             />
           </Form.Item>
-          <BulkOrder />
+          <BulkOrder
+            principal={ principal }
+            vessel={ vessel }
+          />
         </Form>
       </Card>
-      { ( principalId || vesselId ) ?
+      { ( principal.key || vessel.key ) ?
         <Vessels
-          principalId={ principalId }
-          vesselId={ vesselId }
+          principalId={ principal.key }
+          vesselId={ vessel.key }
         /> :
         <Result
           title="Select an owner or a vessel"
