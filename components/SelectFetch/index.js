@@ -93,7 +93,11 @@ class SelectFetch extends Component {
     } );
 
     if ( this.props.onChange ) {
-      this.props.onChange( value ? value.key : '' );
+      if ( this.props.withLabelValue ) {
+        this.props.onChange( value );
+      } else {
+        this.props.onChange( value ? value.key : '' );
+      }
     }
   };
 
@@ -104,7 +108,7 @@ class SelectFetch extends Component {
   };
 
   render() {
-    const { placeholder, allowClear, className, style } = this.props;
+    const { placeholder, allowClear, className, style, disabled } = this.props;
 
     return (
       <Select
@@ -118,6 +122,7 @@ class SelectFetch extends Component {
         allowClear={ allowClear }
         placeholder={ placeholder }
         style={ style }
+        disabled={ disabled }
         showSearch={ true }
         labelInValue={ true }
         filterOption={ false }

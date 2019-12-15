@@ -2,10 +2,10 @@
  * External dependencies.
  */
 import React, { useState } from 'react';
-import { map } from 'lodash';
+import { map, isEmpty } from 'lodash';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
-import { Row, Col, Form, Card, Button, Input, InputNumber, Select, Checkbox, DatePicker, message } from 'antd';
+import { Row, Col, Form, Button, Input, InputNumber, Select, Checkbox, DatePicker, message } from 'antd';
 
 /**
  * Internal dependencies.
@@ -16,7 +16,9 @@ import SelectFetch from '~/components/SelectFetch';
 import ModalForm from '~/components/ModalForm';
 import styles from './styles.less';
 
-const BulkOrder = () => {
+const BulkOrder = ( { principal, vessel } ) => {
+  const [ principalId, setPrincipalId ] = useState( principal.key || '' );
+
   const handleSave = ( { values }, done, error ) => {
     const { token } = parseCookies();
 
@@ -40,27 +42,43 @@ const BulkOrder = () => {
       className={ styles.bulkOrder }
       width={ '100%' }
       onSave={ handleSave }
-      modalForm={ ( getFieldDecorator ) => (
+      modalForm={ ( getFieldDecorator, { setFieldsValue } ) => (
         <Form>
           <Row gutter={ 36 }>
             <Col lg={ 12 }>
               <Form.Item label="Owner">
-                <SelectFetch
-                  allowClear={ true }
-                  placeholder="Select owner"
-                  dataKey="id"
-                  labelKey="name"
-                  action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/principal` }
-                />
+                { ! isEmpty( principal ) || ! isEmpty( vessel ) ?
+                  <SelectFetch
+                  disabled={ true }
+                  placeholder={ principal.label || '' }
+                  /> :
+                  <SelectFetch
+                    value={ principalId }
+                    allowClear={ true }
+                    placeholder="Select owner"
+                    dataKey="id"
+                    labelKey="name"
+                    action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/principal` }
+                    onChange={ ( value ) => {
+                      setPrincipalId( value );
+                      setFieldsValue( { vessel: '' } );
+                    } }
+                  />
+                }
               </Form.Item>
               <Form.Item label="Vessel">
                 { getFieldDecorator( 'vessel', {
                   rules: [ { required: true, message: 'Vessel is required.' } ],
+                  initialValue: vessel.key || ''
                 } )(
                   <SelectFetch
+                    disabled={ ! isEmpty( vessel ) }
                     allowClear={ true }
-                    placeholder="Enter vessel name"
+                    placeholder={ vessel.label ? vessel.label : 'Enter vessel name' }
                     action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel` }
+                    customParams= { {
+                      principal: principalId
+                    } }
                   />
                 ) }
               </Form.Item>
