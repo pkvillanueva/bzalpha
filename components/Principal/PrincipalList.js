@@ -117,8 +117,7 @@ const PrincipalsList = () => {
     axios.delete( `${ process.env.API_URL }/wp-json/bzalpha/v1/principal/${ id }`, {
       headers: { 'Authorization': `Bearer ${ token }` },
       data: {
-        id: id,
-        force: 'true'
+        id: id
       }
     } )
     .finally( () => {

@@ -54,8 +54,7 @@ const Orders = ( { vessel } ) => {
     axios.delete( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/${ id }`, {
       headers: { 'Authorization': `Bearer ${ token }` },
       data: {
-        id: id,
-        force: 'true'
+        id: id
       }
     } ).then( () => {
       setOrders( filter( orders, order => order.id !== id ) );
@@ -66,7 +65,7 @@ const Orders = ( { vessel } ) => {
 
   const handleDelete = ( id ) => {
     Modal.confirm( {
-      title: 'Are you sure cancel this order?',
+      title: 'Are you sure delete this order?',
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
