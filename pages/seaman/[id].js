@@ -178,8 +178,8 @@ const Page = () => {
           <Col md={ 6 } xs={ 24 }>
             <Card>
             <Statistic
-              title="Vessel"
-              value="Durande"
+              title="Date Available"
+              value="N/A"
             />
             </Card>
           </Col>
