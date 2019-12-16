@@ -3,6 +3,7 @@
  */
 import React, { useState } from 'react';
 import { Form, Card, Result } from 'antd';
+import { isEmpty } from 'lodash';
 
 /**
  * Internal dependencies.
@@ -13,8 +14,10 @@ import Vessels from './Vessels';
 import styles from './styles.less';
 
 const Works = () => {
-  const [ principal, setPrincipal ] = useState( {} );
-  const [ vessel, setVessel ] = useState( {} );
+  const [ principalId, setPrincipalId ] = useState( '' );
+  const [ principalName, setPrincipalName ] = useState( '' );
+  const [ vesselId, setVesselId ] = useState( '' );
+  const [ vesselName, setVesselName ] = useState( '' );
 
   return (
     <>
@@ -23,7 +26,7 @@ const Works = () => {
           <Form.Item label="Owner">
             <SelectFetch
               withLabelValue={ true }
-              value={ principal.key }
+              value={ principalId }
               style={ { width: 170 } }
               allowClear={ true }
               placeholder="Enter owner name"
@@ -31,35 +34,53 @@ const Works = () => {
               labelKey="name"
               action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/principal` }
               onChange={ ( value ) => {
-                setPrincipal( value || {} );
-                setVessel( {} );
+                if ( ! isEmpty( value ) ) {
+                  setPrincipalId( value.key );
+                  setPrincipalName( value.label );
+                } else {
+                  setPrincipalId( '' );
+                  setPrincipalName( '' );
+                }
+
+                setVesselId( '' );
+                setVesselName( '' );
               } }
             />
           </Form.Item>
           <Form.Item label="Vessel">
             <SelectFetch
               withLabelValue={ true }
-              value={ vessel.key }
+              value={ vesselId }
               style={ { width: 170 } }
               allowClear={ true }
               placeholder="Enter vessel name"
               action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel` }
-              onChange={ ( value ) => setVessel( value || {} ) }
+              onChange={ ( value ) => {
+                if ( ! isEmpty( value ) ) {
+                  setVesselId( value.key );
+                  setVesselName( value.label );
+                } else {
+                  setVesselId( '' );
+                  setVesselName( '' );
+                }
+              } }
               customParams= { {
-                principal: principal.key
+                principal: principalId
               } }
             />
           </Form.Item>
           <BulkOrder
-            principal={ principal }
-            vessel={ vessel }
+            principalId={ principalId }
+            principalName={ principalName }
+            vesselId={ vesselId }
+            vesselName={ vesselName }
           />
         </Form>
       </Card>
-      { ( principal.key || vessel.key ) ?
+      { ( principalId || vesselId ) ?
         <Vessels
-          principalId={ principal.key }
-          vesselId={ vessel.key }
+          principalId={ principalId }
+          vesselId={ vesselId }
         /> :
         <Result
           title="Select an owner or a vessel"

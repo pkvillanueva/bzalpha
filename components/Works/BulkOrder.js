@@ -16,8 +16,8 @@ import SelectFetch from '~/components/SelectFetch';
 import ModalForm from '~/components/ModalForm';
 import styles from './styles.less';
 
-const BulkOrder = ( { principal, vessel } ) => {
-  const [ principalId, setPrincipalId ] = useState( principal.key || '' );
+const BulkOrder = ( { principalId, principalName, vesselId, vesselName } ) => {
+  const [ principal, setPrincipal ] = useState( '' );
 
   const handleSave = ( { values }, done, error ) => {
     const { token } = parseCookies();
@@ -39,7 +39,7 @@ const BulkOrder = ( { principal, vessel } ) => {
   return (
     <ModalForm
       title="Add New Order"
-      className={ styles.bulkOrder }
+      className={ styles.editOrder }
       width={ '100%' }
       onSave={ handleSave }
       modalForm={ ( getFieldDecorator, { setFieldsValue } ) => (
@@ -47,20 +47,20 @@ const BulkOrder = ( { principal, vessel } ) => {
           <Row gutter={ 36 }>
             <Col lg={ 12 }>
               <Form.Item label="Owner">
-                { ! isEmpty( principal ) || ! isEmpty( vessel ) ?
+                { ! isEmpty( principalId ) || ! isEmpty( vesselId ) ?
                   <SelectFetch
-                  disabled={ true }
-                  placeholder={ principal.label || '' }
+                    disabled={ true }
+                    placeholder={ principalName }
                   /> :
                   <SelectFetch
-                    value={ principalId }
+                    value={ principal }
                     allowClear={ true }
                     placeholder="Select owner"
                     dataKey="id"
                     labelKey="name"
                     action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/principal` }
                     onChange={ ( value ) => {
-                      setPrincipalId( value );
+                      setPrincipal( value );
                       setFieldsValue( { vessel: '' } );
                     } }
                   />
@@ -69,15 +69,15 @@ const BulkOrder = ( { principal, vessel } ) => {
               <Form.Item label="Vessel">
                 { getFieldDecorator( 'vessel', {
                   rules: [ { required: true, message: 'Vessel is required.' } ],
-                  initialValue: vessel.key || ''
+                  initialValue: vesselId || ''
                 } )(
                   <SelectFetch
-                    disabled={ ! isEmpty( vessel ) }
+                    disabled={ ! isEmpty( vesselId ) }
                     allowClear={ true }
-                    placeholder={ vessel.label ? vessel.label : 'Enter vessel name' }
+                    placeholder={ vesselName ? vesselName : 'Enter vessel name' }
                     action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel` }
                     customParams= { {
-                      principal: principalId
+                      principal: principalId ? principalId : principal
                     } }
                   />
                 ) }
@@ -127,7 +127,9 @@ const BulkOrder = ( { principal, vessel } ) => {
                 </Col>
                 <Col lg={ 12 }>
                   <Form.Item label="Uniform">
-                    { getFieldDecorator( 'uniform', {} )(
+                    { getFieldDecorator( 'uniform', {
+                      valuePropName: 'checked'
+                    } )(
                       <Checkbox />
                     ) }
                   </Form.Item>
