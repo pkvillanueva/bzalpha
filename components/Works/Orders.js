@@ -1,12 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Table, Tag, Modal, Icon, Empty } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Table, Tag, Modal, Icon, Empty, Divider } from 'antd';
 import { map, isEmpty, filter } from 'lodash';
 import { parseCookies } from 'nookies';
 import axios from 'axios';
+import moment from 'moment';
 import RankAvatar from './RankAvatar';
-import OrderPending from './OrderPending';
+import EditCandidates from './EditCandidates';
+import EditOrder from './EditOrder';
 import withProvider from '~/utils/withProvider';
-import { OrdersProvider, OrdersContext } from '~/store/orders';
+import { OrdersProvider } from '~/store/orders';
 import styles from './styles.less';
 
 const Orders = ( { vessel } ) => {
@@ -98,18 +100,35 @@ const Orders = ( { vessel } ) => {
     },
     {
       title: 'Details',
-      dataIndex: 'seaman',
-      key: 'seaman',
-      render: ( seaman ) => seaman && seaman.title
+      dataIndex: 'details',
+      key: 'details',
+      render: ( details, { order_status, deadline, sign_on } ) => {
+        let text = '';
+
+        switch ( order_status ) {
+          case 'pending':
+            text += `${ sign_on ? `Join Date: ${ moment( sign_on ).format( 'MMM D YY' ) } ` : '' }`;
+            text += `${ deadline ? `/ Deadline: ${ moment( deadline ).format( 'MMM D YY' ) } ` : '' }`;
+            return text;
+          default:
+            return '';
+        }
+      }
     },
     {
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
       align: 'right',
-      render: ( actions, { id } ) => {
+      render: ( actions, order ) => {
         return (
-          <Icon type="delete" onClick={ () => handleDelete( id ) } />
+          <>
+            <EditOrder type="pending" order={ order }>
+              <Icon type="edit" />
+            </EditOrder>
+            <Divider type="vertical" />
+            <Icon type="delete" onClick={ () => handleDelete( order.id ) } />
+          </>
         );
       }
     }
@@ -118,7 +137,7 @@ const Orders = ( { vessel } ) => {
   const expandedRowRender = ( order ) => {
     switch ( order.order_status ) {
       case 'pending':
-        return <OrderPending data={ order } />
+        return <EditCandidates order={ order } />
     }
 
     return null;

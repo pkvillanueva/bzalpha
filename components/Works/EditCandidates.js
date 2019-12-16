@@ -6,12 +6,13 @@ import { parseCookies } from 'nookies';
 import { Form, Button, Popconfirm, Icon, Table, Tag, Divider, Select, Input, message } from 'antd';
 import SelectFetch from '~/components/SelectFetch';
 import { orderTypes } from '~/utils/orders';
+import EditOrder from './EditOrder';
 import styles from './styles.less';
 
-const OrderPending = ( { data } ) => {
+const EditCandidates = ( { order } ) => {
   const [ seamanId, setSeamanId ] = useState( '' );
   const [ type, setType ] = useState( 'proposed' );
-  const [ candidates, setCandidates ] = useState( data.candidates || [] );
+  const [ candidates, setCandidates ] = useState( order.candidates || [] );
   const [ loading, setLoading ] = useState( false );
   const columns = [
     {
@@ -74,7 +75,7 @@ const OrderPending = ( { data } ) => {
           <>
             { candidate.status === 'approved' &&
               <>
-                <Button size="small" type="primary">Proceed</Button>
+                <Button size="small" type="primary">Process</Button>
                 <Divider type="vertical" />
               </>
             }
@@ -110,12 +111,13 @@ const OrderPending = ( { data } ) => {
       records = [ ...candidates ];
       records[ index ] = { ...records[ index ], ...record }
     } else {
+      const currentDate = moment().format( 'YYYY-MM-DD' );
       records = [ ...candidates ];
       records.push( {
         seaman: seamanId,
         status: 'waiting',
         type: type,
-        timestamp: moment().format( 'YYYY-MM-DD' )
+        timestamp: currentDate
       } );
     }
 
@@ -126,7 +128,7 @@ const OrderPending = ( { data } ) => {
 
     setLoading( true );
 
-    axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/${ data.id } `, params, {
+    axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/${ order.id } `, params, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${ token }`
@@ -197,4 +199,4 @@ const OrderPending = ( { data } ) => {
   );
 };
 
-export default OrderPending;
+export default EditCandidates;

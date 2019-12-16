@@ -12,6 +12,7 @@ const Vessels = ( { principalId, vesselId } ) => {
   const [ loading, setLoading ] = useState( true );
   const [ vessels, setVessels ] = useState( [] );
   const [ activeKey, setActiveKey ] = useState( [] );
+  const signal = axios.CancelToken.source();
 
   // Fetch vessels.
   useEffect( () => {
@@ -27,6 +28,7 @@ const Vessels = ( { principalId, vesselId } ) => {
     }
 
     axios.get( `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel`, {
+      cancelToken: signal.token,
       params: params,
       headers: {
         'Content-Type': 'application/json',
