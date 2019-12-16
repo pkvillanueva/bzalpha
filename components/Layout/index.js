@@ -16,8 +16,8 @@ import { map, pickBy, identity, isEmpty } from 'lodash';
 import styles from './styles.less';
 
 const headerMenu = [
-  { icon: 'dashboard', title: 'Dashboard', href: '/' },
-  { icon: 'database', title: 'BZ Works', href: '/works' },
+  // { icon: 'dashboard', title: 'Dashboard', href: '/' },
+  { icon: 'database', title: 'BZ Works', href: '/' },
   { icon: 'team', title: 'Seaman', href: '/seaman' },
   { icon: 'profile', title: 'Principals', href: '/principal' },
   { icon: 'appstore', title: 'Vessels', href: '/vessel' }
@@ -32,7 +32,8 @@ const getActiveKeys = ( pathname ) => {
 
   headerMenu.forEach( ( menuItem ) => {
     if ( pathname.length === 0 || pathname === '/' ) {
-      activeKeys.push( 'dashboard' );
+      // activeKeys.push( 'dashboard' );
+      activeKeys.push( 'database' );
     } else if ( menuItem.href === '/' ) {
       return;
     } else if ( pathname.search( menuItem.href ) === 0 ) {

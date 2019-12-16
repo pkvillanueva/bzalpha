@@ -1,13 +1,6 @@
 /**
  * Internal dependencies.
  */
-import Layout from '~/components/Layout';
-import withAuth from '~/utils/withAuth';
+import Works from './works';
 
-const Dashboard = () => (
-  <Layout>
-    Dashboard!
-  </Layout>
-);
-
-export default withAuth( Dashboard );
+export default Works;
