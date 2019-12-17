@@ -93,7 +93,7 @@ const PersonalInformation = () => {
             { getFieldDecorator( 'birth_date', {
               rules: [ { required: true, message: "Date of birth is required." } ],
               initialValue: seaman.birth_date && moment( seaman.birth_date )
-            } )( <DatePicker style={ { width: '100%' } } /> ) }
+            } )( <DatePicker placeholder="YYYY-MM-DD" style={ { width: '100%' } } /> ) }
           </Form.Item>
         </Col>
         <Col md={ 8 }>

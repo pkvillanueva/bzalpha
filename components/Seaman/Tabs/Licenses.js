@@ -65,12 +65,12 @@ const Licenses = () => {
         <Form.Item key="issue_date" label="Issue Date">
           { getFieldDecorator( 'issue_date', {
             initialValue: initialValues.issue_date && moment( initialValues.issue_date )
-          } )( <DatePicker style={ { width: '100%' } } /> ) }
+          } )( <DatePicker placeholder="YYYY-MM-DD" style={ { width: '100%' } } /> ) }
         </Form.Item>,
         <Form.Item key="valid_until" label="Valid Until">
           { getFieldDecorator( 'valid_until', {
             initialValue: initialValues.valid_until && moment( initialValues.valid_until )
-          } )( <DatePicker style={ { width: '100%' } } /> ) }
+          } )( <DatePicker placeholder="YYYY-MM-DD" style={ { width: '100%' } } /> ) }
         </Form.Item>,
         <Form.Item key="issued_by" label="Issued By">
           { getFieldDecorator( 'issued_by', {
