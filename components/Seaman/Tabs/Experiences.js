@@ -83,12 +83,12 @@ const Experiences = () => {
         <Form.Item key="date_start" label="Date Start">
           { getFieldDecorator( 'date_start', {
             initialValue: initialValues.date_start && moment( initialValues.date_start )
-          } )( <DatePicker style={ { width: '100%' } } /> ) }
+          } )( <DatePicker placeholder="YYYY-MM-DD" style={ { width: '100%' } } /> ) }
         </Form.Item>,
         <Form.Item key="date_end" label="Date End">
           { getFieldDecorator( 'date_end', {
             initialValue: initialValues.date_end && moment( initialValues.date_end )
-          } )( <DatePicker style={ { width: '100%' } } /> ) }
+          } )( <DatePicker placeholder="YYYY-MM-DD" style={ { width: '100%' } } /> ) }
         </Form.Item>,
         <Form.Item key="rank" label="Rank">
           { getFieldDecorator( 'rank', {
