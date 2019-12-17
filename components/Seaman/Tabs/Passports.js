@@ -72,12 +72,12 @@ const Passports = () => {
           </Form.Item>,
           <Form.Item key="issue_date" label="Issue Date">
             { getFieldDecorator( 'issue_date', {
-              initialValue: moment( initialValues.issue_date )
+              initialValue: initialValues.issue_date && moment( initialValues.issue_date )
             } )( <DatePicker style={ { width: '100%' } } /> ) }
           </Form.Item>,
           <Form.Item key="valid_till" label="Valid Till">
             { getFieldDecorator( 'valid_till', {
-              initialValue: moment( initialValues.valid_till )
+              initialValue: initialValues.valid_till && moment( initialValues.valid_till )
             } )( <DatePicker style={ { width: '100%' } } /> ) }
           </Form.Item>,
           <Form.Item key="issued_by" label="Issued By">
