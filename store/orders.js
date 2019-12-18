@@ -69,13 +69,14 @@ export const OrdersProvider = ( { children } ) => {
     } ).then( ( res ) => {
       if ( success ) success( res );
       setOrders( map( orders, ( order ) => order.id === id ? res.data : order ) );
+      setUpdating( false );
       message.success( 'Order updated.' );
     } ).catch( () => {
       if ( error ) error();
+      setUpdating( false );
       message.error( 'Unable to update order.' );
     } ).finally( () => {
       if ( done ) done();
-      setUpdating( false );
     } );
   }
 

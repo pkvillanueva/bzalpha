@@ -20,7 +20,7 @@ import styles from './styles.less';
 const EditBulkOrder = ( { principalId, principalName, vesselId, vesselName, children, onSave } ) => {
   const [ principal, setPrincipal ] = useState( '' );
 
-  const handleSave = ( { values, form }, done, error ) => {
+  const handleSave = ( { values, form, success, done } ) => {
     const { resetFields } = form;
 
     axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/bulk`, values, {
@@ -31,12 +31,13 @@ const EditBulkOrder = ( { principalId, principalName, vesselId, vesselName, chil
     } ).then( () => {
       if ( onSave ) onSave( values.vessel );
       resetFields();
-      done();
+      success();
       message.success( 'Order created.' );
     } ).catch( ( err ) => {
-      error();
       console.log( err );
       message.error( 'Failed to create an order.' );
+    } ).finally( () => {
+      done();
     } );
   };
 

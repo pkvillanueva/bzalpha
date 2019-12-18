@@ -24,11 +24,19 @@ const ModalForm = Form.create()( ( props ) => {
           setLoading( false );
         } );
       } else if ( onSave ) {
-        onSave( { values, form }, () => {
-          setVisible( false );
-          setLoading( false );
-        }, () => {
-          setLoading( false );
+        onSave( {
+          values,
+          form,
+          success() {
+            setVisible( false );
+            setLoading( false );
+          },
+          error() {
+            setLoading( false );
+          },
+          done() {
+            setLoading( false );
+          }
         } );
       } else {
         setVisible( false );
