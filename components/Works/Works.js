@@ -26,12 +26,12 @@ const Works = () => {
 
     return map( vessels, ( vessel, num ) => (
       <div className={ styles.vesselWrapper } key={ num }>
-        <Spin spinning={ fetchVesselId === vessel.id } tip="Loading...">
-          <Vessel
-            vessel={ vessel }
-            num={ ++num }
-          />
-        </Spin>
+        { fetchVesselId === vessel.id ?
+          <Spin tip="Loading...">
+            <Vessel vessel={ vessel } num={ ++num } />
+          </Spin> :
+          <Vessel vessel={ vessel } num={ ++num } />
+        }
       </div>
     ) );
   };
