@@ -1,19 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { map, isEmpty, filter } from 'lodash';
 import moment from 'moment';
-import axios from 'axios';
-import { parseCookies } from 'nookies';
-import { Form, Button, Popconfirm, Icon, Table, Tag, Divider, Select, Input, message } from 'antd';
+import { Form, Button, Popconfirm, Icon, Table, Tag, Divider, Select, Input } from 'antd';
 import SelectFetch from '~/components/SelectFetch';
-import { orderTypes } from '~/utils/orders';
+import { candidateTypes, getCandidateType, isContractExpiring } from '~/utils/orders';
+import { OrdersContext } from '~/store/orders';
 import EditOrder from './EditOrder';
-import styles from './styles.less';
 
 const EditCandidates = ( { order } ) => {
+  const { updateOrder } = useContext( OrdersContext );
   const [ seamanId, setSeamanId ] = useState( '' );
   const [ type, setType ] = useState( 'proposed' );
   const [ candidates, setCandidates ] = useState( order.candidates || [] );
-  const [ loading, setLoading ] = useState( false );
+
+  const handleCandidates = ( action, index, record ) => {
+    let records = [];
+
+    if ( action === 'delete' ) {
+      records = filter( candidates, ( candidate, id ) => id !== index );
+    } else if ( action === 'update' ) {
+      records = [ ...candidates ];
+      records[ index ] = { ...records[ index ], ...record }
+    } else {
+      const currentDate = moment().format( 'YYYY-MM-DD' );
+      records = [ ...candidates ];
+      records.push( {
+        seaman: seamanId,
+        status: type === 'requested' ? 'approved' : 'waiting',
+        type: type,
+        timestamp: currentDate
+      } );
+    }
+
+    updateOrder( {
+      id: order.id,
+      params: {
+        candidates: records
+      },
+      success( res ) {
+        setCandidates( res.data.candidates || [] );
+      },
+      done() {
+        setSeamanId( '' );
+        setType( 'proposed' );
+      }
+    } );
+  };
+
   const columns = [
     {
       title: 'Date Submitted',
@@ -31,7 +64,7 @@ const EditCandidates = ( { order } ) => {
       title: 'Type',
       dataIndex: 'type',
       key: 'type',
-      render: ( type ) => orderTypes[ type ] && orderTypes[ type ]
+      render: ( type ) => getCandidateType( type )
     },
     {
       title: 'Status',
@@ -71,11 +104,30 @@ const EditCandidates = ( { order } ) => {
       key: 'actions',
       align: 'right',
       render: ( action, candidate, index ) => {
+        const { seaman } = candidate;
+
         return (
           <>
-            { candidate.status === 'approved' &&
+            { ( candidate.status === 'approved' && order.order_status === 'pending' ) &&
               <>
-                <Button size="small" type="primary">Process</Button>
+                <EditOrder
+                  titleType="Save"
+                  status="processing"
+                  order={ order }
+                  saveValues={ {
+                    seaman: seaman.ID,
+                    order_status: 'processing',
+                    candidates: []
+                  } }
+                >
+                  <Button size="small" type="primary">Process</Button>
+                </EditOrder>
+                <Divider type="vertical" />
+              </>
+            }
+            { ( candidate.status === 'approved' && order.order_status === 'onboard' ) &&
+              <>
+                <Button size="small" type="primary">Reserve</Button>
                 <Divider type="vertical" />
               </>
             }
@@ -102,51 +154,8 @@ const EditCandidates = ( { order } ) => {
     }
   ];
 
-  const handleCandidates = ( action, index, record ) => {
-    let records = [];
-
-    if ( action === 'delete' ) {
-      records = filter( candidates, ( candidate, id ) => id !== index );
-    } else if ( action === 'update' ) {
-      records = [ ...candidates ];
-      records[ index ] = { ...records[ index ], ...record }
-    } else {
-      const currentDate = moment().format( 'YYYY-MM-DD' );
-      records = [ ...candidates ];
-      records.push( {
-        seaman: seamanId,
-        status: 'waiting',
-        type: type,
-        timestamp: currentDate
-      } );
-    }
-
-    const { token } = parseCookies();
-    const params = {
-      candidates: records
-    };
-
-    setLoading( true );
-
-    axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/${ order.id } `, params, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${ token }`
-      }
-    } ).then( ( res ) => {
-      setCandidates( res.data.candidates || [] );
-      message.success( 'Updated.' );
-    } ).catch( () => {
-      message.error( 'Error updating.' );
-    } ).finally( () => {
-      setSeamanId( '' );
-      setType( 'proposed' );
-      setLoading( false );
-    } );
-  }
-
   return (
-    <div className={ styles.orderPending }>
+    <>
       <Form layout="inline">
         <Form.Item>
           <SelectFetch
@@ -166,7 +175,7 @@ const EditCandidates = ( { order } ) => {
                 style={ { width: 110 } }
                 onChange={ ( type ) => setType( type ) }
               >
-                { map( orderTypes, ( label, value ) => (
+                { map( candidateTypes, ( label, value ) => (
                   <Select.Option key={ value } value={ value }>
                     { label }
                   </Select.Option>
@@ -177,7 +186,6 @@ const EditCandidates = ( { order } ) => {
               <Button
                 onClick={ handleCandidates }
                 type="primary"
-                loading={ loading }
               >
                 Add Candidate
               </Button>
@@ -187,15 +195,13 @@ const EditCandidates = ( { order } ) => {
       </Form>
       { ! isEmpty( candidates ) &&
         <Table
-          loading={ loading }
           size="middle"
           pagination={ false }
-          className={ styles.orderPendingTable }
           columns={ columns }
           dataSource={ map( candidates, ( order, key ) => ( { key: key, ...order } ) ) }
         />
       }
-    </div>
+    </>
   );
 };
 

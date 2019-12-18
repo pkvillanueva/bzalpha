@@ -4,8 +4,9 @@
 import React, { useState } from 'react';
 import { map, isEmpty } from 'lodash';
 import axios from 'axios';
+const { token } = parseCookies();
 import { parseCookies } from 'nookies';
-import { Row, Col, Form, Button, Input, InputNumber, Select, Checkbox, DatePicker, message } from 'antd';
+import { Row, Col, Form, Input, InputNumber, Select, Checkbox, DatePicker, message } from 'antd';
 
 /**
  * Internal dependencies.
@@ -16,11 +17,11 @@ import SelectFetch from '~/components/SelectFetch';
 import ModalForm from '~/components/ModalForm';
 import styles from './styles.less';
 
-const BulkOrder = ( { principalId, principalName, vesselId, vesselName } ) => {
+const EditBulkOrder = ( { principalId, principalName, vesselId, vesselName, children, onSave } ) => {
   const [ principal, setPrincipal ] = useState( '' );
 
-  const handleSave = ( { values }, done, error ) => {
-    const { token } = parseCookies();
+  const handleSave = ( { values, form }, done, error ) => {
+    const { resetFields } = form;
 
     axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/bulk`, values, {
       headers: {
@@ -28,10 +29,13 @@ const BulkOrder = ( { principalId, principalName, vesselId, vesselName } ) => {
         'Authorization': `Bearer ${ token }`
       },
     } ).then( () => {
+      if ( onSave ) onSave( values.vessel );
+      resetFields();
       done();
       message.success( 'Order created.' );
-    } ).catch( () => {
+    } ).catch( ( err ) => {
       error();
+      console.log( err );
       message.error( 'Failed to create an order.' );
     } );
   };
@@ -39,7 +43,7 @@ const BulkOrder = ( { principalId, principalName, vesselId, vesselName } ) => {
   return (
     <ModalForm
       title="Add New Order"
-      className={ styles.editOrder }
+      className={ styles.editOrderModal }
       width={ '100%' }
       onSave={ handleSave }
       modalForm={ ( getFieldDecorator, { setFieldsValue } ) => (
@@ -138,9 +142,7 @@ const BulkOrder = ( { principalId, principalName, vesselId, vesselName } ) => {
               <Row gutter={ 24 }>
                 <Col lg={ 12 }>
                   <Form.Item label="Join Date">
-                    { getFieldDecorator( 'sign_on', {
-                      rules: [ { required: true, message: 'Join date is required.' } ]
-                    } )(
+                    { getFieldDecorator( 'sign_on', {} )(
                       <DatePicker placeholder="YYYY-MM-DD" />
                     ) }
                   </Form.Item>
@@ -153,14 +155,14 @@ const BulkOrder = ( { principalId, principalName, vesselId, vesselName } ) => {
                   </Form.Item>
                 </Col>
               </Row>
-              <Form.Item label="Contract" className={ styles.contractItem }>
-                <Form.Item className={ styles.contractField }>
+              <Form.Item label="Contract" className={ styles.contractField }>
+                <Form.Item className={ styles.item }>
                   { getFieldDecorator( 'contract_plus', {} )(
                     <InputNumber placeholder="0" />
                   ) }
                 </Form.Item>
-                <span className={ styles.contractUnit }>+/-</span>
-                <Form.Item className={ styles.contractField }>
+                <span className={ styles.unit }>+/-</span>
+                <Form.Item className={ styles.item }>
                   { getFieldDecorator( 'contract_minus', {} )(
                     <InputNumber placeholder="0" />
                   ) }
@@ -176,9 +178,9 @@ const BulkOrder = ( { principalId, principalName, vesselId, vesselName } ) => {
         </Form>
       ) }
     >
-      <Button icon="plus" type="primary" className={ styles.newBulkOrder }>Create Order</Button>
+      { children }
     </ModalForm>
   );
 };
 
-export default BulkOrder;
+export default EditBulkOrder;

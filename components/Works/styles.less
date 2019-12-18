@@ -1,27 +1,29 @@
 .filters {
     margin-bottom: 36px;
+
+    .bulkOrder {
+        margin-top: 4px;
+        float: right;
+    }
 }
 
-.newBulkOrder {
-    margin-top: 4px;
-    float: right;
-}
-
-.editOrder {
+.editOrderModal {
     max-width: 960px;
-}
 
-.contractField {
-    display: inline-block;
-}
+    .contractField {
+        :global(.ant-form-item-children) {
+            display: flex;
+            margin: 0;
+        }
 
-.contractItem {
-    margin: 0;
-}
+        .item {
+            margin: 0;
+        }
 
-.contractUnit {
-    display: inline-block;
-    margin: 0 10px;
+        .unit {
+            margin: 0 10px;
+        }
+    }
 }
 
 .rankAvatar {
@@ -32,20 +34,38 @@
     :global(.ant-avatar-string) {
         transform: scale(1) translateX(-50%);
     }
+
+    &.processing {
+        background-color: rgb(45, 183, 245);
+        color: #fff;
+    }
+
+    &.onboard {
+        background: rgb(135, 208, 104);
+        color: #fff;
+    }
+
+    &.expiring {
+        background: rgb(255, 85, 0);
+        color: #fff;
+    }
 }
 
-.vesselsFetching {
-    font-size: 36px;
+.vesselsLoading {
     text-align: center;
 }
 
-.vessels {
+.vesselWrapper {
+    margin-bottom: 24px;
+}
+
+.vessel {
     &:global(.ant-collapse) {
         background-color: transparent;
 
         > :global(.ant-collapse-item),
         > :global(.ant-collapse-item:last-child) {
-            margin-bottom: 24px;
+            margin-bottom: 0;
             background-color: #fff;
             border-radius: 4px;
             border: 1px solid #e8e8e8;
@@ -72,14 +92,12 @@
             }
         }
     }
-}
 
-.vessel {
-    .vesselHeader {
+    .header {
         display: flex;
         width: 100%;
 
-        .vesselNum {
+        .num {
             flex-shrink: 0;
             display: block;
             font-size: 14px;
@@ -92,34 +110,40 @@
             border: 1px solid #91d5ff;
         }
 
-        .vesselName {
+        .name {
             display: flex;
             align-items: center;
-            flex-basis: 30%;
+            flex-basis: 320px;
+            flex-shrink: 0;
             margin-right: 24px;
         }
 
-        .vesselOrders {
+        .orders {
+            margin-right: 48px;
+
             > :global(.ant-avatar) {
                 margin: 4px 4px 4px 0;
             }
         }
     }
-
-    .vesselLoading {
-        font-size: 24px;
-        text-align: center;
-    }
 }
 
 .orders {
-    .orderId {
-        white-space: nowrap !important;
+    :global(.ant-table-tbody > tr) {
+        > td.compactColumn {
+            white-space: nowrap;
+            width: 1%;
+        }
     }
-}
 
-.orderPending {
-    .orderPendingTable {
+    .noExpand:global(.ant-table-row) {
+        & + :global(.ant-table-expanded-row),
+        :global(.ant-table-row-expand-icon) {
+            display: none;
+        }
+    }
+
+    :global(tr.ant-table-expanded-row td > .ant-table-wrapper) {
         margin: 8px -16px -17px 0;
     }
 }

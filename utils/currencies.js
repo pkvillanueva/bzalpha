@@ -1,3 +1,5 @@
+import { find } from 'lodash';
+
 export const currencies = [
 	{
 		'symbol': '$',
@@ -9,3 +11,13 @@ export const currencies = [
 		'name_plural': 'US dollars'
 	}
 ];
+
+export const getCurrencySymbol = ( code ) => {
+	const currency = find( currencies, [ 'code', code ] );
+
+	if ( currency ) {
+		return currency.symbol;
+	}
+
+	return '';
+};
