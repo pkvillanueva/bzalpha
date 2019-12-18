@@ -31,6 +31,8 @@ export const OrdersProvider = ( { children } ) => {
       }
     } ).then( ( res ) => {
       setOrders( res.data );
+    } ).catch( ( err ) => {
+      console.log( err );
     } ).finally( () => {
       setLoading( false );
     } );
@@ -49,7 +51,8 @@ export const OrdersProvider = ( { children } ) => {
     } ).then( () => {
       setOrders( filter( orders, order => order.id !== id ) );
       message.success( 'Order deleted.' );
-    } ).catch( () => {
+    } ).catch( ( err ) => {
+      console.log( err );
       message.success( 'Unable to delete order.' );
     } ).finally( () => {
       setUpdating( false );
@@ -71,7 +74,8 @@ export const OrdersProvider = ( { children } ) => {
       setOrders( map( orders, ( order ) => order.id === id ? res.data : order ) );
       setUpdating( false );
       message.success( 'Order updated.' );
-    } ).catch( () => {
+    } ).catch( ( err ) => {
+      console.log( err );
       if ( error ) error();
       setUpdating( false );
       message.error( 'Unable to update order.' );

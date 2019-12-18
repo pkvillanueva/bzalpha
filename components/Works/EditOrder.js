@@ -12,7 +12,7 @@ import styles from './styles.less';
 const EditOrder = ( { titleType, saveValues, status, order, children } ) => {
   const { updateOrder } = useContext( OrdersContext );
 
-  const handleSave = ( { values, success } ) => {
+  const handleSave = ( { values, success, error } ) => {
     const { id } = order;
 
     values = mapValues( values, ( v ) => v instanceof moment ? v.format( 'YYYY-MM-DD' ) : v );
