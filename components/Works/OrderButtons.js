@@ -1,0 +1,78 @@
+import React, { useContext } from 'react';
+import { Modal, Icon, Divider, Button } from 'antd';
+import { map } from 'lodash';
+import EditOrder from './EditOrder';
+import { OrdersContext } from '~/store/orders';
+
+const OrderButtons = ( { order } ) => {
+  const { deleteOrder, updateOrder } = useContext( OrdersContext );
+  const { id, order_status } = order;
+  const buttons = [];
+
+  const handleDelete = () => {
+    Modal.confirm( {
+      title: 'Are you sure delete this order?',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: () => deleteOrder( id )
+    } );
+  };
+
+  const handleOnboard = () => {
+    Modal.confirm( {
+      title: 'Are you sure to onboard this order?',
+      okText: 'Yes',
+      cancelText: 'No',
+      onOk: () => updateOrder( { id, params: { order_status: 'onboard' } } )
+    } );
+  };
+
+  const handleSignOff = () => {
+    Modal.confirm( {
+      title: 'Are you sure to close this order?',
+      okText: 'Yes',
+      cancelText: 'No',
+      onOk: () => updateOrder( { id, params: { order_status: 'processing' } } )
+    } );
+  };
+
+  if ( order_status === 'processing' ) {
+    buttons.push(
+      <Button size="small" type="primary" onClick={ () => handleOnboard( order.id ) }>
+        Onboard
+      </Button>
+    );
+  } else if ( order_status === 'onboard' && order.bind_order ) {
+    buttons.push(
+      <Button size="small" type="primary">
+        Switch
+      </Button>
+      );
+  } else if ( order_status === 'onboard' ) {
+    buttons.push(
+      <Button size="small" type="default" onClick={ () => handleSignOff( order.id ) }>
+        Close
+      </Button>
+    );
+  }
+
+  buttons.push(
+    <EditOrder status={ order_status } order={ order }>
+      <Icon type="edit" />
+    </EditOrder>
+  );
+
+  buttons.push(
+    <Icon type="delete" onClick={ () => handleDelete( order.id ) } />
+  );
+
+  return map( buttons, ( button, i ) => (
+    <span key={ i }>
+      { button }
+      { ( i !== ( buttons.length - 1 ) ) && <Divider type="vertical" /> }
+    </span>
+  ) );
+};
+
+export default OrderButtons;

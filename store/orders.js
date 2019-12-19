@@ -23,6 +23,7 @@ export const OrdersProvider = ( { children } ) => {
       cancelToken: signal.token,
       params: {
         vessel: vessel,
+        orderby: 'id',
         per_page: 100
       },
       headers: {
@@ -70,17 +71,25 @@ export const OrdersProvider = ( { children } ) => {
         'Authorization': `Bearer ${ token }`
       }
     } ).then( ( res ) => {
-      if ( success ) success( res );
+      if ( success ) {
+        success( res );
+      }
+
       setOrders( map( orders, ( order ) => order.id === id ? res.data : order ) );
       setUpdating( false );
       message.success( 'Order updated.' );
     } ).catch( ( err ) => {
+      if ( error ) {
+        error();
+      }
+
       console.log( err );
-      if ( error ) error();
       setUpdating( false );
       message.error( 'Unable to update order.' );
     } ).finally( () => {
-      if ( done ) done();
+      if ( done ) {
+        done();
+      }
     } );
   }
 

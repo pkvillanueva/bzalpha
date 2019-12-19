@@ -8,7 +8,7 @@ import { OrdersProvider, OrdersContext } from '~/store/orders';
 import withProvider from '~/utils/withProvider';
 import styles from './styles.less';
 
-const Vessel = ( { vessel, num } ) => {
+const VesselOrders = ( { vessel, num } ) => {
   const { orders, setOrders } = useContext( OrdersContext );
   const [ expanded, setExpanded ] = useState( false );
 
@@ -21,20 +21,16 @@ const Vessel = ( { vessel, num } ) => {
       return null;
     }
 
-    return (
-      <>
-        { ! isEmpty( orders ) && map( orders, ( { position, order_status, sign_off }, key ) => (
-          <RankAvatar
-            style={ { fontSize: 12 } }
-            size={ 38 }
-            key={ key }
-            children={ position }
-            type={ order_status }
-            signOff={ sign_off }
-          />
-        ) ) }
-      </>
-    );
+    return map( orders, ( { position, order_status, sign_off }, key ) => (
+      <RankAvatar
+        style={ { fontSize: 12 } }
+        size={ 38 }
+        key={ key }
+        children={ position }
+        status={ order_status }
+        date={ sign_off }
+      />
+    ) );
   };
 
   const Header = () => (
@@ -67,4 +63,4 @@ const Vessel = ( { vessel, num } ) => {
   );
 };
 
-export default withProvider( OrdersProvider, Vessel );
+export default withProvider( OrdersProvider, VesselOrders );

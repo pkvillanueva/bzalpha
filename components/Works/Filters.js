@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { isEmpty } from 'lodash';
 import { Form, Card, Button } from 'antd';
 import SelectFetch from '~/components/SelectFetch';
-import EditBulkOrder from './EditBulkOrder';
+import EditOrders from './EditOrders';
 import { WorksContext } from '~/store/works';
 import styles from './styles.less';
 
@@ -15,12 +15,19 @@ const Filters = () => {
     vesselId,
     setVesselId,
     vesselName,
-    setVesselName,
-    updateVessel
+    setVesselName
   } = useContext( WorksContext );
 
-  const onSave = ( id ) => {
-    updateVessel( parseInt( id ) );
+  const handlePrincipal = ( value ) => {
+    setPrincipalId( ! isEmpty( value ) ? value.key : '' );
+    setPrincipalName( ! isEmpty( value ) ? value.label : '' );
+    setVesselId( '' );
+    setVesselName( '' );
+  };
+
+  const handleVessel = ( value ) => {
+    setVesselId( ! isEmpty( value ) ? value.key : '' );
+    setVesselName( ! isEmpty( value ) ? value.label : '' );
   };
 
   return (
@@ -36,18 +43,7 @@ const Filters = () => {
             dataKey="id"
             labelKey="name"
             action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/principal` }
-            onChange={ ( value ) => {
-              if ( ! isEmpty( value ) ) {
-                setPrincipalId( value.key );
-                setPrincipalName( value.label );
-              } else {
-                setPrincipalId( '' );
-                setPrincipalName( '' );
-              }
-
-              setVesselId( '' );
-              setVesselName( '' );
-            } }
+            onChange={ handlePrincipal }
           />
         </Form.Item>
         <Form.Item label="Vessel">
@@ -58,29 +54,22 @@ const Filters = () => {
             allowClear={ true }
             placeholder="Enter vessel name"
             action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel` }
-            onChange={ ( value ) => {
-              if ( ! isEmpty( value ) ) {
-                setVesselId( value.key );
-                setVesselName( value.label );
-              } else {
-                setVesselId( '' );
-                setVesselName( '' );
-              }
-            } }
+            onChange={ handleVessel }
             customParams= { {
               principal: principalId
             } }
           />
         </Form.Item>
-        <EditBulkOrder
+        <EditOrders
           principalId={ principalId }
           principalName={ principalName }
           vesselId={ vesselId }
           vesselName={ vesselName }
-          onSave={ onSave }
         >
-          <Button icon="plus" type="primary" className={ styles.bulkOrder }>Create Order</Button>
-        </EditBulkOrder>
+          <Button icon="plus" type="primary" className={ styles.bulkOrder }>
+            Create Order
+          </Button>
+        </EditOrders>
       </Form>
     </Card>
   );

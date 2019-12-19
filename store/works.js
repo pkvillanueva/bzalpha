@@ -3,6 +3,7 @@
  */
 import React, { createContext, useState } from 'react';
 import axios from 'axios';
+import { message } from 'antd';
 import { map } from 'lodash';
 import { parseCookies } from 'nookies';
 const { token } = parseCookies();
@@ -11,7 +12,6 @@ export const WorksContext = createContext();
 
 export const WorksProvider = ( { children } ) => {
   const [ loading, setLoading ] = useState( true );
-  const [ fetchVesselId, setFetchVesselId ] = useState( 0 );
   const [ principalId, setPrincipalId ] = useState( '' );
   const [ principalName, setPrincipalName ] = useState( '' );
   const [ vesselId, setVesselId ] = useState( '' );
@@ -39,17 +39,19 @@ export const WorksProvider = ( { children } ) => {
       }
     } ).then( ( res ) => {
       setVessels( res.data );
+    } ).catch( ( err ) => {
+      console.log( err );
     } ).finally( () => {
       setLoading( false );
     } );
   };
 
-  const updateVessel = ( id ) => {
+  const getVessel = ( id ) => {
     if ( ! id ) {
       return;
     }
 
-    setFetchVesselId( id );
+    setLoading( true );
     axios.get( `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel/${ id }`, {
       cancelToken: signal.token,
       params: {
@@ -61,10 +63,40 @@ export const WorksProvider = ( { children } ) => {
       }
     } ).then( ( res ) => {
       setVessels( map( vessels, ( vessel ) => vessel.id === id ? res.data : vessel ) );
+    } ).catch( ( err ) => {
+      console.log( err );
     } ).finally( () => {
-      setFetchVesselId( 0 );
+      setLoading( false );
     } );
   };
+
+  const saveOrders = ( { values, success, error, done } ) => {
+    axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/bulk`, values, {
+      cancelToken: signal.token,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${ token }`
+      },
+    } ).then( ( res ) => {
+      if ( success ) {
+        success( res );
+      }
+
+      getVessel( parseInt( values.vessel ) );
+      message.success( 'Orders created.' );
+    } ).catch( ( err ) => {
+      if ( error ) {
+        error();
+      }
+
+      console.log( err );
+      message.error( 'Failed to create orders.' );
+    } ).finally( () => {
+      if ( done ) {
+        done();
+      }
+    } );
+  }
 
   const store = {
     loading,
@@ -80,9 +112,8 @@ export const WorksProvider = ( { children } ) => {
     vessels,
     setVessels,
     getVessels,
-    fetchVesselId,
-    setFetchVesselId,
-    updateVessel
+    getVessel,
+    saveOrders
   };
 
   return (

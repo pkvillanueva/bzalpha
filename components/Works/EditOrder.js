@@ -47,7 +47,11 @@ const EditOrder = ( { titleType, saveValues, status, order, children } ) => {
                       initialValue: order.currency
                     } )(
                       <Select>
-                        { map( currencies, ( currency ) => <Select.Option value={ currency.code } key={ currency.code }>{ `(${ currency.symbol }) ${ currency.name }` }</Select.Option> ) }
+                        { map( currencies, ( currency ) => (
+                          <Select.Option value={ currency.code } key={ currency.code }>
+                            { `(${ currency.symbol }) ${ currency.name }` }
+                          </Select.Option>
+                        ) ) }
                       </Select>
                     ) }
                   </Form.Item>
@@ -59,7 +63,11 @@ const EditOrder = ( { titleType, saveValues, status, order, children } ) => {
                   rules: [ { required: true, message: 'Position is required.' } ]
                 } )(
                   <Select placeholder="Select position" >
-                    { map( ranks, ( rank ) => <Select.Option value={ rank.value } key={ rank.value }>{ rank.name }</Select.Option> ) }
+                    { map( ranks, ( rank ) => (
+                      <Select.Option value={ rank.value } key={ rank.value }>
+                        { rank.name }
+                      </Select.Option>
+                    ) ) }
                   </Select>
                 ) }
               </Form.Item>
@@ -98,28 +106,6 @@ const EditOrder = ( { titleType, saveValues, status, order, children } ) => {
             <Col lg={ 12 }>
               <Row gutter={ 24 }>
                 <Col lg={ 12 }>
-                  <Form.Item label="Sign On Date">
-                    { getFieldDecorator( 'sign_on', {
-                      initialValue: order.sign_on && moment( order.sign_on ),
-                      rules: [ { required: true, message: 'Sign on date is required.' } ]
-                    } )(
-                      <DatePicker placeholder="YYYY-MM-DD" />
-                    ) }
-                  </Form.Item>
-                </Col>
-                <Col lg={ 12 }>
-                  <Form.Item label="Sign Off Date">
-                    { getFieldDecorator( 'sign_off', {
-                      initialValue: order.sign_off && moment( order.sign_off ),
-                      rules: [ { required: true, message: 'Sign off date is required.' } ]
-                    } )(
-                      <DatePicker placeholder="YYYY-MM-DD" />
-                    ) }
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row gutter={ 24 }>
-                <Col lg={ 12 }>
                   <Form.Item label="Join Port">
                     { getFieldDecorator( 'port', {
                       initialValue: order.port
@@ -134,6 +120,28 @@ const EditOrder = ( { titleType, saveValues, status, order, children } ) => {
                       initialValue: order.return_port
                     } )(
                       <Input />
+                    ) }
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={ 24 }>
+                <Col lg={ 12 }>
+                  <Form.Item label="Join Date">
+                    { getFieldDecorator( 'sign_on', {
+                      initialValue: order.sign_on && moment( order.sign_on ),
+                      rules: [ { required: true, message: 'Join is required.' } ]
+                    } )(
+                      <DatePicker placeholder="YYYY-MM-DD" />
+                    ) }
+                  </Form.Item>
+                </Col>
+                <Col lg={ 12 }>
+                  <Form.Item label="Return Date">
+                    { getFieldDecorator( 'sign_off', {
+                      initialValue: order.sign_off && moment( order.sign_off ),
+                      rules: [ { required: true, message: 'Return date is required.' } ]
+                    } )(
+                      <DatePicker placeholder="YYYY-MM-DD" />
                     ) }
                   </Form.Item>
                 </Col>
