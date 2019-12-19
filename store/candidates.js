@@ -18,7 +18,7 @@ export const CandidatesProvider = ( { order, children } ) => {
   const saveCandidates = ( records ) => {
     updateOrder( {
       id: order.id,
-      params: {
+      values: {
         candidates: records
       },
       success( res ) {

@@ -10,14 +10,21 @@ import { ranks } from '~/utils/ranks';
 import styles from './styles.less';
 
 const EditOrder = ( { titleType, saveValues, status, order, children } ) => {
-  const { updateOrder } = useContext( OrdersContext );
+  const { updateOrder, createOrder } = useContext( OrdersContext );
+  const isReserved = status === 'reserved';
 
   const handleSave = ( { values, success, error } ) => {
     const { id } = order;
+    const { parent_order } = saveValues;
 
     values = mapValues( values, ( v ) => v instanceof moment ? v.format( 'YYYY-MM-DD' ) : v );
     values = { ...values, ...saveValues };
-    updateOrder( { params: values, id, success, error } );
+
+    if ( parent_order ) {
+      createOrder( { values, success, error } );
+    } else {
+      updateOrder( { values, id, success, error } );
+    }
   };
 
   return (
@@ -64,7 +71,7 @@ const EditOrder = ( { titleType, saveValues, status, order, children } ) => {
                 } )(
                   <Select placeholder="Select position" >
                     { map( ranks, ( rank ) => (
-                      <Select.Option value={ rank.value } key={ rank.value }>
+                      <Select.Option value={ rank.value } key={ rank.value } disabled={ isReserved }>
                         { rank.name }
                       </Select.Option>
                     ) ) }
