@@ -2,13 +2,13 @@ import React, { useEffect, useContext } from 'react';
 import { map, isEmpty } from 'lodash';
 import { Result, Spin, Empty } from 'antd';
 import Filters from './Filters';
-import Vessel from './Vessel';
+import VesselOrders from './VesselOrders';
 import { WorksProvider, WorksContext } from '~/store/works';
 import withProvider from '~/utils/withProvider';
 import styles from './styles.less';
 
 const Works = () => {
-  const { loading, principalId, vesselId, vessels, getVessels, fetchVesselId } = useContext( WorksContext );
+  const { loading, principalId, vesselId, vessels, getVessels } = useContext( WorksContext );
 
   // Initial data fetch.
   useEffect( getVessels, [ principalId, vesselId ] );
@@ -26,12 +26,7 @@ const Works = () => {
 
     return map( vessels, ( vessel, num ) => (
       <div className={ styles.vesselWrapper } key={ num }>
-        { fetchVesselId === vessel.id ?
-          <Spin tip="Loading...">
-            <Vessel vessel={ vessel } num={ ++num } />
-          </Spin> :
-          <Vessel vessel={ vessel } num={ ++num } />
-        }
+        <VesselOrders vessel={ vessel } num={ ++num } />
       </div>
     ) );
   };

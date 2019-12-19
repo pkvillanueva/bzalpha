@@ -25,7 +25,7 @@ const withProvider = ( Provider, Component ) => class extends React.Component {
     const { providerProps, componentProps, ...props } = this.props;
 
     return (
-      <Provider { ...providerProps }>
+      <Provider { ...providerProps } { ...props }>
         <Component { ...componentProps } { ...props } />
       </Provider>
     )

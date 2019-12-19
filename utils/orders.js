@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { getCurrencySymbol } from '~/utils/currencies';
 
 export const candidateTypes = {
   proposed: 'Proposed',
@@ -10,7 +11,8 @@ export const orderStatus = {
   processing: 'Processing',
   onboard: 'Onboard',
   completed: 'Completed',
-  cancelled: 'Cancelled'
+  cancelled: 'Cancelled',
+  reserved: 'Reserved'
 };
 
 export const getCandidateType = ( type ) => {
@@ -21,8 +23,47 @@ export const getOrderStatus = ( status ) => {
   return orderStatus[ status ] || '';
 };
 
-export const isContractExpiring = ( date ) => {
-  if ( ! date ) {
+export const getOrderDetails = ( order ) => {
+  const {
+    order_status,
+    deadline,
+    sign_on,
+    sign_off,
+    port,
+    return_port,
+    wage,
+    currency,
+    contract_plus,
+    contract_minus,
+    remark
+  } = order;
+  let text = '';
+
+  if ( order_status === 'pending' ) {
+    text += `${ sign_on ? `Join Date: ${ moment( sign_on ).format( 'MMM D YY' ) } ` : '' }`;
+    text += `${ deadline ? `/ Deadline: ${ moment( deadline ).format( 'MMM D YY' ) } ` : '' }`;
+    text += `${ remark ? `(Remark: ${ remark })` : '' }`;
+    return text;
+  }
+
+  text += `${ sign_on ? `${ order_status === 'processing' ? 'Join Date:' : 'Joined Date:' } ${ moment( sign_on ).format( 'MMM D YY' ) } ` : '' }`;
+  text += `${ port ? `@ ${ port } ` : '' }`;
+  text += `${ wage ? `[${ getCurrencySymbol( currency ) }${ wage }] ` : '' }`;
+  text += `${ contract_plus ? `${ contract_plus } +/- ` : '' }`;
+  text += `${ contract_plus && contract_minus ? `${ contract_minus } ` : '' }`;
+  text += `${ sign_off ? `Until: ${ moment( sign_off ).format( 'MMM D YY' ) } ` : '' }`;
+  text += `${ return_port ? `@ ${ return_port } ` : '' }`;
+  text += `${ remark ? `(Remark: ${ remark })` : '' }`;
+  return text;
+};
+
+export const isOrderExpiring = ( order, date ) => {
+  if ( typeof order === 'object' ) {
+    date = order.sign_off;
+    order = order.order_status;
+  }
+
+  if ( ! date || order !== 'onboard' ) {
     return false;
   }
 

@@ -1,18 +1,18 @@
 import { Avatar } from 'antd';
 import classnames from 'classnames';
 import styles from './styles.less';
-import { isContractExpiring } from '~/utils/orders';
+import { isOrderExpiring } from '~/utils/orders';
 
-const RankAvatar = ( { type, signOff, ...props } ) => {
-  let setType = type;
+const RankAvatar = ( { status, date, ...props } ) => {
+  let typeClass = status;
 
-  if ( type === 'onboard' && signOff && isContractExpiring( signOff ) ) {
-    setType = 'expiring';
+  if ( isOrderExpiring( status, date ) ) {
+    typeClass = 'expiring';
   }
 
   const className = classnames( {
     [`${ styles.rankAvatar }`]: true,
-    [`${ styles[ setType ] }`]: true,
+    [`${ styles[ typeClass ] }`]: true,
   } );
 
   return <Avatar { ...props } className={ className } />

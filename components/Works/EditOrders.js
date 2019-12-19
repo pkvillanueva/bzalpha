@@ -1,43 +1,30 @@
 /**
  * External dependencies.
  */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { map, isEmpty } from 'lodash';
-import axios from 'axios';
-const { token } = parseCookies();
-import { parseCookies } from 'nookies';
-import { Row, Col, Form, Input, InputNumber, Select, Checkbox, DatePicker, message } from 'antd';
-
-/**
- * Internal dependencies.
- */
+import { Row, Col, Form, Input, InputNumber, Select, Checkbox, DatePicker } from 'antd';
 import { ranks } from '~/utils/ranks';
 import { currencies } from '~/utils/currencies';
 import SelectFetch from '~/components/SelectFetch';
 import ModalForm from '~/components/ModalForm';
+import { WorksContext } from '~/store/works';
 import styles from './styles.less';
 
-const EditBulkOrder = ( { principalId, principalName, vesselId, vesselName, children, onSave } ) => {
+const EditOrders = ( { principalId, principalName, vesselId, vesselName, children } ) => {
+  const { saveOrders } = useContext( WorksContext );
   const [ principal, setPrincipal ] = useState( '' );
 
   const handleSave = ( { values, form, success, done } ) => {
     const { resetFields } = form;
 
-    axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/bulk`, values, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${ token }`
-      },
-    } ).then( () => {
-      if ( onSave ) onSave( values.vessel );
-      resetFields();
-      success();
-      message.success( 'Order created.' );
-    } ).catch( ( err ) => {
-      console.log( err );
-      message.error( 'Failed to create an order.' );
-    } ).finally( () => {
-      done();
+    saveOrders( {
+      values,
+      done,
+      success: () => {
+        resetFields();
+        success();
+      }
     } );
   };
 
@@ -101,7 +88,11 @@ const EditBulkOrder = ( { principalId, principalName, vesselId, vesselName, chil
                       initialValue: 'USD'
                     } )(
                       <Select>
-                        { map( currencies, ( currency ) => <Select.Option value={ currency.code } key={ currency.code }>{ `(${ currency.symbol }) ${ currency.name }` }</Select.Option> ) }
+                        { map( currencies, ( currency ) => (
+                          <Select.Option value={ currency.code } key={ currency.code }>
+                            { `(${ currency.symbol }) ${ currency.name }` }
+                          </Select.Option>
+                        ) ) }
                       </Select>
                     ) }
                   </Form.Item>
@@ -116,7 +107,11 @@ const EditBulkOrder = ( { principalId, principalName, vesselId, vesselName, chil
                     placeholder="Select positions"
                     showSearch={ true }
                   >
-                    { map( ranks, ( rank ) => <Select.Option value={ rank.value } key={ rank.value }>{ rank.name }</Select.Option> ) }
+                    { map( ranks, ( rank ) => (
+                      <Select.Option value={ rank.value } key={ rank.value }>
+                        { rank.name }
+                      </Select.Option>
+                    ) ) }
                   </Select>
                 ) }
               </Form.Item>
@@ -124,7 +119,7 @@ const EditBulkOrder = ( { principalId, principalName, vesselId, vesselName, chil
             <Col lg={ 12 }>
               <Row gutter={ 24 }>
                 <Col lg={ 12 }>
-                  <Form.Item label="Port">
+                  <Form.Item label="Join Port">
                     { getFieldDecorator( 'port', {} )(
                       <Input />
                     ) }
@@ -184,4 +179,4 @@ const EditBulkOrder = ( { principalId, principalName, vesselId, vesselName, chil
   );
 };
 
-export default EditBulkOrder;
+export default EditOrders;
