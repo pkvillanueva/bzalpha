@@ -26,10 +26,26 @@ const CandidateButtons = ( { candidate, index } ) => {
       </EditOrder>
     );
   } else if ( seaman.ID && status === 'approved' && order_status === 'onboard' ) {
+    const { id, position, currency, sign_off, return_port } = order;
+
     buttons.push(
-      <Button size="small" type="primary">
-        Reserve
-      </Button>
+      <EditOrder
+          titleType="Save"
+          status="reserved"
+          order={ {
+            id,
+            position,
+            currency,
+            sign_on: sign_off,
+            port: return_port
+          } }
+          saveValues={ {
+            seaman: seaman.ID,
+            parent_order: id
+          } }
+        >
+        <Button size="small" type="primary">Reserve</Button>
+      </EditOrder>
     );
   }
 

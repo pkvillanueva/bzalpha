@@ -60,11 +60,11 @@ export const OrdersProvider = ( { children } ) => {
     } );
   };
 
-  const updateOrder = ( { id, params, success, error, done } ) => {
+  const updateOrder = ( { id, values, success, error, done } ) => {
     id = parseInt( id );
     setUpdating( true );
 
-    axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/${ id } `, params, {
+    axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/${ id }`, values, {
       cancelToken: signal.token,
       headers: {
         'Content-Type': 'application/json',
@@ -91,7 +91,54 @@ export const OrdersProvider = ( { children } ) => {
         done();
       }
     } );
-  }
+  };
+
+  const createOrder = ( { values, success, error, done } ) => {
+    const { parent_order } = values;
+    setUpdating( true );
+
+    axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/`, {
+      ...values,
+      status: 'publish'
+    }, {
+      cancelToken: signal.token,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${ token }`
+      }
+    } ).then( ( res ) => {
+      if ( success ) {
+        success( res );
+      }
+
+      if ( parent_order ) {
+        setOrders( map( orders, ( order ) => {
+          return order.id === parent_order ? {
+            ...order,
+            candidates: [],
+            bind_order: res.data
+          } : order;
+        } ) );
+      } else {
+        setOrders( orders.unshift( res.data ) );
+      }
+
+      setUpdating( false );
+      message.success( 'Order updated.' );
+    } ).catch( ( err ) => {
+      if ( error ) {
+        error();
+      }
+
+      console.log( err );
+      setUpdating( false );
+      message.error( 'Unable to update order.' );
+    } ).finally( () => {
+      if ( done ) {
+        done();
+      }
+    } );
+  };
 
   const store = {
     loading,
@@ -101,6 +148,7 @@ export const OrdersProvider = ( { children } ) => {
     getOrders,
     deleteOrder,
     updateOrder,
+    createOrder,
     orders,
     setOrders
   };

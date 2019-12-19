@@ -24,7 +24,7 @@ const OrderButtons = ( { order } ) => {
       title: 'Are you sure to onboard this order?',
       okText: 'Yes',
       cancelText: 'No',
-      onOk: () => updateOrder( { id, params: { order_status: 'onboard' } } )
+      onOk: () => updateOrder( { id, values: { order_status: 'onboard' } } )
     } );
   };
 
@@ -33,7 +33,7 @@ const OrderButtons = ( { order } ) => {
       title: 'Are you sure to close this order?',
       okText: 'Yes',
       cancelText: 'No',
-      onOk: () => updateOrder( { id, params: { order_status: 'processing' } } )
+      onOk: () => updateOrder( { id, values: { order_status: 'processing' } } )
     } );
   };
 

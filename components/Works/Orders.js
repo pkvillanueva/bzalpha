@@ -95,7 +95,9 @@ const Orders = ( { vessel } ) => {
   const expandedRowRender = ( order ) => {
     const { order_status } = order;
 
-    if ( order_status === 'pending' || isOrderExpiring( order ) ) {
+    if ( order_status === 'onboard' && order.bind_order ) {
+      return <>Reserved!</>;
+    } else if ( order_status === 'pending' || isOrderExpiring( order ) ) {
       return <Candidates order={ order } />;
     }
 
