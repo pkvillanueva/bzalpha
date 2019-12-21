@@ -26,7 +26,6 @@ export const WorksProvider = ( { children } ) => {
     if ( vesselId ) {
       params.include = [ vesselId ];
     } else if ( principalId ) {
-      params.per_page = 100;
       params.principal = principalId;
     }
 

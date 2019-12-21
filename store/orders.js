@@ -54,7 +54,7 @@ export const OrdersProvider = ( { children } ) => {
       message.success( 'Order deleted.' );
     } ).catch( ( err ) => {
       console.log( err );
-      message.success( 'Unable to delete order.' );
+      message.error( 'Unable to delete order.' );
     } ).finally( () => {
       setUpdating( false );
     } );
@@ -116,7 +116,7 @@ export const OrdersProvider = ( { children } ) => {
           return order.id === parent_order ? {
             ...order,
             candidates: [],
-            bind_order: res.data
+            child_order: res.data
           } : order;
         } ) );
       } else {

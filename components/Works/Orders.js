@@ -3,6 +3,7 @@ import { Table, Tag } from 'antd';
 import { map, isEmpty } from 'lodash';
 import RankAvatar from './RankAvatar';
 import Candidates from './Candidates';
+import ReservedCandidate from './ReservedCandidate';
 import OrderButtons from './OrderButtons';
 import { OrdersContext } from '~/store/orders';
 import { getOrderDetails, isOrderExpiring } from '~/utils/orders';
@@ -93,10 +94,10 @@ const Orders = ( { vessel } ) => {
   ];
 
   const expandedRowRender = ( order ) => {
-    const { order_status } = order;
+    const { order_status, id, child_order } = order;
 
-    if ( order_status === 'onboard' && order.bind_order ) {
-      return <>Reserved!</>;
+    if ( order_status === 'onboard' && child_order ) {
+      return <ReservedCandidate parentId={ id } order={ child_order } />;
     } else if ( order_status === 'pending' || isOrderExpiring( order ) ) {
       return <Candidates order={ order } />;
     }

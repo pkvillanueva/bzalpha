@@ -43,7 +43,7 @@ const OrderButtons = ( { order } ) => {
         Onboard
       </Button>
     );
-  } else if ( order_status === 'onboard' && order.bind_order ) {
+  } else if ( order_status === 'onboard' && order.child_order ) {
     buttons.push(
       <Button size="small" type="primary">
         Switch

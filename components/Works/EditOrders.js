@@ -18,6 +18,8 @@ const EditOrders = ( { principalId, principalName, vesselId, vesselName, childre
   const handleSave = ( { values, form, success, done } ) => {
     const { resetFields } = form;
 
+    values.vessel = parseInt( values.vessel );
+
     saveOrders( {
       values,
       done,
