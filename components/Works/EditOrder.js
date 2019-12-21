@@ -15,10 +15,10 @@ const EditOrder = ( { titleType, saveValues, status, order, children } ) => {
 
   const handleSave = ( { values, success, error } ) => {
     const { id } = order;
-    const { parent_order } = saveValues;
 
     values = mapValues( values, ( v ) => v instanceof moment ? v.format( 'YYYY-MM-DD' ) : v );
     values = { ...values, ...saveValues };
+    const { parent_order } = values;
 
     if ( parent_order ) {
       createOrder( { values, success, error } );
