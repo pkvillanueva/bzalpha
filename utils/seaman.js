@@ -2,6 +2,24 @@ import { filter } from 'lodash';
 import moment from 'moment';
 import { ranks } from './ranks';
 
+export const endOfContract = [
+  'At Sea',
+  'Compassionate Leave',
+  'Demotion',
+  'Dismissed',
+  'Documents Lacking',
+  'Drug or Alcohol Abuse',
+  'Dry Dock Supervision',
+  'End of Contract',
+  'Management Change',
+  'Medical Ground',
+  'Promotion',
+  'Resign',
+  'Superintendent Visit',
+  'Transfer',
+  'Vessel Lay Up',
+];
+
 export const getContact = ( seaman ) => {
   return seaman.phone || seaman.email || seaman.skype || seaman.tel || '';
 }
