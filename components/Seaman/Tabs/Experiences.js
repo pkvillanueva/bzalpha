@@ -13,7 +13,7 @@ import ReactCountryFlag from 'react-country-flag';
 import { SeamanContext } from '~/store/seaman';
 import DataCollection from '~/components/DataCollection';
 import { ranks } from '~/utils/ranks';
-import { getRankName, getTotalTime } from '~/utils/seaman';
+import { getRankName, getTotalTime, endOfContract } from '~/utils/seaman';
 import { countries } from '~/utils/countries';
 import { vesselType } from '~/utils/vessel';
 
@@ -163,22 +163,10 @@ const Experiences = () => {
           { getFieldDecorator( 'end_of_contract', {
             initialValue: initialValues.end_of_contract
           } )(
-            <Select style={ { width: '100%' } }>
-              <Select.Option value="At Sea">At Sea</Select.Option>
-              <Select.Option value="Compassionate Leave">Compassionate Leave</Select.Option>
-              <Select.Option value="Demotion">Demotion</Select.Option>
-              <Select.Option value="Dismissed">Dismissed</Select.Option>
-              <Select.Option value="Documents Lacking">Documents Lacking</Select.Option>
-              <Select.Option value="Drug or Alcohol Abuse">Drug or Alcohol Abuse</Select.Option>
-              <Select.Option value="Dry Dock Supervision">Dry Dock Supervision</Select.Option>
-              <Select.Option value="End of Contract">End of Contract</Select.Option>
-              <Select.Option value="Management Change">Management Change</Select.Option>
-              <Select.Option value="Medical Ground">Medical Ground</Select.Option>
-              <Select.Option value="Promotion">Promotion</Select.Option>
-              <Select.Option value="Resign">Resign</Select.Option>
-              <Select.Option value="Superintendent Visit">Superintendent Visit</Select.Option>
-              <Select.Option value="Transfer">Transfer</Select.Option>
-              <Select.Option value="Vessel Lay Up">Vessel Lay Up</Select.Option>
+            <Select showSearch={ true } style={ { width: '100%' } }>
+              { map( endOfContract, ( text ) => (
+                <Select.Option value={ text }>{ text }</Select.Option>
+              ) ) }
             </Select>
           ) }
         </Form.Item>,
