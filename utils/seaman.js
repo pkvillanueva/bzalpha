@@ -35,7 +35,7 @@ export const getTotalTime = ( start, end ) => {
   end = moment( end );
   total += end.diff( start, 'days' );
 
-  if ( ! total ) {
+  if ( ! total || total < 0 ) {
     return 0;
   }
 
@@ -65,8 +65,8 @@ export const getTotalSeaTime = ( exp ) => {
     } );
   }
 
-  if ( ! total ) {
-    return '';
+  if ( ! total || total < 0 ) {
+    return 0;
   }
 
   const years = Math.floor( total / 365 );
