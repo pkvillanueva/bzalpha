@@ -164,8 +164,10 @@ const Experiences = () => {
             initialValue: initialValues.end_of_contract
           } )(
             <Select showSearch={ true } style={ { width: '100%' } }>
-              { map( endOfContract, ( text ) => (
-                <Select.Option value={ text }>{ text }</Select.Option>
+              { map( endOfContract, ( text, key ) => (
+                <Select.Option value={ text } key={ key }>
+                  { text }
+                </Select.Option>
               ) ) }
             </Select>
           ) }
