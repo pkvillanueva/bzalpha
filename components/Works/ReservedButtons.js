@@ -5,15 +5,28 @@ import EditOrder from './EditOrder';
 import { OrdersContext } from '~/store/orders';
 
 const ReservedButtons = ( { order } ) => {
-  const { id, order_status } = order;
+  const { deleteOrder } = useContext( OrdersContext );
+  const { id } = order;
   const buttons = [];
 
+  const handleDelete = () => {
+    Modal.confirm( {
+      title: 'Are you sure delete this order?',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: () => deleteOrder( id )
+    } );
+  };
+
   buttons.push(
-    <a>Edit</a>
+    <EditOrder title="Edit Reserve Order" order={ order }>
+      <a>Edit</a>
+    </EditOrder>
   );
 
   buttons.push(
-    <a>Delete</a>
+    <a onClick={ handleDelete }>Delete</a>
   );
 
   return map( buttons, ( button, i ) => (

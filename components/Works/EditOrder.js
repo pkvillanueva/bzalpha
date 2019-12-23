@@ -1,35 +1,50 @@
 import React, { useContext } from 'react';
 import moment from 'moment';
-import { mapValues, map } from 'lodash';
+import { mapValues, map, isEmpty } from 'lodash';
 import { Form, Row, Col, Input, InputNumber, Select, DatePicker, Checkbox } from 'antd';
 import ModalForm from '~/components/ModalForm';
 import { OrdersContext } from '~/store/orders';
-import { getOrderStatus } from '~/utils/orders';
 import { currencies } from '~/utils/currencies';
 import { ranks } from '~/utils/ranks';
 import styles from './styles.less';
 
-const EditOrder = ( { titleType, saveValues, status, order, children } ) => {
+const EditOrder = ( { title, saveValues, order, children } ) => {
   const { updateOrder, createOrder } = useContext( OrdersContext );
-  const isReserved = status === 'reserved';
+  const { id, parent_order } = order
 
   const handleSave = ( { values, success, error } ) => {
-    const { id } = order;
-
     values = mapValues( values, ( v ) => v instanceof moment ? v.format( 'YYYY-MM-DD' ) : v );
     values = { ...values, ...saveValues };
-    const { parent_order } = values;
 
-    if ( parent_order ) {
+    if ( ! id ) {
       createOrder( { values, success, error } );
     } else {
       updateOrder( { values, id, success, error } );
     }
   };
 
+  const formTitle = () => {
+    const { position, id } = order;
+    let text = 'Edit Order ';
+
+    if ( title ) {
+      text = `${ title } `;
+    }
+
+    return `${ text } ${ position }-${ id }`;
+  };
+
+  const hasParentOrder = () => {
+    return ! isEmpty( parent_order );
+  };
+
+  const isCloseOrder = () => {
+
+  };
+
   return (
     <ModalForm
-      title={ `${ titleType ? titleType : 'Edit' } ${ getOrderStatus( status ) } Order ${ order.position }-${ order.id } `}
+      title={ formTitle() }
       className={ styles.editOrderModal }
       width={ '100%' }
       onSave={ handleSave }
@@ -71,7 +86,7 @@ const EditOrder = ( { titleType, saveValues, status, order, children } ) => {
                 } )(
                   <Select placeholder="Select position" >
                     { map( ranks, ( rank ) => (
-                      <Select.Option value={ rank.value } key={ rank.value } disabled={ isReserved }>
+                      <Select.Option value={ rank.value } key={ rank.value } disabled={ hasParentOrder() }>
                         { rank.name }
                       </Select.Option>
                     ) ) }

@@ -58,7 +58,7 @@ const OrderButtons = ( { order } ) => {
   }
 
   buttons.push(
-    <EditOrder status={ order_status } order={ order }>
+    <EditOrder order={ order }>
       <Icon type="edit" />
     </EditOrder>
   );

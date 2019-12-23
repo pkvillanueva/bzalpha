@@ -13,8 +13,7 @@ const CandidateButtons = ( { candidate, index } ) => {
   if ( seaman.ID && status === 'approved' && order_status === 'pending' ) {
     buttons.push(
       <EditOrder
-          titleType="Save"
-          status="processing"
+          title="Save Process Order"
           order={ order }
           saveValues={ {
             seaman: seaman.ID,
@@ -30,10 +29,8 @@ const CandidateButtons = ( { candidate, index } ) => {
 
     buttons.push(
       <EditOrder
-          titleType="Save"
-          status="reserved"
+          title="Save Reserve Order"
           order={ {
-            id,
             position,
             currency,
             sign_on: sign_off,

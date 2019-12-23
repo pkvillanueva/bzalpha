@@ -49,8 +49,20 @@ export const OrdersProvider = ( { children } ) => {
       data: {
         id: id
       }
-    } ).then( () => {
-      setOrders( filter( orders, order => order.id !== id ) );
+    } ).then( ( res ) => {
+      const { parent_order } = res.data;
+
+      if ( parent_order ) {
+        setOrders( map( orders, ( order ) => {
+          return order.id === parent_order.id ? {
+            ...order,
+            child_order: null
+          } : order;
+        } ) );
+      } else {
+        setOrders( filter( orders, order => order.id !== id ) );
+      }
+
       message.success( 'Order deleted.' );
     } ).catch( ( err ) => {
       console.log( err );
@@ -71,11 +83,23 @@ export const OrdersProvider = ( { children } ) => {
         'Authorization': `Bearer ${ token }`
       }
     } ).then( ( res ) => {
+      const { parent_order } = res.data;
+
       if ( success ) {
         success( res );
       }
 
-      setOrders( map( orders, ( order ) => order.id === id ? res.data : order ) );
+      if ( parent_order ) {
+        setOrders( map( orders, ( order ) => {
+          return order.id === parent_order.id ? {
+            ...order,
+            child_order: { ...res.data }
+          } : order;
+        } ) );
+      } else {
+        setOrders( map( orders, ( order ) => order.id === id ? res.data : order ) );
+      }
+
       setUpdating( false );
       message.success( 'Order updated.' );
     } ).catch( ( err ) => {
@@ -140,6 +164,39 @@ export const OrdersProvider = ( { children } ) => {
     } );
   };
 
+  const closeOrder = ( { id, values, success, error, done } ) => {
+    id = parseInt( id );
+    setUpdating( true );
+
+    axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/close`, values, {
+      cancelToken: signal.token,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${ token }`
+      }
+    } ).then( ( res ) => {
+      if ( success ) {
+        success( res );
+      }
+
+      setOrders( map( orders, ( order ) => order.id === id ? res.data : order ) );
+      setUpdating( false );
+      message.success( 'Order updated.' );
+    } ).catch( ( err ) => {
+      if ( error ) {
+        error();
+      }
+
+      console.log( err );
+      setUpdating( false );
+      message.error( 'Unable to update order.' );
+    } ).finally( () => {
+      if ( done ) {
+        done();
+      }
+    } );
+  }
+
   const store = {
     loading,
     setLoading,
@@ -149,6 +206,7 @@ export const OrdersProvider = ( { children } ) => {
     deleteOrder,
     updateOrder,
     createOrder,
+    closeOrder,
     orders,
     setOrders
   };
