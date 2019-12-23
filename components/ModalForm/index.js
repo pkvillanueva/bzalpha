@@ -5,7 +5,7 @@ import React, { useState, cloneElement } from 'react';
 import { Modal, Form } from 'antd';
 
 const ModalForm = Form.create()( ( props ) => {
-  const { modalForm, title, form, children, onChange, onSave, onCancel, ...restProps } = props;
+  const { modalForm, title, form, children, onChange, onSave, onCancel, okText, ...restProps } = props;
   const { getFieldDecorator, validateFields, resetFields } = form;
   const [ visible, setVisible ] = useState( false );
   const [ loading, setLoading ] = useState( false );
@@ -59,7 +59,7 @@ const ModalForm = Form.create()( ( props ) => {
         { ...restProps }
         visible={ visible }
         title={ title }
-        okText="Save"
+        okText={ okText || "Save" }
         onOk={ handleOk }
         onCancel={ handleCancel }
         maskClosable={ false }
