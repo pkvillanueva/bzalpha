@@ -12,7 +12,7 @@ import { WorksContext } from '~/store/works';
 import styles from './styles.less';
 
 const EditOrders = ( { principalId, principalName, vesselId, vesselName, children } ) => {
-  const { saveOrders } = useContext( WorksContext );
+  const { bulkOrders } = useContext( WorksContext );
   const [ principal, setPrincipal ] = useState( '' );
 
   const handleSave = ( { values, form, success, done } ) => {
@@ -20,7 +20,7 @@ const EditOrders = ( { principalId, principalName, vesselId, vesselName, childre
 
     values.vessel = parseInt( values.vessel );
 
-    saveOrders( {
+    bulkOrders( {
       values,
       done,
       success: () => {

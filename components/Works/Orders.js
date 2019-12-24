@@ -26,18 +26,18 @@ const Orders = ( { vessel } ) => {
     );
   };
 
-  const columnOrderStatusRender = ( order_status, order ) => {
+  const columnOrderStatusRender = ( status, order ) => {
     let color = '';
 
     if ( isOrderExpiring( order ) ) {
       color = 'volcano';
-    } else if ( order_status === 'onboard' ) {
+    } else if ( status === 'onboard' ) {
       color = 'green';
-    } else if ( order_status === 'processing' ) {
+    } else if ( status === 'processing' ) {
       color = 'blue';
     }
 
-    return <Tag color={ color }>{ order_status }</Tag>
+    return <Tag color={ color }>{ status }</Tag>
   };
 
   const columns = [
@@ -45,8 +45,8 @@ const Orders = ( { vessel } ) => {
       dataIndex: 'position',
       key: 'position',
       width: 65,
-      render: ( position, { order_status, sign_off } ) => (
-        <RankAvatar status={ order_status } date={ sign_off }>{ position }</RankAvatar>
+      render: ( position, { status, sign_off } ) => (
+        <RankAvatar status={ status } date={ sign_off }>{ position }</RankAvatar>
       )
     },
     {
@@ -70,8 +70,8 @@ const Orders = ( { vessel } ) => {
     },
     {
       title: 'Status',
-      dataIndex: 'order_status',
-      key: 'order_status',
+      dataIndex: 'status',
+      key: 'status',
       className: styles.compactColumn,
       render: columnOrderStatusRender
     },
@@ -94,11 +94,11 @@ const Orders = ( { vessel } ) => {
   ];
 
   const expandedRowRender = ( order ) => {
-    const { order_status, id, child_order } = order;
+    const { status, id, child_order } = order;
 
-    if ( order_status === 'onboard' && child_order ) {
+    if ( status === 'onboard' && child_order ) {
       return <ReservedCandidate parentId={ id } order={ child_order } />;
-    } else if ( order_status === 'pending' || isOrderExpiring( order ) ) {
+    } else if ( status === 'pending' || isOrderExpiring( order ) ) {
       return <Candidates order={ order } />;
     }
 
@@ -106,12 +106,12 @@ const Orders = ( { vessel } ) => {
   };
 
   const rowClassName = ( order ) => {
-    const { order_status } = order;
+    const { status } = order;
 
     if ( isOrderExpiring( order ) ) {
       return styles.expiring;
-    } else if ( order_status !== 'pending' ) {
-      return `${ styles.noExpand } ${ styles[ order_status ] }`;
+    } else if ( status !== 'pending' ) {
+      return `${ styles.noExpand } ${ styles[ status ] }`;
     }
 
     return '';

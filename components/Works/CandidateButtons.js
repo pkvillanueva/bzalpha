@@ -4,28 +4,26 @@ import { Button, Popconfirm, Icon, Divider, Select } from 'antd';
 import { CandidatesContext } from '~/store/candidates';
 import EditOrder from './EditOrder';
 
-const CandidateButtons = ( { candidate, index } ) => {
+const CandidateButtons = ( { candidate } ) => {
   const { order, updateCandidate, deleteCandidate } = useContext( CandidatesContext );
-  const { seaman, status } = candidate;
-  const { order_status } = order;
   const buttons = [];
 
-  if ( seaman.ID && status === 'approved' && order_status === 'pending' ) {
+  if ( candidate.seaman.id && candidate.status === 'approved' && order.meta.status === 'pending' ) {
     buttons.push(
       <EditOrder
           title="Save Process Order"
           order={ order }
           saveValues={ {
-            seaman: seaman.ID,
-            order_status: 'processing',
+            seaman: candidate.seaman.id,
+            status: 'processing',
             candidates: []
           } }
         >
         <Button size="small" type="primary">Process</Button>
       </EditOrder>
     );
-  } else if ( seaman.ID && status === 'approved' && order_status === 'onboard' ) {
-    const { id, vessel, position, currency, sign_off, return_port } = order;
+  } else if ( candidate.seaman.id && candidate.status === 'approved' && order.meta.status === 'onboard' ) {
+    const { vessel, position, currency, sign_off, return_port } = order.meta;
 
     buttons.push(
       <EditOrder
@@ -37,10 +35,10 @@ const CandidateButtons = ( { candidate, index } ) => {
             port: return_port
           } }
           saveValues={ {
-            seaman: seaman.ID,
-            vessel: vessel.ID,
-            order_status: 'reserved',
-            parent_order: id
+            status: 'reserved',
+            seaman: candidate.seaman.id,
+            vessel: vessel.id,
+            parent_order: order.id
           } }
         >
         <Button size="small" type="primary">Reserve</Button>
@@ -50,8 +48,8 @@ const CandidateButtons = ( { candidate, index } ) => {
 
   buttons.push(
     <Select
-      onChange={ ( status ) => updateCandidate( index, { status } ) }
-      value={ status }
+      onChange={ ( status ) => updateCandidate( candidate.index, { status } ) }
+      value={ candidate.status }
       size="small"
     >
       <Select.Option value="waiting">Waiting</Select.Option>
@@ -64,7 +62,7 @@ const CandidateButtons = ( { candidate, index } ) => {
     <Popconfirm
       title="Are you sure?"
       icon={ <Icon type="question-circle-o" /> }
-      onConfirm={ () => deleteCandidate( index ) }
+      onConfirm={ () => deleteCandidate( candidate.index ) }
     >
       <a>Delete</a>
     </Popconfirm>

@@ -32,7 +32,7 @@ const Candidates = () => {
 
   const columnRemarkRender = ( remark, candidate, index ) => (
     <Input
-      key={ candidate.seaman.ID }
+      key={ candidate.seaman.id }
       size="small"
       defaultValue={ remark }
       onPressEnter={ ( event ) => {
@@ -79,7 +79,7 @@ const Candidates = () => {
       dataIndex: 'actions',
       key: 'actions',
       align: 'right',
-      render: ( action, candidate, index ) => <CandidateButtons candidate={ candidate } index={ index } />
+      render: ( action, candidate, index ) => <CandidateButtons candidate={ { index, ...candidate } } />
     }
   ];
 

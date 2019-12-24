@@ -21,13 +21,13 @@ const VesselOrders = ( { vessel, num } ) => {
       return null;
     }
 
-    return map( orders, ( { position, order_status, sign_off }, key ) => (
+    return map( orders, ( { position, status, sign_off }, key ) => (
       <RankAvatar
         style={ { fontSize: 12 } }
         size={ 38 }
         key={ key }
         children={ position }
-        status={ order_status }
+        status={ status }
         date={ sign_off }
       />
     ) );
