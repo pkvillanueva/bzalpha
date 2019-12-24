@@ -48,7 +48,7 @@ const Page = () => {
   const getBreadcrumb = () => {
     return [
       { path: '/vessel', breadcrumbName: 'Vessels List' },
-      { breadcrumbName: vessel.title.rendered }
+      { breadcrumbName: vessel.title }
     ]
   };
 
@@ -91,7 +91,7 @@ const Page = () => {
 
   return (
     <Layout
-      title={ vessel.title.rendered }
+      title={ vessel.title }
       breadcrumb={ formatBreadcrumb( getBreadcrumb() ) }
       extra={ [
         <Button type="primary" key="save" onClick={ handleSave } disabled={ ( ! isVesselTouched && ! isFieldsTouched() ) } loading={ isSaving }>Save</Button>

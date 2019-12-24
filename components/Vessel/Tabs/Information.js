@@ -35,7 +35,7 @@ const Information = () => {
           </Form.Item>
           <Form.Item label="Name">
             { getFieldDecorator( 'title', {
-              initialValue: vessel.title.rendered,
+              initialValue: vessel.title,
               rules: [
                 {
                   required: true,

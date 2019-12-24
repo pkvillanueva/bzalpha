@@ -70,7 +70,7 @@ class SelectFetch extends Component {
     .then( ( res ) => {
       const data = map( res.data, ( d ) => ( {
         value: d[ this.dataKey ],
-        text: this.labelKey === 'title' ? d[ this.labelKey ].rendered : d[ this.labelKey ]
+        text: d[ this.labelKey ]
       } ) );
 
       this.setState( { data: data, fetching: false } );

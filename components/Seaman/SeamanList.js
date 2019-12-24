@@ -26,7 +26,7 @@ const columns = [
       <>
         <Avatar className={ styles.tableAvatar } src={ r.avatar } shape="square" icon="user" />
         <a href={ `/seaman/${ r.id }` }>
-          { r.first_name || r.last_name ? `${ r.first_name } ${ r.last_name }` : '<No Name>' }
+          { r.title || '<No Name>' }
         </a>
       </>
     )

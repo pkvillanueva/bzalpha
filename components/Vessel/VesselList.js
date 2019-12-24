@@ -24,7 +24,7 @@ const columns = [
     dataIndex: 'name',
     render: ( t, r ) => (
       <a href={ `/vessel/${ r.id }` }>
-        { r.title.rendered || '<No Name>' }
+        { r.title || '<No Name>' }
       </a>
     )
   },

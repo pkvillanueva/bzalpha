@@ -37,7 +37,7 @@ const VesselOrders = ( { vessel, num } ) => {
     <div className={ styles.header }>
       <div className={ styles.name }>
         <span className={ styles.num }>{ num }</span>
-        <strong>{ vessel.title.rendered }</strong>
+        <strong>{ vessel.title }</strong>
       </div>
       <div className={ styles.orders }>
         <Avatars />

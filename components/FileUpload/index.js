@@ -41,8 +41,8 @@ class FileUpload extends Component {
     fileList = fileList.slice( -1 );
     fileList = fileList.map( file => {
       if ( file.response ) {
-        file.title = file.response.title.rendered;
-        file.name = file.response.title.rendered;
+        file.title = file.response.title;
+        file.name = file.response.title;
         file.url = file.response.source_url;
         file.id = file.response.id;
       }
