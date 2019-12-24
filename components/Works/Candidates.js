@@ -54,7 +54,7 @@ const Candidates = () => {
       title: 'Seaman',
       dataIndex: 'seaman',
       key: 'seaman',
-      render: ( seaman ) => seaman && seaman.post_title
+      render: ( seaman ) => seaman && seaman.title
     },
     {
       title: 'Type',

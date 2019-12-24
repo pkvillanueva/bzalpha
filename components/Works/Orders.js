@@ -65,7 +65,7 @@ const Orders = ( { vessel } ) => {
       key: 'seaman',
       className: styles.compactColumn,
       render: ( seaman ) => (
-        seaman && <a>{ seaman.post_title }</a>
+        seaman && <a>{ seaman.title }</a>
       )
     },
     {
