@@ -41,7 +41,7 @@ const PageHeader = () => {
       </div>
       <div className={ styles.pageHeaderMainContent }>
         <h1 className={ styles.pageHeaderTitle }>
-          <span className={ styles.pageHeaderName }>{ seaman.title.rendered }</span>
+          <span className={ styles.pageHeaderName }>{ seaman.title }</span>
           { seaman.rank && <Tag color="blue">{ getRankName( seaman.rank ) }</Tag> }
         </h1>
         { seaman.job_status === 'onboard' ? (
@@ -144,7 +144,7 @@ const Page = () => {
   const getBreadcrumb = () => {
     return [
       { path: '/seaman', breadcrumbName: 'Seaman List' },
-      { breadcrumbName: seaman.title.rendered }
+      { breadcrumbName: seaman.title }
     ]
   };
 
