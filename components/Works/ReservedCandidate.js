@@ -22,7 +22,7 @@ const ReservedCandidate = ( { parentId, order } ) => {
       key: 'seaman',
       className: styles.compactColumn,
       render: ( seaman ) => (
-        seaman && <>{ seaman.post_title }</>
+        seaman && <>{ seaman.title }</>
       )
     },
     {
