@@ -25,7 +25,7 @@ export const getOrderStatus = ( status ) => {
 
 export const getOrderDetails = ( order ) => {
   const {
-    order_status,
+    status,
     deadline,
     sign_on,
     sign_off,
@@ -39,14 +39,14 @@ export const getOrderDetails = ( order ) => {
   } = order;
   let text = '';
 
-  if ( order_status === 'pending' ) {
+  if ( status === 'pending' ) {
     text += `${ sign_on ? `Join Date: ${ moment( sign_on ).format( 'MMM D YY' ) } ` : '' }`;
     text += `${ deadline ? `/ Deadline: ${ moment( deadline ).format( 'MMM D YY' ) } ` : '' }`;
     text += `${ remark ? `(Remark: ${ remark })` : '' }`;
     return text;
   }
 
-  text += `${ sign_on ? `${ order_status === 'processing' ? 'Join Date:' : 'Joined Date:' } ${ moment( sign_on ).format( 'MMM D YY' ) } ` : '' }`;
+  text += `${ sign_on ? `${ status === 'processing' ? 'Join Date:' : 'Joined Date:' } ${ moment( sign_on ).format( 'MMM D YY' ) } ` : '' }`;
   text += `${ port ? `@ ${ port } ` : '' }`;
   text += `${ wage ? `[${ getCurrencySymbol( currency ) }${ wage }] ` : '' }`;
   text += `${ contract_plus ? `${ contract_plus } +/- ` : '' }`;
@@ -60,7 +60,7 @@ export const getOrderDetails = ( order ) => {
 export const isOrderExpiring = ( order, date ) => {
   if ( typeof order === 'object' ) {
     date = order.sign_off;
-    order = order.order_status;
+    order = order.status;
   }
 
   if ( ! date || order !== 'onboard' ) {

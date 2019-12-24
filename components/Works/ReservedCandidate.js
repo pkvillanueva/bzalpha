@@ -27,11 +27,11 @@ const ReservedCandidate = ( { parentId, order } ) => {
     },
     {
       title: 'Status',
-      dataIndex: 'order_status',
-      key: 'order_status',
+      dataIndex: 'status',
+      key: 'status',
       className: styles.compactColumn,
-      render: ( order_status ) => (
-        <Tag color="purple">{ order_status }</Tag>
+      render: ( status ) => (
+        <Tag color="purple">{ status }</Tag>
       )
     },
     {
@@ -55,7 +55,7 @@ const ReservedCandidate = ( { parentId, order } ) => {
   return (
     <>
       <Table
-        dataSource={ map( [ order ], ( order ) => ( { key: order.ID, ...order } ) ) }
+        dataSource={ map( [ order ], ( order ) => ( { key: order.id, ...order } ) ) }
         columns={ columns }
         pagination={ false }
       />

@@ -69,7 +69,7 @@ export const WorksProvider = ( { children } ) => {
     } );
   };
 
-  const saveOrders = ( { values, success, error, done } ) => {
+  const bulkOrders = ( { values, success, error, done } ) => {
     axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/bulk`, values, {
       cancelToken: signal.token,
       headers: {
@@ -112,7 +112,7 @@ export const WorksProvider = ( { children } ) => {
     setVessels,
     getVessels,
     getVessel,
-    saveOrders
+    bulkOrders
   };
 
   return (

@@ -6,7 +6,7 @@ import { OrdersContext } from '~/store/orders';
 
 const OrderButtons = ( { order } ) => {
   const { deleteOrder, updateOrder } = useContext( OrdersContext );
-  const { id, order_status } = order;
+  const { id, status } = order;
   const buttons = [];
 
   const handleDelete = () => {
@@ -24,7 +24,7 @@ const OrderButtons = ( { order } ) => {
       title: 'Are you sure to onboard this order?',
       okText: 'Yes',
       cancelText: 'No',
-      onOk: () => updateOrder( { id, values: { order_status: 'onboard' } } )
+      onOk: () => updateOrder( { id, values: { status: 'onboard' } } )
     } );
   };
 
@@ -33,23 +33,23 @@ const OrderButtons = ( { order } ) => {
       title: 'Are you sure to close this order?',
       okText: 'Yes',
       cancelText: 'No',
-      onOk: () => updateOrder( { id, values: { order_status: 'processing' } } )
+      onOk: () => updateOrder( { id, values: { status: 'processing' } } )
     } );
   };
 
-  if ( order_status === 'processing' ) {
+  if ( status === 'processing' ) {
     buttons.push(
       <Button size="small" type="primary" onClick={ () => handleOnboard( order.id ) }>
         Onboard
       </Button>
     );
-  } else if ( order_status === 'onboard' && order.child_order ) {
+  } else if ( status === 'onboard' && order.child_order ) {
     buttons.push(
       <Button size="small" type="primary">
         Switch
       </Button>
       );
-  } else if ( order_status === 'onboard' ) {
+  } else if ( status === 'onboard' ) {
     buttons.push(
       <Button size="small" type="default" onClick={ () => handleSignOff( order.id ) }>
         Close
