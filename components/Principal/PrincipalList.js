@@ -40,7 +40,7 @@ const columns = [
   },
   {
     title: 'Country',
-    dataIndex: 'country',
+    dataIndex: 'meta.country',
     render: ( r ) => {
       if ( ! r ) {
         return '-';
@@ -117,7 +117,8 @@ const PrincipalsList = () => {
     axios.delete( `${ process.env.API_URL }/wp-json/bzalpha/v1/principal/${ id }`, {
       headers: { 'Authorization': `Bearer ${ token }` },
       data: {
-        id: id
+        id: id,
+        force: true
       }
     } )
     .finally( () => {
@@ -129,7 +130,7 @@ const PrincipalsList = () => {
     title: 'Action',
     key: 'action',
     className: 'action',
-    align: 'center',
+    align: 'right',
     width: 125,
     render: ( r ) => (
       <div>
