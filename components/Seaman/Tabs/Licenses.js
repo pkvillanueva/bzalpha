@@ -26,7 +26,7 @@ const Licenses = () => {
       title: 'File',
       dataIndex: 'file',
       key: 'file',
-      render: ( record ) => record && record.url && <Button icon="file" size="small" href={ record.url } target="_blank" />
+      render: ( file ) => file && file.source_url && <Button icon="file" size="small" href={ file.source_url } target="_blank" />
     },
   ];
 
