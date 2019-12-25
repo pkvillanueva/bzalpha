@@ -7,26 +7,25 @@ import { message } from 'antd';
 import { map } from 'lodash';
 import { parseCookies } from 'nookies';
 const { token } = parseCookies();
+import { prepareValues } from '~/utils/api';
 
 export const WorksContext = createContext();
 
 export const WorksProvider = ( { children } ) => {
   const [ loading, setLoading ] = useState( true );
-  const [ principalId, setPrincipalId ] = useState( '' );
-  const [ principalName, setPrincipalName ] = useState( '' );
-  const [ vesselId, setVesselId ] = useState( '' );
-  const [ vesselName, setVesselName ] = useState( '' );
+  const [ principal, setPrincipal ] = useState( { id: '', name: '' } );
+  const [ vessel, setVessel ] = useState( { id: '', name: '' } );
   const [ vessels, setVessels ] = useState( [] );
   const signal = axios.CancelToken.source();
 
-  const getVessels = () => {
+  const fetchVessels = () => {
     const params = {};
     setLoading( true );
 
-    if ( vesselId ) {
-      params.include = [ vesselId ];
-    } else if ( principalId ) {
-      params.principal = principalId;
+    if ( vessel.id ) {
+      params.include = [ vessel.id ];
+    } else if ( principal.id ) {
+      params.principal = principal.id;
     }
 
     axios.get( `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel`, {
@@ -45,7 +44,7 @@ export const WorksProvider = ( { children } ) => {
     } );
   };
 
-  const getVessel = ( id ) => {
+  const fetchVessel = ( id ) => {
     if ( ! id ) {
       return;
     }
@@ -69,7 +68,9 @@ export const WorksProvider = ( { children } ) => {
     } );
   };
 
-  const bulkOrders = ( { values, success, error, done } ) => {
+  const createOrders = ( { values, success, error, done } ) => {
+    values = prepareValues( values );
+
     axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/bz-order/bulk`, values, {
       cancelToken: signal.token,
       headers: {
@@ -81,7 +82,7 @@ export const WorksProvider = ( { children } ) => {
         success( res );
       }
 
-      getVessel( parseInt( values.vessel ) );
+      fetchVessel( values.vessel );
       message.success( 'Orders created.' );
     } ).catch( ( err ) => {
       if ( error ) {
@@ -100,19 +101,15 @@ export const WorksProvider = ( { children } ) => {
   const store = {
     loading,
     setLoading,
-    principalId,
-    setPrincipalId,
-    principalName,
-    setPrincipalName,
-    vesselId,
-    setVesselId,
-    vesselName,
-    setVesselName,
+    principal,
+    setPrincipal,
+    vessel,
+    setVessel,
     vessels,
     setVessels,
-    getVessels,
-    getVessel,
-    bulkOrders
+    fetchVessels,
+    fetchVessel,
+    createOrders
   };
 
   return (

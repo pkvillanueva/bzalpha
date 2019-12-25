@@ -1,33 +1,30 @@
 import React, { useContext } from 'react';
-import { isEmpty } from 'lodash';
 import { Form, Card, Button } from 'antd';
 import SelectFetch from '~/components/SelectFetch';
-import EditOrders from './EditOrders';
-import { WorksContext } from '~/store/works';
+import CreateOrder from './CreateOrder';
+import { WorksContext } from './store/works';
 import styles from './styles.less';
 
 const Filters = () => {
-  const {
-    principalId,
-    setPrincipalId,
-    principalName,
-    setPrincipalName,
-    vesselId,
-    setVesselId,
-    vesselName,
-    setVesselName
-  } = useContext( WorksContext );
+  const { principal, setPrincipal, vessel, setVessel } = useContext( WorksContext );
 
   const handlePrincipal = ( value ) => {
-    setPrincipalId( ! isEmpty( value ) ? value.key : '' );
-    setPrincipalName( ! isEmpty( value ) ? value.label : '' );
-    setVesselId( '' );
-    setVesselName( '' );
+    setPrincipal( {
+      id: value && value.key || '',
+      name: value && value.label || ''
+    } );
+
+    setVessel( {
+      id: '',
+      name: ''
+    } );
   };
 
   const handleVessel = ( value ) => {
-    setVesselId( ! isEmpty( value ) ? value.key : '' );
-    setVesselName( ! isEmpty( value ) ? value.label : '' );
+    setVessel( {
+      id: value && value.key || '',
+      name: value && value.label || ''
+    } );
   };
 
   return (
@@ -36,7 +33,7 @@ const Filters = () => {
         <Form.Item label="Owner">
           <SelectFetch
             withLabelValue={ true }
-            value={ principalId }
+            value={ principal.id }
             style={ { width: 170 } }
             allowClear={ true }
             placeholder="Enter owner name"
@@ -49,27 +46,22 @@ const Filters = () => {
         <Form.Item label="Vessel">
           <SelectFetch
             withLabelValue={ true }
-            value={ vesselId }
+            value={ vessel.id }
             style={ { width: 170 } }
             allowClear={ true }
             placeholder="Enter vessel name"
             action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel` }
             onChange={ handleVessel }
             customParams= { {
-              principal: principalId
+              principal: principal.id
             } }
           />
         </Form.Item>
-        <EditOrders
-          principalId={ principalId }
-          principalName={ principalName }
-          vesselId={ vesselId }
-          vesselName={ vesselName }
-        >
-          <Button icon="plus" type="primary" className={ styles.bulkOrder }>
+        <CreateOrder>
+          <Button icon="plus" type="primary" className={ styles.createOrder }>
             Create Order
           </Button>
-        </EditOrders>
+        </CreateOrder>
       </Form>
     </Card>
   );
