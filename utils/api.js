@@ -44,3 +44,7 @@ export const parseMoment = ( value ) => {
 
   return moment( value );
 };
+
+export const dateFormat = ( date, format ) => {
+  return date && moment( date ).format( format || 'YYYY-MM-DD' );
+};

@@ -11,25 +11,26 @@ import { ranks } from '~/utils/ranks';
  */
 import ModalForm from '~/components/ModalForm';
 import { SeamanContext } from '~/store/seaman';
+import { merge } from 'lodash';
 
 const EditRank = () => {
   const { seaman, setSeaman, setFieldsValue, setIsSeamanTouched, getFieldDecorator } = useContext( SeamanContext );
 
   const handleChange = ( values, callback ) => {
-    setSeaman( { ...seaman, ...values } );
+    setSeaman( merge( seaman, values ) );
     setFieldsValue( values );
     setIsSeamanTouched( true );
     callback();
   }
 
-  getFieldDecorator( 'rank', { initialValue: seaman.rank } );
+  getFieldDecorator( 'meta.rank', { initialValue: seaman.rank } );
 
   return (
     <ModalForm
       title="Edit Rank"
       onChange={ handleChange }
       modalForm={ ( decorator ) => ( <>
-        { decorator( 'rank', {
+        { decorator( 'meta.rank', {
           initialValue: seaman.rank
         } )(
           <Select style={ { width: '100%' } } placeholder="Select a rank">

@@ -2,9 +2,9 @@
  * External dependencies.
  */
 import React, { useContext, useState } from 'react';
-import { Form, Input, DatePicker, Select } from 'antd';
+import { Form, Input, DatePicker, Select, InputNumber } from 'antd';
 import moment from 'moment';
-import { map } from 'lodash';
+import { map, omit } from 'lodash';
 import ReactCountryFlag from 'react-country-flag';
 
 /**
@@ -15,16 +15,18 @@ import DataCollection from '~/components/DataCollection';
 import { ranks } from '~/utils/ranks';
 import { getRankName, getTotalTime, endOfContract } from '~/utils/seaman';
 import { countries } from '~/utils/countries';
+import { currencies } from '~/utils/currencies';
 import { vesselType } from '~/utils/vessel';
+import { dateFormat, parseMoment } from '~/utils/api';
 
 const Experiences = () => {
   const { seaman, setFieldsValue, setIsSeamanTouched } = useContext( SeamanContext );
 
-  const [ experiences, setExperiences ] = useState( seaman.experiences || [] );
+  const [ experiences, setExperiences ] = useState( seaman.meta.experiences || [] );
 
   const columns = [
-    { title: 'Date Start', dataIndex: 'date_start', key: 'date_start' },
-    { title: 'Date End', dataIndex: 'date_end', key: 'date_end' },
+    { title: 'Date Start', dataIndex: 'date_start', key: 'date_start', render: ( date ) => dateFormat( date ) },
+    { title: 'Date End', dataIndex: 'date_end', key: 'date_end', render: ( date ) => dateFormat( date ) },
     {
       title: 'Sea Time',
       dataIndex: 'seatime',
@@ -42,7 +44,7 @@ const Experiences = () => {
     { title: 'Type', dataIndex: 'type', key: 'type' },
     { title: 'Flag', dataIndex: 'flag', key: 'flag', render: ( r ) => r && <ReactCountryFlag code={ r.toLowerCase() } svg /> },
     { title: 'Owner', dataIndex: 'owner', key: 'owner' },
-    { title: 'CA', dataIndex: 'ca', key: 'ca' },
+    { title: 'Wage', dataIndex: 'wage', key: 'wage', render: ( wage, { currency } ) => `${ currency ? `[${ currency }] ` : '' }${ wage || '' }` },
     { title: 'IMO', dataIndex: 'imo', key: 'imo' },
     { title: 'GRT', dataIndex: 'grt', key: 'grt' },
     { title: 'DWT', dataIndex: 'dwt', key: 'dwt' },
@@ -59,35 +61,32 @@ const Experiences = () => {
     } );
 
     setExperiences( records );
-    setFieldsValue( { experiences: records } );
+    setFieldsValue( {
+      meta: {
+        experiences: map( records, ( record ) => omit( record, [ 'id', 'key' ] ) )
+      }
+    } );
     setIsSeamanTouched( true );
-  };
-
-  const handleFormatRecord = ( record ) => {
-    return {
-      ...record,
-      date_start: record['date_start'].format( 'YYYY-MM-DD' ),
-      date_end: record['date_end'].format( 'YYYY-MM-DD' )
-    }
   };
 
   return (
     <DataCollection
       title="Experiences"
       columns={ columns }
-      data={ experiences }
+      data={ experiences.sort( ( a, b ) => {
+        return moment( b.date_start ).unix() - moment( a.date_start ).unix();
+      } ) }
       modalTitle="Experience"
       onChange={ handleSave }
-      formatRecord={ handleFormatRecord }
       modalForm={ ( getFieldDecorator, initialValues, { getFieldValue } ) => [
         <Form.Item key="date_start" label="Date Start">
           { getFieldDecorator( 'date_start', {
-            initialValue: initialValues.date_start && moment( initialValues.date_start )
+            initialValue: parseMoment( initialValues.date_start )
           } )( <DatePicker placeholder="YYYY-MM-DD" style={ { width: '100%' } } /> ) }
         </Form.Item>,
         <Form.Item key="date_end" label="Date End">
           { getFieldDecorator( 'date_end', {
-            initialValue: initialValues.date_end && moment( initialValues.date_end )
+            initialValue: parseMoment( initialValues.date_end )
           } )( <DatePicker placeholder="YYYY-MM-DD" style={ { width: '100%' } } /> ) }
         </Form.Item>,
         <Form.Item key="rank" label="Rank">
@@ -124,10 +123,23 @@ const Experiences = () => {
             initialValue: initialValues.owner
           } )( <Input /> ) }
         </Form.Item>,
-        <Form.Item key="ca" label="CA">
-          { getFieldDecorator( 'ca', {
-            initialValue: initialValues.ca
-          } )( <Input /> ) }
+        <Form.Item key="currency" label="Currency">
+          { getFieldDecorator( 'currency', {
+            initialValue: initialValues.currency
+          } )(
+            <Select style={ { width: '100%' } }>
+              { map( currencies, ( currency ) => (
+                <Select.Option value={ currency.code } key={ currency.code }>
+                  { `(${ currency.symbol }) ${ currency.name }` }
+                </Select.Option>
+              ) ) }
+            </Select>
+          ) }
+        </Form.Item>,
+        <Form.Item key="wage" label="Wage">
+          { getFieldDecorator( 'wage', {
+            initialValue: initialValues.wage
+          } )( <InputNumber style={ { width: '100%' } } /> ) }
         </Form.Item>,
         <Form.Item key="imo" label="IMO">
           { getFieldDecorator( 'imo', {

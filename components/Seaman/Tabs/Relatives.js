@@ -3,6 +3,7 @@
  */
 import React, { useContext } from 'react';
 import { Form, Input } from 'antd';
+import { omit, map } from 'lodash';
 
 /**
  * Internal dependencies.
@@ -21,7 +22,11 @@ const Relatives = () => {
   ];
 
   const handleSave = ( records ) => {
-    setFieldsValue( { relatives: records } );
+    setFieldsValue( {
+      meta: {
+        relatives: map( records, ( record ) => omit( record, [ 'id', 'key' ] ) )
+      }
+    } );
     setIsSeamanTouched( true );
   };
 
@@ -29,7 +34,7 @@ const Relatives = () => {
     <DataCollection
       title="Relatives"
       columns={ columns }
-      data={ seaman.relatives }
+      data={ seaman.meta.relatives }
       modalTitle="Relative"
       onChange={ handleSave }
       modalForm={ ( getFieldDecorator, initialValues ) => [

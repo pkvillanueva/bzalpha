@@ -28,10 +28,12 @@ const SeamanNew = Form.create()( ( { form, visible, onCancel } ) => {
       values = {
         status: 'publish',
         title: fullName.first + ( fullName.last ? ` ${ fullName.last }` : '' ),
-        first_name: fullName.first,
-        middle_name: fullName.middle,
-        last_name: fullName.last,
-        job_status: 'standby'
+        meta: {
+          first_name: fullName.first,
+          middle_name: fullName.middle,
+          last_name: fullName.last,
+          job_status: 'standby'
+        }
       };
 
       axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/seaman`, values, {
