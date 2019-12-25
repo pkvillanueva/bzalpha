@@ -4,6 +4,7 @@
 import React, { Component, useContext, forwardRef } from 'react';
 import { Upload, Button } from 'antd';
 import { parseCookies } from 'nookies';
+const { token } = parseCookies();
 
 /**
  * Internal dependencies.
@@ -44,6 +45,7 @@ class FileUpload extends Component {
         file.title = file.response.title;
         file.name = file.response.title;
         file.url = file.response.source_url;
+        file.source_url = file.response.source_url;
         file.id = file.response.id;
       }
       return file;
@@ -54,7 +56,7 @@ class FileUpload extends Component {
     if ( info.file.status === 'done' ) {
       const { onChange } = this.props;
       if ( onChange ) {
-        const keys = [ 'title', 'name', 'url', 'id' ];
+        const keys = [ 'title', 'name', 'url', 'source_url', 'id' ];
         onChange( fileList.length && pick( fileList[0], keys ) );
       }
     }
@@ -71,7 +73,6 @@ class FileUpload extends Component {
 
   render() {
     let { onChange, block, text, ...props } = this.props;
-    const { token } = parseCookies();
 
     text = text || 'Click to Upload';
     props = {
@@ -99,8 +100,7 @@ class FileUpload extends Component {
 }
 
 const wrapFileUpload = ( props, ref ) => {
-  const { token } = useContext( UserContext );
-  return <FileUpload { ...props } token={ token } ref={ ref } />
+  return <FileUpload { ...props } ref={ ref } />
 };
 
 export default forwardRef( wrapFileUpload );

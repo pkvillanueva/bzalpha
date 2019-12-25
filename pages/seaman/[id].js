@@ -24,7 +24,7 @@ import withProvider from '~/utils/withProvider';
 import formatBreadcrumb from '~/utils/formatBreadcrumb';
 import { getStatus, getRankName, getTotalSeaTime, getRankTotalSeaTime, getCurrentAge, getContact } from '~/utils/seaman';
 import styles from './styles.less';
-import { dateFormat } from '../../utils/api';
+import { dateFormat, prepareValues } from '../../utils/api';
 
 const PageHeader = () => {
   const { seaman, getFieldDecorator } = useContext( SeamanContext );
@@ -38,7 +38,7 @@ const PageHeader = () => {
             return fileId;
           },
         } )(
-          <AvatarUpload src={ seaman.meta.avatar } />
+          <AvatarUpload src={ seaman.avatar } />
         ) }
       </div>
       <div className={ styles.pageHeaderMainContent }>
@@ -113,13 +113,7 @@ const Page = () => {
       }
 
       setIsSaving( true );
-      values = {
-        ...values,
-        birth_date: values['birth_date'] && values['birth_date'].format( 'YYYY-MM-DD' ),
-        licenses: values.licenses && values.licenses.map( ( d ) => ( { ...d, file: ( d.file && d.file.id ) ? d.file.id : null } ) ),
-        visas: values.visas && values.visas.map( ( d ) => ( { ...d, file: ( d.file && d.file.id ) ? d.file.id : null } ) ),
-        passports: values.passports && values.passports.map( ( d ) => ( { ...d, file: ( d.file && d.file.id ) ? d.file.id : null } ) ),
-      };
+      values = prepareValues( values );
 
       const cookies = parseCookies();
       axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/seaman/${ query.id }`, values, {
