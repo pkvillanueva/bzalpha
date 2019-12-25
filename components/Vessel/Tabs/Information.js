@@ -3,26 +3,27 @@
  */
 import React, { useContext } from 'react';
 import { Form, Card, Input, Select } from 'antd';
-import { map } from 'lodash';
+import { map, mapValues } from 'lodash';
 import ReactCountryFlag from 'react-country-flag';
 
 /**
  * Internal dependencies.
  */
 import SelectFetch from '~/components/SelectFetch';
-import { VesselContext } from '~/store/vessel';
+import { VesselContext } from '../store/vessel';
 import { countries } from '~/utils/countries';
 import { vesselType } from '~/utils/vessel';
 
 const Information = () => {
   const { vessel, getFieldDecorator, getFieldValue } = useContext( VesselContext );
+  const { meta } = vessel;
 
   return (
     <Card>
         <Form style={ { maxWidth: '400px', margin: '0 auto' } }>
           <Form.Item label="Owner">
             { getFieldDecorator( 'principal', {
-              initialValue: map( vessel.principal, ( p ) => p.id ),
+              initialValue: mapValues( vessel.principal, 'id' ),
               rules: [ { required: true, message: 'Owner is required.' } ]
             } )(
               <SelectFetch
@@ -47,8 +48,8 @@ const Information = () => {
             ) }
           </Form.Item>
           <Form.Item label="Type">
-            { getFieldDecorator( 'type', {
-              initialValue: vessel.type
+            { getFieldDecorator( 'meta.type', {
+              initialValue: meta.type
             } )(
               <Select>
                 { map( vesselType, ( type ) => <Select.Option key={ type.value } value={ type.value }>{ type.name }</Select.Option> ) }
@@ -56,8 +57,8 @@ const Information = () => {
             ) }
           </Form.Item>
           <Form.Item label="Flag">
-            { getFieldDecorator( 'flag', {
-              initialValue: vessel.flag
+            { getFieldDecorator( 'meta.flag', {
+              initialValue: meta.flag
             } )(
               <Select showSearch>
                 { map( countries, ( country ) => <Select.Option key={ country.code } value={ country.code }>{ country.name }</Select.Option> ) }
@@ -66,43 +67,43 @@ const Information = () => {
             { getFieldValue( 'flag' ) && <ReactCountryFlag code={ getFieldValue( 'flag' ).toLowerCase() } svg /> }
           </Form.Item>
           <Form.Item label="(IMO) International Maritime Organization">
-            { getFieldDecorator( 'imo', {
-              initialValue: vessel.imo
+            { getFieldDecorator( 'meta.imo', {
+              initialValue: meta.imo
             } )(
               <Input />
             ) }
           </Form.Item>
           <Form.Item label="(GRT) Gross Register Tonnage">
-            { getFieldDecorator( 'grt', {
-              initialValue: vessel.grt
+            { getFieldDecorator( 'meta.grt', {
+              initialValue: meta.grt
             } )(
               <Input />
             ) }
           </Form.Item>
           <Form.Item label="(DWT) Deadweight Tonnage">
-            { getFieldDecorator( 'dwt', {
-              initialValue: vessel.dwt
+            { getFieldDecorator( 'meta.dwt', {
+              initialValue: meta.dwt
             } )(
               <Input />
             ) }
           </Form.Item>
           <Form.Item label="(HP) Horse Power">
-            { getFieldDecorator( 'hp', {
-              initialValue: vessel.hp
+            { getFieldDecorator( 'meta.hp', {
+              initialValue: meta.hp
             } )(
               <Input />
             ) }
           </Form.Item>
           <Form.Item label="(KW) Kilowatt">
-            { getFieldDecorator( 'kw', {
-              initialValue: vessel.kw
+            { getFieldDecorator( 'meta.kw', {
+              initialValue: meta.kw
             } )(
               <Input />
             ) }
           </Form.Item>
           <Form.Item label="Engine">
-            { getFieldDecorator( 'engine', {
-              initialValue: vessel.engine
+            { getFieldDecorator( 'meta.engine', {
+              initialValue: meta.engine
             } )(
               <Input />
             ) }

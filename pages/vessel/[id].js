@@ -13,7 +13,7 @@ const { TabPane } = Tabs;
  */
 import Layout from '~/components/Layout';
 import Information from '~/components/Vessel/Tabs/Information';
-import { VesselProvider, VesselContext } from '~/store/vessel';
+import { VesselProvider, VesselContext } from '~/components/Vessel/store/vessel';
 import withAuth from '~/utils/withAuth';
 import withProvider from '~/utils/withProvider';
 import formatBreadcrumb from '~/utils/formatBreadcrumb';
