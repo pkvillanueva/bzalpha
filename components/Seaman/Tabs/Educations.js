@@ -3,6 +3,7 @@
  */
 import React, { useContext } from 'react';
 import { Form, Input, Select } from 'antd';
+import { omit, map } from 'lodash';
 
 /**
  * Internal dependencies.
@@ -21,7 +22,11 @@ const Educations = () => {
   ];
 
   const handleSave = ( records ) => {
-    setFieldsValue( { educations: records } );
+    setFieldsValue( {
+      meta: {
+        educations: map( records, ( record ) => omit( record, [ 'id', 'key' ] ) )
+      }
+    } );
     setIsSeamanTouched( true );
   };
 
@@ -29,7 +34,7 @@ const Educations = () => {
     <DataCollection
       title="Educations"
       columns={ columns }
-      data={ seaman.educations }
+      data={ seaman.meta.educations }
       modalTitle="Education"
       onChange={ handleSave }
       modalForm={ ( getFieldDecorator, initialValues ) => [

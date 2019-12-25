@@ -36,13 +36,13 @@ const PageHeader = () => {
             return fileId;
           },
         } )(
-          <AvatarUpload src={ seaman.avatar } />
+          <AvatarUpload src={ seaman.meta.avatar } />
         ) }
       </div>
       <div className={ styles.pageHeaderMainContent }>
         <h1 className={ styles.pageHeaderTitle }>
           <span className={ styles.pageHeaderName }>{ seaman.title }</span>
-          { seaman.rank && <Tag color="blue">{ getRankName( seaman.rank ) }</Tag> }
+          { seaman.meta.rank && <Tag color="blue">{ getRankName( seaman.meta.rank ) }</Tag> }
         </h1>
         { seaman.job_status === 'onboard' ? (
           <p>
@@ -60,7 +60,7 @@ const PageHeader = () => {
           <Statistic
             title="Age"
             groupSeparator=""
-            value={ getCurrentAge( seaman.birth_date ) }
+            value={ getCurrentAge( seaman.meta.birth_date ) }
           />
           <Statistic
             title="Contact"
@@ -70,12 +70,12 @@ const PageHeader = () => {
           <Statistic
             title="Total Sea Time"
             groupSeparator=""
-            value={ getTotalSeaTime( seaman.experiences ) }
+            value={ getTotalSeaTime( seaman.meta.experiences ) }
           />
-          { seaman.rank && <Statistic
+          { seaman.meta.rank && <Statistic
             groupSeparator=""
-            title={ `As ${ getRankName( seaman.rank ) }` }
-            value={ getRankTotalSeaTime( seaman.rank, seaman.experiences ) }
+            title={ `As ${ seaman.meta.rank }` }
+            value={ getRankTotalSeaTime( seaman.meta.rank, seaman.meta.experiences ) }
           /> }
         </Stats>
       </div>
@@ -126,17 +126,13 @@ const Page = () => {
           'Authorization': `Bearer ${ cookies.token }`,
         }
       } ).then( ( res ) => {
-        setTimeout( () => {
-          setSeaman( res.data );
-          resetFields();
-          setIsSaving( false );
-          setIsSeamanTouched( false );
-        }, 1500 );
+        setSeaman( res.data );
+        resetFields();
+        setIsSaving( false );
+        setIsSeamanTouched( false );
       } ).catch( () => {
-        setTimeout( () => {
-          setIsSaving( false );
-          setIsSeamanTouched( false );
-        }, 1500 );
+        setIsSaving( false );
+        setIsSeamanTouched( false );
       } );
     } );
   };
@@ -148,12 +144,12 @@ const Page = () => {
     ]
   };
 
-  getFieldDecorator( 'relatives', { initialValue: seaman.relatives } );
-  getFieldDecorator( 'educations', { initialValue: seaman.educations } );
-  getFieldDecorator( 'passports', { initialValue: seaman.passports } );
-  getFieldDecorator( 'visas', { initialValue: seaman.visas } );
-  getFieldDecorator( 'experiences', { initialValue: seaman.experiences } );
-  getFieldDecorator( 'licenses', { initialValue: seaman.licenses } );
+  getFieldDecorator( 'meta.relatives', { initialValue: seaman.meta.relatives } );
+  getFieldDecorator( 'meta.educations', { initialValue: seaman.meta.educations } );
+  getFieldDecorator( 'meta.passports', { initialValue: seaman.meta.passports } );
+  getFieldDecorator( 'meta.visas', { initialValue: seaman.meta.visas } );
+  getFieldDecorator( 'meta.experiences', { initialValue: seaman.meta.experiences } );
+  getFieldDecorator( 'meta.licenses', { initialValue: seaman.meta.licenses } );
 
   return (
     <Layout
@@ -187,7 +183,7 @@ const Page = () => {
             <Card>
             <Statistic
               title="Rank"
-              value={ getRankName( seaman.rank ) || 'N/A' }
+              value={ getRankName( seaman.meta.rank ) || 'N/A' }
               suffix={ <EditRank /> }
             />
             </Card>
@@ -197,7 +193,7 @@ const Page = () => {
             <Statistic
               prefix="$"
               title="Min. Wage"
-              value={ seaman.min_wage || '0' }
+              value={ seaman.meta.min_wage }
               suffix={ <EditMinWage /> }
             />
             </Card>

@@ -3,7 +3,6 @@
  */
 import React, { useContext } from 'react';
 import { Form, Input, DatePicker, Button } from 'antd';
-import moment from 'moment';
 
 /**
  * Internal dependencies.
@@ -11,7 +10,8 @@ import moment from 'moment';
 import { SeamanContext } from '~/store/seaman';
 import DataCollection from '~/components/DataCollection';
 import FileUpload from '~/components/FileUpload';
-import { isEmpty } from 'lodash';
+import { isEmpty, omit, map } from 'lodash';
+import { parseMoment, dateFormat } from '~/utils/api';
 
 const Licenses = () => {
   const { seaman, setFieldsValue, setIsSeamanTouched } = useContext( SeamanContext );
@@ -19,8 +19,8 @@ const Licenses = () => {
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Number', dataIndex: 'num', key: 'num' },
-    { title: 'Issue Date', dataIndex: 'issue_date', key: 'issue_date' },
-    { title: 'Valid Until', dataIndex: 'valid_until', key: 'valid_until' },
+    { title: 'Issue Date', dataIndex: 'issue_date', key: 'issue_date', render: ( date ) => dateFormat( date ) },
+    { title: 'Valid Until', dataIndex: 'valid_until', key: 'valid_until', render: ( date ) => dateFormat( date ) },
     { title: 'Issued By', dataIndex: 'issued_by', key: 'issued_by' },
     {
       title: 'File',
@@ -31,26 +31,21 @@ const Licenses = () => {
   ];
 
   const handleSave = ( records ) => {
-    setFieldsValue( { licenses: records } );
+    setFieldsValue( {
+      meta: {
+        licenses: map( records, ( record ) => omit( record, [ 'id', 'key' ] ) )
+      }
+    } );
     setIsSeamanTouched( true );
-  };
-
-  const handleFormatRecord = ( record ) => {
-    return {
-      ...record,
-      issue_date: record['issue_date'].format( 'YYYY-MM-DD' ),
-      valid_until: record['valid_until'].format( 'YYYY-MM-DD' )
-    }
   };
 
   return (
     <DataCollection
       title="Licenses"
       columns={ columns }
-      data={ seaman.licenses }
-      modalTitle="Document"
+      data={ seaman.meta.licenses }
+      modalTitle="License"
       onChange={ handleSave }
-      formatRecord={ handleFormatRecord }
       modalForm={ ( getFieldDecorator, initialValues ) => [
         <Form.Item key="name" label="Name">
           { getFieldDecorator( 'name', {
@@ -64,12 +59,12 @@ const Licenses = () => {
         </Form.Item>,
         <Form.Item key="issue_date" label="Issue Date">
           { getFieldDecorator( 'issue_date', {
-            initialValue: initialValues.issue_date && moment( initialValues.issue_date )
+            initialValue: parseMoment( initialValues.issue_date )
           } )( <DatePicker placeholder="YYYY-MM-DD" style={ { width: '100%' } } /> ) }
         </Form.Item>,
         <Form.Item key="valid_until" label="Valid Until">
           { getFieldDecorator( 'valid_until', {
-            initialValue: initialValues.valid_until && moment( initialValues.valid_until )
+            initialValue: parseMoment( initialValues.valid_until )
           } )( <DatePicker placeholder="YYYY-MM-DD" style={ { width: '100%' } } /> ) }
         </Form.Item>,
         <Form.Item key="issued_by" label="Issued By">

@@ -30,11 +30,15 @@ const getCities = ( value ) => {
 const ContactInformation = () => {
   const { seaman, getFieldDecorator, setFieldsValue } = useContext( SeamanContext );
 
-  const [ selectCities, setSelectCities ] = useState( getCities( seaman.state ) );
+  const [ selectCities, setSelectCities ] = useState( getCities( seaman.meta.state ) );
 
   const handleState = ( value ) => {
     setSelectCities( getCities( value ) );
-    setFieldsValue( { city: '' } );
+    setFieldsValue( {
+      meta: {
+        city: ''
+      }
+    } );
   };
 
   return (
@@ -42,9 +46,9 @@ const ContactInformation = () => {
       <Row gutter={ [ 32 ] }>
         <Col md={ 8 }>
           <Form.Item label="Country">
-            { getFieldDecorator( 'country', {
+            { getFieldDecorator( 'meta.country', {
               rules: [ { required: true, message: "Country is required." } ],
-              initialValue: seaman.country
+              initialValue: seaman.meta.country
             } )( <Select style={ { width: '100%' } } showSearch>
               <Select.Option value="Philippines">Philippines</Select.Option>
             </Select> ) }
@@ -52,9 +56,9 @@ const ContactInformation = () => {
         </Col>
         <Col md={ 16 }>
           <Form.Item label="Address">
-            { getFieldDecorator( 'address', {
+            { getFieldDecorator( 'meta.address', {
               rules: [ { required: true, message: "Address is required." } ],
-              initialValue: seaman.address
+              initialValue: seaman.meta.address
             } )( <Input rows={ 4 }/> ) }
           </Form.Item>
         </Col>
@@ -62,9 +66,9 @@ const ContactInformation = () => {
       <Row gutter={ [ 32 ] }>
         <Col md={ 8 }>
           <Form.Item label="State">
-            { getFieldDecorator( 'state', {
+            { getFieldDecorator( 'meta.state', {
               rules: [ { required: true, message: "State is required." } ],
-              initialValue: seaman.state
+              initialValue: seaman.meta.state
             } )( <Select showSearch style={ { width: '100%' } } onChange={ handleState }>
               { map( sortBy( states, [ 'name' ] ), ( state ) => (
                 <Select.Option value={ state.name } key={ state.name }>{ state.name }</Select.Option>
@@ -74,9 +78,9 @@ const ContactInformation = () => {
         </Col>
         <Col md={ 8 }>
           <Form.Item label="City">
-            { getFieldDecorator( 'city', {
+            { getFieldDecorator( 'meta.city', {
               rules: [ { required: true, message: "City is required." } ],
-              initialValue: seaman.city
+              initialValue: seaman.meta.city
             } )( <Select showSearch style={ { width: '100%' } }>
               { map( selectCities, ( city ) => (
                 <Select.Option value={ city.name } key={ city.name }>{ city.name }</Select.Option>
@@ -86,9 +90,9 @@ const ContactInformation = () => {
         </Col>
         <Col md={ 8 }>
           <Form.Item label="Zip">
-            { getFieldDecorator( 'zip', {
+            { getFieldDecorator( 'meta.zip', {
               rules: [ { required: true, message: "Zip is required." } ],
-              initialValue: seaman.zip
+              initialValue: seaman.meta.zip
             } )( <Input type="number" /> ) }
           </Form.Item>
         </Col>
@@ -96,24 +100,24 @@ const ContactInformation = () => {
       <Row gutter={ [ 32 ] }>
         <Col md={ 8 }>
           <Form.Item label="Tel. Number">
-            { getFieldDecorator( 'tel', {
-              initialValue: seaman.tel
+            { getFieldDecorator( 'meta.tel', {
+              initialValue: seaman.meta.tel
             } )( <Input /> ) }
           </Form.Item>
         </Col>
         <Col md={ 8 }>
           <Form.Item label="Phone Number">
-            { getFieldDecorator( 'phone', {
+            { getFieldDecorator( 'meta.phone', {
               rules: [ { required: true, message: 'Phone number is required.' } ],
-              initialValue: seaman.phone
+              initialValue: seaman.meta.phone
             } )( <Input /> ) }
           </Form.Item>
         </Col>
         <Col md={ 8 }>
           <Form.Item label="Email">
-            { getFieldDecorator('email', {
+            { getFieldDecorator('meta.email', {
               rules: [ { type: 'email', message: 'The input is not valid E-mail!' } ],
-              initialValue: seaman.email
+              initialValue: seaman.meta.email
             } )( <Input /> ) }
           </Form.Item>
         </Col>
@@ -121,8 +125,8 @@ const ContactInformation = () => {
       <Row gutter={ [ 32 ] }>
         <Col md={ 8 }>
           <Form.Item label="Skype">
-            { getFieldDecorator( 'skype', {
-              initialValue: seaman.skype
+            { getFieldDecorator( 'meta.skype', {
+              initialValue: seaman.meta.skype
             } )( <Input /> ) }
           </Form.Item>
         </Col>

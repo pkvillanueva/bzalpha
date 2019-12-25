@@ -17,22 +17,22 @@ const ContactInformation = () => {
       <Row gutter={ [ 32 ] }>
         <Col md={ 8 }>
           <Form.Item label="Hair Color">
-            { getFieldDecorator( 'hair_color', {
-              initialValue: seaman.hair_color
+            { getFieldDecorator( 'meta.hair_color', {
+              initialValue: seaman.meta.hair_color
             } )( <Input /> ) }
           </Form.Item>
         </Col>
         <Col md={ 8 }>
           <Form.Item label="Height (cm)">
-            { getFieldDecorator( 'height', {
-              initialValue: seaman.height
+            { getFieldDecorator( 'meta.height', {
+              initialValue: seaman.meta.height
             } )( <Input /> ) }
           </Form.Item>
         </Col>
         <Col md={ 8 }>
           <Form.Item label="Collar Size (cm)">
-            { getFieldDecorator( 'collar_size', {
-              initialValue: seaman.collar_size
+            { getFieldDecorator( 'meta.collar_size', {
+              initialValue: seaman.meta.collar_size
             } )( <Input /> ) }
           </Form.Item>
         </Col>
@@ -40,22 +40,22 @@ const ContactInformation = () => {
       <Row gutter={ [ 32 ] }>
         <Col md={ 8 }>
           <Form.Item label="Eyes Color">
-            { getFieldDecorator( 'eyes_color', {
-              initialValue: seaman.eyes_color
+            { getFieldDecorator( 'meta.eyes_color', {
+              initialValue: seaman.meta.eyes_color
             } )( <Input /> ) }
           </Form.Item>
         </Col>
         <Col md={ 8 }>
           <Form.Item label="Weight (kg)">
-            { getFieldDecorator( 'weight', {
-              initialValue: seaman.weight
+            { getFieldDecorator( 'meta.weight', {
+              initialValue: seaman.meta.weight
             } )( <Input /> ) }
           </Form.Item>
         </Col>
         <Col md={ 8 }>
           <Form.Item label="Waist Size (cm)">
-            { getFieldDecorator( 'waist_size', {
-              initialValue: seaman.waist_size
+            { getFieldDecorator( 'meta.waist_size', {
+              initialValue: seaman.meta.waist_size
             } )( <Input /> ) }
           </Form.Item>
         </Col>
@@ -63,8 +63,8 @@ const ContactInformation = () => {
       <Row gutter={ [ 32 ] }>
         <Col md={ 8 }>
           <Form.Item label="Shoes Size">
-            { getFieldDecorator( 'shoes_size', {
-              initialValue: seaman.shoes_size
+            { getFieldDecorator( 'meta.shoes_size', {
+              initialValue: seaman.meta.shoes_size
             } )( <Input /> ) }
           </Form.Item>
         </Col>

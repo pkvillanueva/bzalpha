@@ -3,7 +3,6 @@
  */
 import React, { useContext } from 'react';
 import { Form, Input, DatePicker, Button } from 'antd';
-import moment from 'moment';
 
 /**
  * Internal dependencies.
@@ -11,7 +10,8 @@ import moment from 'moment';
 import { SeamanContext } from '~/store/seaman';
 import DataCollection from '~/components/DataCollection';
 import FileUpload from '~/components/FileUpload';
-import { isEmpty } from 'lodash';
+import { isEmpty, omit, map } from 'lodash';
+import { dateFormat, parseMoment } from '~/utils/api';
 
 const Visas = () => {
   const { seaman, setFieldsValue, setIsSeamanTouched } = useContext( SeamanContext );
@@ -19,8 +19,8 @@ const Visas = () => {
   const columns = [
     { title: 'Type', dataIndex: 'type', key: 'type' },
     { title: 'Number', dataIndex: 'num', key: 'num' },
-    { title: 'Issue Date', dataIndex: 'issue_date', key: 'issue_date' },
-    { title: 'Valid Till', dataIndex: 'valid_till', key: 'valid_till' },
+    { title: 'Issue Date', dataIndex: 'issue_date', key: 'issue_date', render: ( date ) => dateFormat( date ) },
+    { title: 'Valid Till', dataIndex: 'valid_till', key: 'valid_till', render: ( date ) => dateFormat( date ) },
     { title: 'Issued By', dataIndex: 'issued_by', key: 'issued_by' },
     {
       title: 'File',
@@ -31,26 +31,21 @@ const Visas = () => {
   ];
 
   const handleSave = ( records ) => {
-    setFieldsValue( { visas: records } );
+    setFieldsValue( {
+      meta: {
+        visas: map( records, ( record ) => omit( record, [ 'id', 'key' ] ) )
+      }
+    } );
     setIsSeamanTouched( true );
-  };
-
-  const handleFormatRecord = ( record ) => {
-    return {
-      ...record,
-      issue_date: record['issue_date'].format( 'YYYY-MM-DD' ),
-      valid_till: record['valid_till'].format( 'YYYY-MM-DD' )
-    }
   };
 
   return (
     <DataCollection
       title="VISA"
       columns={ columns }
-      data={ seaman.visas }
+      data={ seaman.meta.visas }
       modalTitle="VISA"
       onChange={ handleSave }
-      formatRecord={ handleFormatRecord }
       modalForm={ ( getFieldDecorator, initialValues ) => [
         <Form.Item key="type" label="Type">
           { getFieldDecorator( 'type', {
@@ -64,12 +59,12 @@ const Visas = () => {
         </Form.Item>,
         <Form.Item key="issue_date" label="Issue Date">
           { getFieldDecorator( 'issue_date', {
-            initialValue: initialValues.issue_date && moment( initialValues.issue_date )
+            initialValue: parseMoment( initialValues.issue_date )
           } )( <DatePicker placeholder="YYYY-MM-DD" style={ { width: '100%' } } /> ) }
         </Form.Item>,
         <Form.Item key="valid_till" label="Valid Till">
           { getFieldDecorator( 'valid_till', {
-            initialValue: initialValues.valid_till && moment( initialValues.valid_till )
+            initialValue: parseMoment( initialValues.valid_till )
           } )( <DatePicker placeholder="YYYY-MM-DD" style={ { width: '100%' } } /> ) }
         </Form.Item>,
         <Form.Item key="issued_by" label="Issued By">

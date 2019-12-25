@@ -21,12 +21,12 @@ import styles from './styles.less';
 const columns = [
   {
     title: 'Name',
-    dataIndex: 'name',
-    render: ( t, r ) => (
+    dataIndex: 'title',
+    render: ( title, { avatar, id } ) => (
       <>
-        <Avatar className={ styles.tableAvatar } src={ r.avatar } shape="square" icon="user" />
-        <a href={ `/seaman/${ r.id }` }>
-          { r.title || '<No Name>' }
+        <Avatar className={ styles.tableAvatar } src={ avatar } shape="square" icon="user" />
+        <a href={ `/seaman/${ id }` }>
+          { title || '<No Name>' }
         </a>
       </>
     )
@@ -49,18 +49,18 @@ const columns = [
   },
   {
     title: 'Rank',
-    dataIndex: 'rank',
-    render: ( t, r ) => getRankName( r.rank ) || '—'
+    dataIndex: 'meta.rank',
+    render: ( rank ) => getRankName( rank ) || '—'
   },
   {
     title: 'Age',
-    dataIndex: 'age',
-    render: ( t, r ) => getCurrentAge( r.birth_date ) || '—'
+    dataIndex: 'meta.birth_date',
+    render: ( birth_date ) => getCurrentAge( birth_date ) || '—'
   },
   {
     title: 'Contact',
     dataIndex: 'contact',
-    render: ( t, r ) => r.phone || r.email || r.skype || r.tel || '—'
+    render: ( contact, { meta } ) => meta.phone || meta.email || meta.skype || meta.tel || '—'
   }
 ];
 
