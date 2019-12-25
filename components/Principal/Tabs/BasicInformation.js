@@ -14,6 +14,7 @@ import { countries } from '~/utils/countries';
 
 const BasicInformation = () => {
   const { principal, getFieldDecorator, getFieldValue } = useContext( PrincipalContext );
+  const { meta } = principal;
 
   return (
     <Card>
@@ -32,8 +33,8 @@ const BasicInformation = () => {
           ) }
         </Form.Item>
         <Form.Item label="Country">
-          { getFieldDecorator( 'country', {
-            initialValue: principal.country,
+          { getFieldDecorator( 'meta.country', {
+            initialValue: meta.country,
             rules: [ { required: true, message: 'Country is required.' } ],
           } )(
             <Select placeholder="Select country" showSearch>

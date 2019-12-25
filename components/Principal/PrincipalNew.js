@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import Router from 'next/router';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
+const { token } = parseCookies();
 import { map } from 'lodash';
 import { Modal, Form, Input, Select } from 'antd';
 import ReactCountryFlag from 'react-country-flag';
@@ -14,22 +15,20 @@ import ReactCountryFlag from 'react-country-flag';
  */
 import { countries } from '~/utils/countries';
 
-const VesselNew = Form.create()( ( { form, visible, onCancel } ) => {
+const PrincipalNew = Form.create()( ( { form, visible, onCancel } ) => {
   const { getFieldDecorator, validateFields, resetFields, getFieldValue } = form;
   const [ isLoading, setIsLoading ] = useState( false );
 
-  const handleOk = () => {
+  const handleSave = () => {
     validateFields( ( err, values ) => {
       if ( err ) {
         return;
       }
 
       setIsLoading( true );
-      const { token } = parseCookies();
       values = {
+        ...values,
         status: 'publish',
-        name: values.name,
-        country: values.country,
       };
 
       axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/principal`, values, {
@@ -64,7 +63,7 @@ const VesselNew = Form.create()( ( { form, visible, onCancel } ) => {
       okText={ 'Create' }
       maskClosable={ ! isLoading }
       onCancel={ handleCancel }
-      onOk={ handleOk }
+      onOk={ handleSave }
       okButtonProps={ { loading: isLoading } }
     >
       <Form layout="horizontal">
@@ -74,18 +73,18 @@ const VesselNew = Form.create()( ( { form, visible, onCancel } ) => {
           } )( <Input placeholder="Enter name" /> ) }
         </Form.Item>
         <Form.Item label="Country">
-          { getFieldDecorator( 'country', {
+          { getFieldDecorator( 'meta.country', {
             rules: [ { required: true, message: 'Country is required.' } ],
           } )(
             <Select placeholder="Select country" showSearch>
               { map( countries, ( country ) => <Select.Option key={ country.code } value={ country.code }>{ country.name }</Select.Option> ) }
             </Select>
           ) }
-          { getFieldValue( 'country' ) && <ReactCountryFlag code={ getFieldValue( 'country' ).toLowerCase() } svg /> }
+          { getFieldValue( 'meta.country' ) && <ReactCountryFlag code={ getFieldValue( 'meta.country' ).toLowerCase() } svg /> }
         </Form.Item>
       </Form>
     </Modal>
   )
 } );
 
-export default VesselNew;
+export default PrincipalNew;
