@@ -12,6 +12,7 @@ import { Row, Col, Statistic, Badge, Button, Card, Tag, Tooltip, Icon } from 'an
  */
 import Layout from '~/components/Layout';
 import SeamanEdit from '~/components/Seaman/SeamanEdit';
+import EditDateAvailable from '~/components/Seaman/Modals/EditDateAvailable';
 import EditRank from '~/components/Seaman/Modals/EditRank';
 import EditMinWage from '~/components/Seaman/Modals/EditMinWage';
 import AvatarUpload from '~/components/AvatarUpload';
@@ -23,6 +24,7 @@ import withProvider from '~/utils/withProvider';
 import formatBreadcrumb from '~/utils/formatBreadcrumb';
 import { getStatus, getRankName, getTotalSeaTime, getRankTotalSeaTime, getCurrentAge, getContact } from '~/utils/seaman';
 import styles from './styles.less';
+import { dateFormat } from '../../utils/api';
 
 const PageHeader = () => {
   const { seaman, getFieldDecorator } = useContext( SeamanContext );
@@ -164,38 +166,39 @@ const Page = () => {
         <Row type="flex" gutter={ 24 }>
           <Col md={ 6 } xs={ 24 }>
             <Card>
-            <Statistic
-              title="Status"
-              prefix={ <Badge status={ status.state } /> }
-              value={ status.name }
-            />
+              <Statistic
+                title="Status"
+                prefix={ <Badge status={ status.state } /> }
+                value={ status.name }
+              />
             </Card>
           </Col>
           <Col md={ 6 } xs={ 24 }>
             <Card>
-            <Statistic
-              title="Date Available"
-              value="N/A"
-            />
+              <Statistic
+                title="Date Available"
+                value={ dateFormat( seaman.meta.date_available, 'll' ) || 'N/A' }
+                suffix={ <EditDateAvailable /> }
+              />
             </Card>
           </Col>
           <Col md={ 6 } xs={ 24 }>
             <Card>
-            <Statistic
-              title="Rank"
-              value={ getRankName( seaman.meta.rank ) || 'N/A' }
-              suffix={ <EditRank /> }
-            />
+              <Statistic
+                title="Rank"
+                value={ getRankName( seaman.meta.rank ) || 'N/A' }
+                suffix={ <EditRank /> }
+              />
             </Card>
           </Col>
           <Col md={ 6 } xs={ 24 }>
             <Card>
-            <Statistic
-              prefix="$"
-              title="Min. Wage"
-              value={ seaman.meta.min_wage }
-              suffix={ <EditMinWage /> }
-            />
+              <Statistic
+                prefix="$"
+                title="Min. Wage"
+                value={ seaman.meta.min_wage }
+                suffix={ <EditMinWage /> }
+              />
             </Card>
           </Col>
         </Row>
