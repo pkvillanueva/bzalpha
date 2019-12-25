@@ -21,29 +21,29 @@ import styles from './styles.less';
 const columns = [
   {
     title: 'Name',
-    dataIndex: 'name',
-    render: ( t, r ) => (
-      <a href={ `/vessel/${ r.id }` }>
-        { r.title || '<No Name>' }
+    dataIndex: 'title',
+    render: ( title, { id } ) => (
+      <a href={ `/vessel/${ id }` }>
+        { title || '<No Name>' }
       </a>
     )
   },
   {
     title: 'Type',
-    dataIndex: 'type',
-    render: ( r ) => r || '-'
+    dataIndex: 'meta.type',
+    render: ( type ) => type || '-'
   },
   {
     title: 'Flag',
-    dataIndex: 'flag',
+    dataIndex: 'meta.flag',
     align: 'center',
-    render: ( r ) => {
-      if ( ! r ) {
+    render: ( flag ) => {
+      if ( ! flag ) {
         return '-';
       }
 
       return (
-        <ReactCountryFlag code={ r.toLowerCase() } svg />
+        <ReactCountryFlag code={ flag } svg />
       );
     }
   },
@@ -61,17 +61,7 @@ const columns = [
         </a>
       );
     }
-  },
-  {
-    title: 'IMO',
-    dataIndex: 'imo',
-    render: ( r ) => r || '-'
-  },
-  {
-    title: 'MMSI',
-    dataIndex: 'mmsi',
-    render: ( r ) => r || '-'
-  },
+  }
 ];
 
 const VesselsList = ( { basePrincipal, customParams = {} } ) => {
@@ -176,17 +166,19 @@ const VesselsList = ( { basePrincipal, customParams = {} } ) => {
         <FormItem label="Search">
           <Search onSearch={ handleSearch } placeholder="Name..." />
         </FormItem>
-        <FormItem label="Owner">
-          <SelectFetch
-            className={ styles.selectStatus }
-            allowClear={ true }
-            onChange={ handleOwner }
-            placeholder="Select owner"
-            dataKey="id"
-            labelKey="name"
-            action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/principal` }
-          />
-        </FormItem>
+        { ! basePrincipal &&
+          <FormItem label="Owner">
+            <SelectFetch
+              className={ styles.selectStatus }
+              allowClear={ true }
+              onChange={ handleOwner }
+              placeholder="Select owner"
+              dataKey="id"
+              labelKey="name"
+              action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/principal` }
+            />
+          </FormItem>
+        }
       </Form>
     </Block>
     <Block>
