@@ -31,7 +31,7 @@ const EditRank = () => {
       onChange={ handleChange }
       modalForm={ ( decorator ) => ( <>
         { decorator( 'meta.rank', {
-          initialValue: seaman.rank
+          initialValue: seaman.meta.rank
         } )(
           <Select style={ { width: '100%' } } placeholder="Select a rank">
             { map( ranks, ( rank ) => <Select.Option value={ rank.value } key={ rank.value }>{ rank.name }</Select.Option> ) }
