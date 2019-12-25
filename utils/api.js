@@ -1,23 +1,23 @@
-import { map, mapValues, isEmpty } from 'lodash';
+import { map, mapValues, isEmpty, isPlainObject, isNull, isArray } from 'lodash';
 import moment from 'moment';
 
 export const prepareValues = ( values ) => {
-  if ( typeof values !== 'object' ) {
+  if ( ! isPlainObject( values ) ) {
     return values;
   }
 
   values = mapValues( values, ( value ) => {
-    if ( value instanceof moment ) {
+    if ( isNull( value ) || value instanceof moment ) {
       return value;
-    } else if ( typeof value === 'object' ) {
+    } else if ( isPlainObject( value ) ) {
       let tempID = getID( value );
 
-      if ( typeof tempID === 'object' ) {
+      if ( isPlainObject( tempID ) ) {
         value = prepareValues( value );
       } else {
         value = tempID;
       }
-    } else if ( typeof value === 'array' ) {
+    } else if ( isArray( value ) ) {
       value = map( value, ( item ) => prepareValues( item ) );
     }
 
