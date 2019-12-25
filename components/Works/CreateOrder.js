@@ -8,19 +8,18 @@ import { ranks } from '~/utils/ranks';
 import { currencies } from '~/utils/currencies';
 import SelectFetch from '~/components/SelectFetch';
 import ModalForm from '~/components/ModalForm';
-import { WorksContext } from '~/store/works';
+import { WorksContext } from './store/works';
 import styles from './styles.less';
 
-const EditOrders = ( { principalId, principalName, vesselId, vesselName, children } ) => {
-  const { bulkOrders } = useContext( WorksContext );
-  const [ principal, setPrincipal ] = useState( '' );
+const CreateOrder = ( { children }) => {
+  const { principal, vessel, createOrders } = useContext( WorksContext );
+  const [ principalValue, setPrincipalValue ] = useState( '' );
 
   const handleSave = ( { values, form, success, done } ) => {
     const { resetFields } = form;
-
     values.vessel = parseInt( values.vessel );
 
-    bulkOrders( {
+    createOrders( {
       values,
       done,
       success: () => {
@@ -41,20 +40,20 @@ const EditOrders = ( { principalId, principalName, vesselId, vesselName, childre
           <Row gutter={ 36 }>
             <Col lg={ 12 }>
               <Form.Item label="Owner">
-                { ! isEmpty( principalId ) || ! isEmpty( vesselId ) ?
+                { ! isEmpty( principal.id ) || ! isEmpty( vessel.id ) ?
                   <SelectFetch
                     disabled={ true }
-                    placeholder={ principalName }
+                    placeholder={ principal.name }
                   /> :
                   <SelectFetch
-                    value={ principal }
+                    value={ principalValue }
                     allowClear={ true }
                     placeholder="Select owner"
                     dataKey="id"
                     labelKey="name"
                     action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/principal` }
                     onChange={ ( value ) => {
-                      setPrincipal( value );
+                      setPrincipalValue( value );
                       setFieldsValue( { vessel: '' } );
                     } }
                   />
@@ -63,15 +62,15 @@ const EditOrders = ( { principalId, principalName, vesselId, vesselName, childre
               <Form.Item label="Vessel">
                 { getFieldDecorator( 'vessel', {
                   rules: [ { required: true, message: 'Vessel is required.' } ],
-                  initialValue: vesselId || ''
+                  initialValue: vessel.id || ''
                 } )(
                   <SelectFetch
-                    disabled={ ! isEmpty( vesselId ) }
+                    disabled={ ! isEmpty( vessel.id ) }
                     allowClear={ true }
-                    placeholder={ vesselName ? vesselName : 'Enter vessel name' }
+                    placeholder={ vessel.name ? vessel.name : 'Enter vessel name' }
                     action={ `${ process.env.API_URL }/wp-json/bzalpha/v1/vessel` }
                     customParams= { {
-                      principal: principalId ? principalId : principal
+                      principal: principal.id ? principal.id : principalValue
                     } }
                   />
                 ) }
@@ -181,4 +180,4 @@ const EditOrders = ( { principalId, principalName, vesselId, vesselName, childre
   );
 };
 
-export default EditOrders;
+export default CreateOrder;

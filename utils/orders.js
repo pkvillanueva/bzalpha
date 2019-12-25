@@ -36,7 +36,7 @@ export const getOrderDetails = ( order ) => {
     contract_plus,
     contract_minus,
     remark
-  } = order;
+  } = order.meta;
   let text = '';
 
   if ( status === 'pending' ) {
@@ -59,8 +59,8 @@ export const getOrderDetails = ( order ) => {
 
 export const isOrderExpiring = ( order, date ) => {
   if ( typeof order === 'object' ) {
-    date = order.sign_off;
-    order = order.status;
+    date = order.meta.sign_off;
+    order = order.meta.status;
   }
 
   if ( ! date || order !== 'onboard' ) {

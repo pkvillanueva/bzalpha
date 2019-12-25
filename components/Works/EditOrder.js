@@ -1,45 +1,48 @@
 import React, { useContext } from 'react';
-import moment from 'moment';
-import { mapValues, map, isEmpty } from 'lodash';
+import { map, merge } from 'lodash';
 import { Form, Row, Col, Input, InputNumber, Select, DatePicker, Checkbox } from 'antd';
 import ModalForm from '~/components/ModalForm';
-import { OrdersContext } from '~/store/orders';
+import { OrdersContext } from './store/orders';
 import { currencies } from '~/utils/currencies';
 import { ranks } from '~/utils/ranks';
+import { parseMoment } from '~/utils/api';
 import styles from './styles.less';
 
 const EditOrder = ( { title, saveValues, order, children } ) => {
   const { updateOrder, createOrder } = useContext( OrdersContext );
-  const { id, parent_order } = order
+  const { id, meta } = order
+  const { position, status } = meta;
 
   const handleSave = ( { values, success, error } ) => {
-    values = mapValues( values, ( v ) => v instanceof moment ? v.format( 'YYYY-MM-DD' ) : v );
-    values = { ...values, ...saveValues };
-
     if ( ! id ) {
+      values = merge( order, values, saveValues );
       createOrder( { values, success, error } );
     } else {
+      values = merge( values, saveValues );
       updateOrder( { values, id, success, error } );
     }
   };
 
   const formTitle = () => {
-    const { position, id } = order;
     let text = 'Edit Order ';
 
     if ( title ) {
       text = `${ title } `;
     }
 
-    return `${ text } ${ position }-${ id }`;
+    if ( position && id ) {
+      text += `${ position }-${ id } `;
+    }
+
+    return text;
   };
 
-  const hasParentOrder = () => {
-    return ! isEmpty( parent_order );
+  const isReserve = () => {
+    return status === 'reserved';
   };
 
-  const isCloseOrder = () => {
-
+  const isOnboard = () => {
+    return status === 'onboard';
   };
 
   return (
@@ -55,8 +58,8 @@ const EditOrder = ( { title, saveValues, order, children } ) => {
               <Row gutter={ 24 }>
                 <Col lg={ 16 }>
                   <Form.Item label="Wage">
-                    { getFieldDecorator( 'wage', {
-                      initialValue: order.wage,
+                    { getFieldDecorator( 'meta.wage', {
+                      initialValue: meta.wage,
                       rules: [ { required: true, message: 'Wage is required.' } ]
                     } )(
                       <InputNumber placeholder="960" style={ { width: '100%' } } />
@@ -65,8 +68,8 @@ const EditOrder = ( { title, saveValues, order, children } ) => {
                 </Col>
                 <Col lg={ 8 }>
                   <Form.Item label="Currency">
-                    { getFieldDecorator( 'currency', {
-                      initialValue: order.currency
+                    { getFieldDecorator( 'meta.currency', {
+                      initialValue: meta.currency
                     } )(
                       <Select>
                         { map( currencies, ( currency ) => (
@@ -80,13 +83,13 @@ const EditOrder = ( { title, saveValues, order, children } ) => {
                 </Col>
               </Row>
               <Form.Item label="Position">
-                { getFieldDecorator( 'position', {
-                  initialValue: order.position,
+                { getFieldDecorator( 'meta.position', {
+                  initialValue: meta.position,
                   rules: [ { required: true, message: 'Position is required.' } ]
                 } )(
                   <Select placeholder="Select position" >
                     { map( ranks, ( rank ) => (
-                      <Select.Option value={ rank.value } key={ rank.value } disabled={ hasParentOrder() }>
+                      <Select.Option value={ rank.value } key={ rank.value } disabled={ ( isReserve() || isOnboard() ) }>
                         { rank.name }
                       </Select.Option>
                     ) ) }
@@ -97,16 +100,16 @@ const EditOrder = ( { title, saveValues, order, children } ) => {
                 <Col lg={ 14 }>
                   <Form.Item label="Contract" className={ styles.contractField }>
                     <Form.Item className={ styles.item }>
-                      { getFieldDecorator( 'contract_plus', {
-                        initialValue: order.contract_plus
+                      { getFieldDecorator( 'meta.contract_plus', {
+                        initialValue: meta.contract_plus
                       } )(
                         <InputNumber placeholder="0" />
                       ) }
                     </Form.Item>
                     <span className={ styles.unit }>+/-</span>
                     <Form.Item className={ styles.item }>
-                      { getFieldDecorator( 'contract_minus', {
-                        initialValue: order.contract_minus
+                      { getFieldDecorator( 'meta.contract_minus', {
+                        initialValue: meta.contract_minus
                       } )(
                         <InputNumber placeholder="0" />
                       ) }
@@ -115,8 +118,8 @@ const EditOrder = ( { title, saveValues, order, children } ) => {
                 </Col>
                 <Col lg={ 10 }>
                   <Form.Item label="Uniform">
-                    { getFieldDecorator( 'uniform', {
-                      initialValue: order.uniform,
+                    { getFieldDecorator( 'meta.uniform', {
+                      initialValue: meta.uniform,
                       valuePropName: 'checked'
                     } )(
                       <Checkbox />
@@ -129,8 +132,8 @@ const EditOrder = ( { title, saveValues, order, children } ) => {
               <Row gutter={ 24 }>
                 <Col lg={ 12 }>
                   <Form.Item label="Join Port">
-                    { getFieldDecorator( 'port', {
-                      initialValue: order.port
+                    { getFieldDecorator( 'meta.port', {
+                      initialValue: meta.port
                     } )(
                       <Input />
                     ) }
@@ -138,8 +141,8 @@ const EditOrder = ( { title, saveValues, order, children } ) => {
                 </Col>
                 <Col lg={ 12 }>
                   <Form.Item label="Return Port">
-                    { getFieldDecorator( 'return_port', {
-                      initialValue: order.return_port
+                    { getFieldDecorator( 'meta.return_port', {
+                      initialValue: meta.return_port
                     } )(
                       <Input />
                     ) }
@@ -149,8 +152,8 @@ const EditOrder = ( { title, saveValues, order, children } ) => {
               <Row gutter={ 24 }>
                 <Col lg={ 12 }>
                   <Form.Item label="Join Date">
-                    { getFieldDecorator( 'sign_on', {
-                      initialValue: order.sign_on && moment( order.sign_on ),
+                    { getFieldDecorator( 'meta.sign_on', {
+                      initialValue: parseMoment( meta.sign_on ),
                       rules: [ { required: true, message: 'Join is required.' } ]
                     } )(
                       <DatePicker placeholder="YYYY-MM-DD" />
@@ -159,8 +162,8 @@ const EditOrder = ( { title, saveValues, order, children } ) => {
                 </Col>
                 <Col lg={ 12 }>
                   <Form.Item label="Return Date">
-                    { getFieldDecorator( 'sign_off', {
-                      initialValue: order.sign_off && moment( order.sign_off ),
+                    { getFieldDecorator( 'meta.sign_off', {
+                      initialValue: parseMoment( meta.sign_off ),
                       rules: [ { required: true, message: 'Return date is required.' } ]
                     } )(
                       <DatePicker placeholder="YYYY-MM-DD" />
@@ -169,8 +172,8 @@ const EditOrder = ( { title, saveValues, order, children } ) => {
                 </Col>
               </Row>
               <Form.Item label="Remark">
-                { getFieldDecorator( 'remark', {
-                  initialValue: order.remark
+                { getFieldDecorator( 'meta.remark', {
+                  initialValue: meta.remark
                 } )(
                   <Input.TextArea rows={ 4 } />
                 ) }
