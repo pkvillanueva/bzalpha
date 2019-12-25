@@ -78,23 +78,17 @@ export const WorksProvider = ( { children } ) => {
         'Authorization': `Bearer ${ token }`
       },
     } ).then( ( res ) => {
-      if ( success ) {
-        success( res );
-      }
+      success && success( res );
 
       fetchVessel( values.vessel );
       message.success( 'Orders created.' );
     } ).catch( ( err ) => {
-      if ( error ) {
-        error();
-      }
+      error && error();
 
       console.log( err );
       message.error( 'Failed to create orders.' );
     } ).finally( () => {
-      if ( done ) {
-        done();
-      }
+      done && done();
     } );
   }
 
