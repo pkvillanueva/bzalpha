@@ -3,7 +3,7 @@
  */
 import React, { useContext } from 'react';
 import { Icon, Select } from 'antd';
-import { map } from 'lodash';
+import { map, merge } from 'lodash';
 import { ranks } from '~/utils/ranks';
 
 /**
@@ -11,37 +11,36 @@ import { ranks } from '~/utils/ranks';
  */
 import ModalForm from '~/components/ModalForm';
 import { SeamanContext } from '~/store/seaman';
-import { merge } from 'lodash';
 
 const EditRank = () => {
-  const { seaman, setSeaman, setFieldsValue, setIsSeamanTouched, getFieldDecorator } = useContext( SeamanContext );
+	const { seaman, setSeaman, setFieldsValue, setIsSeamanTouched, getFieldDecorator } = useContext( SeamanContext );
 
-  const handleChange = ( values, callback ) => {
-    setSeaman( merge( seaman, values ) );
-    setFieldsValue( values );
-    setIsSeamanTouched( true );
-    callback();
-  }
+	const handleChange = ( values, callback ) => {
+		setSeaman( merge( seaman, values ) );
+		setFieldsValue( values );
+		setIsSeamanTouched( true );
+		callback();
+	};
 
-  getFieldDecorator( 'meta.rank', { initialValue: seaman.rank } );
+	getFieldDecorator( 'meta.rank', { initialValue: seaman.rank } );
 
-  return (
-    <ModalForm
-      title="Edit Rank"
-      onChange={ handleChange }
-      modalForm={ ( decorator ) => ( <>
-        { decorator( 'meta.rank', {
-          initialValue: seaman.meta.rank
-        } )(
-          <Select style={ { width: '100%' } } placeholder="Select a rank">
-            { map( ranks, ( rank ) => <Select.Option value={ rank.value } key={ rank.value }>{ rank.name }</Select.Option> ) }
-          </Select>
-        ) }
-      </> ) }
-    >
-      <Icon style={ { opacity: 0.3 } } type="edit" />
-    </ModalForm>
-  );
+	return (
+		<ModalForm
+			title="Edit Rank"
+			onChange={ handleChange }
+			modalForm={ ( decorator ) => ( <>
+				{ decorator( 'meta.rank', {
+					initialValue: seaman.meta.rank,
+				} )(
+					<Select style={ { width: '100%' } } placeholder="Select a rank">
+						{ map( ranks, ( rank ) => <Select.Option value={ rank.value } key={ rank.value }>{ rank.name }</Select.Option> ) }
+					</Select>
+				) }
+			</> ) }
+		>
+			<Icon style={ { opacity: 0.3 } } type="edit" />
+		</ModalForm>
+	);
 };
 
 export default EditRank;

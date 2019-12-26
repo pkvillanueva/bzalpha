@@ -12,27 +12,25 @@ import SeamenList from '~/components/Seaman/SeamanList';
 import formatBreadcrumb from '~/utils/formatBreadcrumb';
 import withAuth from '~/utils/withAuth';
 
-class Page extends Component {
-  breadcrumb = [
-    {
-      path: '/seaman',
-      breadcrumbName: 'Seaman List'
-    }
-  ];
+const breadcrumb = [ {
+	path: '/seaman',
+	breadcrumbName: 'Seaman List',
+} ];
 
-  render() {
-    return (
-      <Layout
-        title="Seaman List"
-        breadcrumb={ formatBreadcrumb( this.breadcrumb ) }
-        pageHeaderContent={ <div>Page where you can view, add or edit a seaman.</div> }
-      >
-        <Card bordered={ false }>
-          <SeamenList />
-        </Card>
-      </Layout>
-    );
-  }
+class Page extends Component {
+	render() {
+		return (
+			<Layout
+				title="Seaman List"
+				breadcrumb={ formatBreadcrumb( breadcrumb ) }
+				pageHeaderContent={ <div>Page where you can view, add or edit a seaman.</div> }
+			>
+				<Card bordered={ false }>
+					<SeamenList />
+				</Card>
+			</Layout>
+		);
+	}
 }
 
 export default withAuth( Page );

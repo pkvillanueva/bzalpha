@@ -20,90 +20,90 @@ import withProvider from '~/utils/withProvider';
 import formatBreadcrumb from '~/utils/formatBreadcrumb';
 
 const tabContent = {
-  information: <BasicInformation />,
-  vessels: <Vessels />
+	information: <BasicInformation />,
+	vessels: <Vessels />,
 };
 
 const PageHeaderFooter = ( { onChange } ) => {
-  return (
-    <Tabs defaultActiveKey="information" onChange={ onChange }>
-    <TabPane tab="Information" key="information" />
-      <TabPane tab="Vessels" key="vessels" />
-    </Tabs>
-  );
+	return (
+		<Tabs defaultActiveKey="information" onChange={ onChange }>
+			<TabPane tab="Information" key="information" />
+			<TabPane tab="Vessels" key="vessels" />
+		</Tabs>
+	);
 };
 
 const Page = () => {
-  const {
-    principal,
-    setPrincipal,
-    validateFields,
-    isSaving,
-    setIsSaving,
-    resetFields,
-    isFieldsTouched,
-    isPrincipalTouched,
-    setIsPrincipalTouched,
-  } = useContext( PrincipalContext );
-  const [ tab, setTab ] = useState( 'information' );
-  const { query } = useRouter();
+	const {
+		principal,
+		setPrincipal,
+		validateFields,
+		isSaving,
+		setIsSaving,
+		resetFields,
+		isFieldsTouched,
+		isPrincipalTouched,
+		setIsPrincipalTouched,
+	} = useContext( PrincipalContext );
+	const [ tab, setTab ] = useState( 'information' );
+	const { query } = useRouter();
 
-  const getBreadcrumb = () => {
-    return [
-      { path: '/principal', breadcrumbName: 'Principals List' },
-      { breadcrumbName: principal.name }
-    ]
-  };
+	const getBreadcrumb = () => {
+		return [
+			{ path: '/principal', breadcrumbName: 'Principals List' },
+			{ breadcrumbName: principal.name },
+		];
+	};
 
-  const handleSave = () => {
-    if ( isSaving ) {
-      return;
-    }
+	const handleSave = () => {
+		if ( isSaving ) {
+			return;
+		}
 
-    validateFields( ( err, values ) => {
-      if ( err ) {
-        return;
-      }
+		validateFields( ( err, values ) => {
+			if ( err ) {
+				return;
+			}
 
-      setIsSaving( true );
-      const cookies = parseCookies();
-      axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/principal/${ query.id }`, values, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${ cookies.token }`,
-        }
-      } ).then( ( res ) => {
-        setTimeout( () => {
-          setPrincipal( res.data );
-          resetFields();
-          setIsSaving( false );
-          setIsPrincipalTouched( false );
-        }, 1500 );
-      } ).catch( () => {
-        setTimeout( () => {
-          setIsSaving( false );
-          setIsPrincipalTouched( false );
-        }, 1500 );
-      } );
-    } );
-  };
+			setIsSaving( true );
+			const cookies = parseCookies();
+			axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/principal/${ query.id }`, values, {
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${ cookies.token }`,
+				},
+			} ).then( ( res ) => {
+				setTimeout( () => {
+					setPrincipal( res.data );
+					resetFields();
+					setIsSaving( false );
+					setIsPrincipalTouched( false );
+				}, 1500 );
+			} ).catch( () => {
+				setTimeout( () => {
+					setIsSaving( false );
+					setIsPrincipalTouched( false );
+				}, 1500 );
+			} );
+		} );
+	};
 
-  const handleTabChange = ( value ) => {
-    setTab( value );
-  };
+	const handleTabChange = ( value ) => {
+		setTab( value );
+	};
 
-  return (
-    <Layout
-      title={ principal.name }
-      breadcrumb={ formatBreadcrumb( getBreadcrumb() ) }
-      extra={ [
-        <Button type="primary" key="save" onClick={ handleSave } disabled={ ( ! isPrincipalTouched && ! isFieldsTouched() ) } loading={ isSaving }>Save</Button>
-      ] }
-      footer={ <PageHeaderFooter onChange={ handleTabChange } /> }
-    >
-      { tabContent[ tab ] }
-    </Layout>
-  );
+	return (
+		<Layout
+			title={ principal.name }
+			breadcrumb={ formatBreadcrumb( getBreadcrumb() ) }
+			extra={ [
+				<Button type="primary" key="save" onClick={ handleSave } disabled={ ( ! isPrincipalTouched && ! isFieldsTouched() ) } loading={ isSaving }>Save</Button>,
+			] }
+			footer={ <PageHeaderFooter onChange={ handleTabChange } /> }
+		>
+			{ tabContent[ tab ] }
+		</Layout>
+	);
 };
 
 export default withAuth( withProvider( PrincipalProvider, Page ) );

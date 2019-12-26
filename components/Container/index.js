@@ -4,9 +4,9 @@
 import styles from './styles.less';
 
 const Container = ( { children } ) => (
-  <div className={ styles.container }>
-    { children }
-  </div>
+	<div className={ styles.container }>
+		{ children }
+	</div>
 );
 
 export default Container;
