@@ -19,9 +19,12 @@ const ModalForm = Form.create()( ( props ) => {
 			setLoading( true );
 
 			if ( onChange ) {
-				onChange( values, () => {
-					setVisible( false );
-					setLoading( false );
+				onChange( {
+					values,
+					done() {
+						setVisible( false );
+						setLoading( false );
+					},
 				} );
 			} else if ( onSave ) {
 				onSave( {
@@ -40,6 +43,7 @@ const ModalForm = Form.create()( ( props ) => {
 				} );
 			} else {
 				setVisible( false );
+				setLoading( false );
 			}
 		} );
 	};
