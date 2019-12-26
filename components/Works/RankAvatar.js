@@ -4,18 +4,18 @@ import styles from './styles.less';
 import { isOrderExpiring } from '~/utils/orders';
 
 const RankAvatar = ( { status, date, ...props } ) => {
-  let typeClass = status;
+	let typeClass = status;
 
-  if ( isOrderExpiring( status, date ) ) {
-    typeClass = 'expiring';
-  }
+	if ( isOrderExpiring( status, date ) ) {
+		typeClass = 'expiring';
+	}
 
-  const className = classnames( {
-    [`${ styles.rankAvatar }`]: true,
-    [`${ styles[ typeClass ] }`]: true,
-  } );
+	const className = classnames( {
+		[ `${ styles.rankAvatar }` ]: true,
+		[ `${ styles[ typeClass ] }` ]: true,
+	} );
 
-  return <Avatar { ...props } className={ className } />
+	return <Avatar { ...props } className={ className } />;
 };
 
 export default RankAvatar;

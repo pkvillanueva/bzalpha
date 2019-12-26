@@ -10,26 +10,25 @@ import { parseCookies } from 'nookies';
 import { UserProvider } from '../store/user';
 
 class _App extends App {
-  static async getInitialProps( { Component, ctx } ) {
-    const cookies = parseCookies( ctx );
+	static async getInitialProps( { Component, ctx } ) {
+		const cookies = parseCookies( ctx );
 
-    if ( Component.getInitialProps ) {
-      const props = await Component.getInitialProps( ctx );
-      return { ...props, cookies };
-    } else {
-      return { cookies };
-    }
-  }
+		if ( Component.getInitialProps ) {
+			const props = await Component.getInitialProps( ctx );
+			return { ...props, cookies };
+		}
+		return { cookies };
+	}
 
-  render() {
-    const { Component, cookies, ...pageProps } = this.props;
+	render() {
+		const { Component, cookies, ...pageProps } = this.props;
 
-    return (
-      <UserProvider cookies={ cookies }>
-        <Component { ...pageProps } />
-      </UserProvider>
-    );
-  }
+		return (
+			<UserProvider cookies={ cookies }>
+				<Component { ...pageProps } />
+			</UserProvider>
+		);
+	}
 }
 
 export default _App;

@@ -1,8 +1,7 @@
 /**
  * External dependencies.
  */
-import React, { useState } from 'react';
-import { Card, Tabs } from 'antd';
+import { Tabs } from 'antd';
 const { TabPane } = Tabs;
 
 /**
@@ -20,51 +19,51 @@ import Licenses from './Tabs/Licenses';
 import BMI from './Tabs/BMI';
 
 const SeamanEdit = () => {
-  return (
-    <Tabs defaultActiveKey="general">
-      <TabPane tab="General" key="general">
-        <BlockCard>
-          <PersonalInformation />
-        </BlockCard>
-        <BlockCard>
-          <ContactInformation />
-        </BlockCard>
-      </TabPane>
-      <TabPane tab="Experiences" key="experiences">
-        <BlockCard>
-          <Experiences />
-        </BlockCard>
-      </TabPane>
-      <TabPane tab="Passports" key="passports">
-        <BlockCard>
-          <Passports />
-        </BlockCard>
-        <BlockCard>
-          <Visas />
-        </BlockCard>
-      </TabPane>
-      <TabPane tab="Licenses" key="documents">
-        <BlockCard>
-          <Licenses />
-        </BlockCard>
-      </TabPane>
-      <TabPane tab="Educations" key="educations">
-        <BlockCard>
-          <Educations />
-        </BlockCard>
-      </TabPane>
-      <TabPane tab="Relatives" key="relatives">
-        <BlockCard>
-          <Relatives />
-        </BlockCard>
-      </TabPane>
-      <TabPane tab="BMI" key="bmi">
-        <BlockCard>
-          <BMI />
-        </BlockCard>
-      </TabPane>
-    </Tabs>
-  );
-}
+	return (
+		<Tabs defaultActiveKey="general">
+			<TabPane tab="General" key="general">
+				<BlockCard>
+					<PersonalInformation />
+				</BlockCard>
+				<BlockCard>
+					<ContactInformation />
+				</BlockCard>
+			</TabPane>
+			<TabPane tab="Experiences" key="experiences">
+				<BlockCard>
+					<Experiences />
+				</BlockCard>
+			</TabPane>
+			<TabPane tab="Passports" key="passports">
+				<BlockCard>
+					<Passports />
+				</BlockCard>
+				<BlockCard>
+					<Visas />
+				</BlockCard>
+			</TabPane>
+			<TabPane tab="Licenses" key="documents">
+				<BlockCard>
+					<Licenses />
+				</BlockCard>
+			</TabPane>
+			<TabPane tab="Educations" key="educations">
+				<BlockCard>
+					<Educations />
+				</BlockCard>
+			</TabPane>
+			<TabPane tab="Relatives" key="relatives">
+				<BlockCard>
+					<Relatives />
+				</BlockCard>
+			</TabPane>
+			<TabPane tab="BMI" key="bmi">
+				<BlockCard>
+					<BMI />
+				</BlockCard>
+			</TabPane>
+		</Tabs>
+	);
+};
 
 export default SeamanEdit;

@@ -9,132 +9,130 @@ import { Select, Spin } from 'antd';
 const { Option } = Select;
 
 class SelectFetch extends Component {
-  constructor( props ) {
-    super( props );
-    this.fetchData = debounce( this.fetchData );
-    this.dataKey = props.dataKey || 'id';
-    this.labelKey = props.labelKey || 'title';
-  }
+	constructor( props ) {
+		super( props );
+		this.fetchData = debounce( this.fetchData );
+		this.dataKey = props.dataKey || 'id';
+		this.labelKey = props.labelKey || 'title';
+	}
 
-  state = {
-    value: [],
-    data: [],
-    fetching: false,
-    loading: false
-  };
+	state = {
+		value: [],
+		data: [],
+		fetching: false,
+		loading: false,
+	};
 
-  static getDerivedStateFromProps = ( nextProps, prevState ) => {
-    // Allow clear value from props.
-    if ( isPlainObject( prevState.value ) && ! isEmpty( prevState.value ) && ! nextProps.value ) {
-      return {
-        value: undefined
-      };
-    }
+	static getDerivedStateFromProps = ( nextProps, prevState ) => {
+		// Allow clear value from props.
+		if ( isPlainObject( prevState.value ) && ! isEmpty( prevState.value ) && ! nextProps.value ) {
+			return {
+				value: undefined,
+			};
+		}
 
-    return null;
-  };
+		return null;
+	};
 
-  componentDidMount = () => {
-    this.setState( { loading: false } );
+	componentDidMount = () => {
+		this.setState( { loading: false } );
 
-    const { value, initialData } = this.props;
-    if ( ! value || isEmpty( initialData ) ) {
-      return;
-    }
+		const { value, initialData } = this.props;
+		if ( ! value || isEmpty( initialData ) ) {
+			return;
+		}
 
-    let data = {};
-    if ( isArray( initialData ) ) {
-      data = initialData[0];
-    } else {
-      data = initialData;
-    }
+		let data = {};
+		if ( isArray( initialData ) ) {
+			data = initialData[ 0 ];
+		} else {
+			data = initialData;
+		}
 
-    this.setState( { value: {
-      key: data[ this.dataKey ],
-      label: data[ this.labelKey ]
-    } } );
-  };
+		this.setState( { value: {
+			key: data[ this.dataKey ],
+			label: data[ this.labelKey ],
+		} } );
+	};
 
-  fetchData = ( params = {} ) => {
-    const { token } = parseCookies();
+	fetchData = ( params = {} ) => {
+		const { token } = parseCookies();
 
-    this.setState( {
-      fetching: true,
-      data: []
-    } );
+		this.setState( {
+			fetching: true,
+			data: [],
+		} );
 
-    axios.get( this.props.action, {
-      headers: { 'Authorization': `Bearer ${ token }` },
-      params: { ...params, ...this.props.customParams }
-    } )
-    .then( ( res ) => {
-      const data = map( res.data, ( d ) => ( {
-        value: d[ this.dataKey ],
-        text: d[ this.labelKey ]
-      } ) );
+		axios.get( this.props.action, {
+			headers: { Authorization: `Bearer ${ token }` },
+			params: { ...params, ...this.props.customParams },
+		} ).then( ( res ) => {
+			const data = map( res.data, ( d ) => ( {
+				value: d[ this.dataKey ],
+				text: d[ this.labelKey ],
+			} ) );
 
-      this.setState( { data: data, fetching: false } );
-    } )
-    .catch( () => {
-      this.setState( { data: [], fetching: false } );
-    } );
-  };
+			this.setState( { data, fetching: false } );
+		} ).catch( () => {
+			this.setState( { data: [], fetching: false } );
+		} );
+	};
 
-  handleSearch = ( value ) => {
-    this.fetchData( {
-      search: value
-    } );
-  };
+	handleSearch = ( value ) => {
+		this.fetchData( {
+			search: value,
+		} );
+	};
 
-  handleChange = ( value ) => {
-    this.setState( {
-      value,
-      fetching: false
-    } );
+	handleChange = ( value ) => {
+		this.setState( {
+			value,
+			fetching: false,
+		} );
 
-    if ( this.props.onChange ) {
-      if ( this.props.withLabelValue ) {
-        this.props.onChange( value );
-      } else {
-        this.props.onChange( value ? value.key : '' );
-      }
-    }
-  };
+		if ( this.props.onChange ) {
+			if ( this.props.withLabelValue ) {
+				this.props.onChange( value );
+			} else {
+				this.props.onChange( value ? value.key : '' );
+			}
+		}
+	};
 
-  handleDropdownVisibleChange = ( open ) => {
-    if ( open ) {
-      this.fetchData();
-    }
-  };
+	handleDropdownVisibleChange = ( open ) => {
+		if ( open ) {
+			this.fetchData();
+		}
+	};
 
-  render() {
-    const { placeholder, allowClear, className, style, disabled } = this.props;
+	render() {
+		const { placeholder, allowClear, className, style, disabled } = this.props;
 
-    return (
-      <Select
-        notFoundContent={ this.state.fetching && <Spin size="small" /> }
-        value={ this.state.value }
-        loading={ this.state.loading }
-        onDropdownVisibleChange={ this.handleDropdownVisibleChange }
-        onSearch={ this.handleSearch }
-        onChange={ this.handleChange }
-        className={ className }
-        allowClear={ allowClear }
-        placeholder={ placeholder }
-        style={ style }
-        disabled={ disabled }
-        showSearch={ true }
-        labelInValue={ true }
-        filterOption={ false }
-      >
-        { this.state.data.map( d => (
-          <Option key={ d.value }>
-            { d.text }
-          </Option>
-        ) ) }
-      </Select>
-    );
-  }
+		return (
+			<Select
+				notFoundContent={ this.state.fetching && <Spin size="small" /> }
+				value={ this.state.value }
+				loading={ this.state.loading }
+				onDropdownVisibleChange={ this.handleDropdownVisibleChange }
+				onSearch={ this.handleSearch }
+				onChange={ this.handleChange }
+				className={ className }
+				allowClear={ allowClear }
+				placeholder={ placeholder }
+				style={ style }
+				disabled={ disabled }
+				showSearch={ true }
+				labelInValue={ true }
+				filterOption={ false }
+			>
+				{ this.state.data.map( ( d ) => (
+					<Option key={ d.value }>
+						{ d.text }
+					</Option>
+				) ) }
+			</Select>
+		);
+	}
 }
 
 export default SelectFetch;

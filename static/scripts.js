@@ -1,5 +1,5 @@
 if ( typeof window !== 'undefined' ) {
-  window.addEventListener( 'DOMContentLoaded', () => {
-    document.getElementById( 'holderStyle' ).remove();
-  } );
+	window.addEventListener( 'DOMContentLoaded', () => {
+		document.getElementById( 'holderStyle' ).remove();
+	} );
 }

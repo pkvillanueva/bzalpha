@@ -10,18 +10,18 @@ import { useRouter } from 'next/router';
 import VesselList from '~/components/Vessel/VesselList';
 
 const Vessels = () => {
-  const { query } = useRouter();
+	const { query } = useRouter();
 
-  return (
-    <Card>
-      <VesselList
-        basePrincipal={ query.id }
-        customParams={ {
-          principal: query.id
-        } }
-      />
-    </Card>
-  );
+	return (
+		<Card>
+			<VesselList
+				basePrincipal={ query.id }
+				customParams={ {
+					principal: query.id,
+				} }
+			/>
+		</Card>
+	);
 };
 
 export default Vessels;
