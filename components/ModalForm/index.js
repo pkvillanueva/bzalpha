@@ -67,6 +67,9 @@ const ModalForm = Form.create()( ( props ) => {
 				onOk={ handleOk }
 				onCancel={ handleCancel }
 				maskClosable={ false }
+				cancelButtonProps={ {
+					disabled: loading,
+				} }
 				okButtonProps={ {
 					loading,
 				} }
