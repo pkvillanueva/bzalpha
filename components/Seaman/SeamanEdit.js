@@ -12,7 +12,7 @@ import PersonalInformation from './Tabs/PersonalInformation';
 import ContactInformation from './Tabs/ContactInformation';
 import Relatives from './Tabs/Relatives';
 import Educations from './Tabs/Educations';
-import Passports from './Tabs/Passports';
+import EditPassports from './EditPassports';
 import Visas from './Tabs/Visas';
 import EditExperiences from './EditExperiences';
 import Licenses from './Tabs/Licenses';
@@ -36,11 +36,13 @@ const SeamanEdit = () => {
 			</TabPane>
 			<TabPane tab="Passports" key="passports">
 				<BlockCard>
-					<Passports />
+					<Card title="Passports">
+						<EditPassports />
+					</Card>
 				</BlockCard>
-				<BlockCard>
+				{/* <BlockCard>
 					<Visas />
-				</BlockCard>
+				</BlockCard> */}
 			</TabPane>
 			<TabPane tab="Licenses" key="documents">
 				<BlockCard>
