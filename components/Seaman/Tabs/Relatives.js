@@ -8,7 +8,7 @@ import { omit, map } from 'lodash';
 /**
  * Internal dependencies.
  */
-import { SeamanContext } from '~/store/seaman';
+import { SeamanContext } from '../store/seaman';
 import DataCollection from '~/components/DataCollection';
 
 const Relatives = () => {

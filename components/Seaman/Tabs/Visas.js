@@ -7,7 +7,7 @@ import { Form, Input, DatePicker, Button } from 'antd';
 /**
  * Internal dependencies.
  */
-import { SeamanContext } from '~/store/seaman';
+import { SeamanContext } from '../store/seaman';
 import DataCollection from '~/components/DataCollection';
 import FileUpload from '~/components/FileUpload';
 import { isEmpty, omit, map } from 'lodash';

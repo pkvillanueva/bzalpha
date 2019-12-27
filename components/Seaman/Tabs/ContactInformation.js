@@ -8,7 +8,7 @@ import { map, filter, sortBy } from 'lodash';
 /**
  * Internal dependencies.
  */
-import { SeamanContext } from '~/store/seaman';
+import { SeamanContext } from '../store/seaman';
 import states from '~/utils/states';
 import cities from '~/utils/cities';
 

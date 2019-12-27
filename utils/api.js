@@ -1,4 +1,4 @@
-import { map, mapValues, isEmpty, isPlainObject, isNull, isArray } from 'lodash';
+import { map, mapValues, isEmpty, isPlainObject, isNull, isArray, isString } from 'lodash';
 import moment from 'moment';
 
 export const prepareValues = ( values ) => {
@@ -46,5 +46,9 @@ export const parseMoment = ( value ) => {
 };
 
 export const dateFormat = ( date, format ) => {
-	return date && moment( date ).format( format || 'YYYY-MM-DD' );
+	if ( ! format || ! isString( format ) ) {
+		format = 'YYYY-MM-DD';
+	}
+
+	return date && moment( date ).format( format );
 };

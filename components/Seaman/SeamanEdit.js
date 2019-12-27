@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Tabs } from 'antd';
+import { Tabs, Card } from 'antd';
 const { TabPane } = Tabs;
 
 /**
@@ -14,7 +14,7 @@ import Relatives from './Tabs/Relatives';
 import Educations from './Tabs/Educations';
 import Passports from './Tabs/Passports';
 import Visas from './Tabs/Visas';
-import Experiences from './Tabs/Experiences';
+import EditExperiences from './EditExperiences';
 import Licenses from './Tabs/Licenses';
 import BMI from './Tabs/BMI';
 
@@ -30,9 +30,9 @@ const SeamanEdit = () => {
 				</BlockCard>
 			</TabPane>
 			<TabPane tab="Experiences" key="experiences">
-				<BlockCard>
-					<Experiences />
-				</BlockCard>
+				<Card title="Experiences">
+					<EditExperiences />
+				</Card>
 			</TabPane>
 			<TabPane tab="Passports" key="passports">
 				<BlockCard>
