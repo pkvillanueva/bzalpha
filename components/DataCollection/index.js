@@ -95,6 +95,8 @@ const DataCollection = Form.create()( ( props ) => {
 	};
 
 	const afterClose = () => {
+		const { resetFields } = form;
+		resetFields();
 		setLoading( false );
 		setEditIndex( -1 );
 	};
