@@ -2,7 +2,7 @@
  * External dependencies.
  */
 import React, { useContext } from 'react';
-import { Form, Input, Row, Col, Card } from 'antd';
+import { Form, Input, InputNumber, Row, Col, Card } from 'antd';
 
 /**
  * Internal dependencies.
@@ -27,14 +27,14 @@ const ContactInformation = () => {
 					<Form.Item label="Height (cm)">
 						{ getFieldDecorator( 'meta.height', {
 							initialValue: meta.height,
-						} )( <Input /> ) }
+						} )( <InputNumber style={ { width: '100%' } } /> ) }
 					</Form.Item>
 				</Col>
 				<Col md={ 8 }>
 					<Form.Item label="Collar Size (cm)">
 						{ getFieldDecorator( 'meta.collar_size', {
 							initialValue: meta.collar_size,
-						} )( <Input /> ) }
+						} )( <InputNumber style={ { width: '100%' } } /> ) }
 					</Form.Item>
 				</Col>
 			</Row>
@@ -50,14 +50,14 @@ const ContactInformation = () => {
 					<Form.Item label="Weight (kg)">
 						{ getFieldDecorator( 'meta.weight', {
 							initialValue: meta.weight,
-						} )( <Input /> ) }
+						} )( <InputNumber style={ { width: '100%' } } /> ) }
 					</Form.Item>
 				</Col>
 				<Col md={ 8 }>
 					<Form.Item label="Waist Size (cm)">
 						{ getFieldDecorator( 'meta.waist_size', {
 							initialValue: meta.waist_size,
-						} )( <Input /> ) }
+						} )( <InputNumber style={ { width: '100%' } } /> ) }
 					</Form.Item>
 				</Col>
 			</Row>
