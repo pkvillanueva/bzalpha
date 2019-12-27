@@ -10,16 +10,16 @@ import { ranks } from '~/utils/ranks';
  * Internal dependencies.
  */
 import ModalForm from '~/components/ModalForm';
-import { SeamanContext } from '~/store/seaman';
+import { SeamanContext } from '../store/seaman';
 
 const EditRank = () => {
 	const { seaman, setSeaman, setFieldsValue, setIsSeamanTouched, getFieldDecorator } = useContext( SeamanContext );
 
-	const handleChange = ( values, callback ) => {
+	const handleChange = ( { values, done } ) => {
 		setSeaman( merge( seaman, values ) );
 		setFieldsValue( values );
 		setIsSeamanTouched( true );
-		callback();
+		done();
 	};
 
 	getFieldDecorator( 'meta.rank', { initialValue: seaman.rank } );

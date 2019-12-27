@@ -8,18 +8,18 @@ import { Icon, DatePicker } from 'antd';
  * Internal dependencies.
  */
 import ModalForm from '~/components/ModalForm';
-import { SeamanContext } from '~/store/seaman';
+import { SeamanContext } from '../store/seaman';
 import { parseMoment } from '~/utils/api';
 import { merge } from 'lodash';
 
 const EditDateAvailable = () => {
 	const { seaman, setSeaman, setFieldsValue, setIsSeamanTouched, getFieldDecorator } = useContext( SeamanContext );
 
-	const handleChange = ( values, callback ) => {
+	const handleChange = ( { values, done } ) => {
 		setSeaman( merge( seaman, values ) );
 		setFieldsValue( values );
 		setIsSeamanTouched( true );
-		callback();
+		done();
 	};
 
 	getFieldDecorator( 'meta.date_available', { initialValue: seaman.meta.date_available } );
