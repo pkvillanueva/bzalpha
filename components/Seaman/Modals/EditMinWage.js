@@ -27,8 +27,8 @@ const EditMinWage = () => {
 		<ModalForm
 			title="Edit Minimum Wage"
 			onChange={ handleChange }
-			modalForm={ ( decorator ) => ( <>
-				{ decorator( 'meta.min_wage', {
+			modalForm={ ( { getFieldDecorator } ) => ( <>
+				{ getFieldDecorator( 'meta.min_wage', {
 					initialValue: seaman.meta.min_wage,
 				} )(
 					<InputNumber style={ { width: '100%' } } />

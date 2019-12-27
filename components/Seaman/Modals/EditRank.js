@@ -28,8 +28,8 @@ const EditRank = () => {
 		<ModalForm
 			title="Edit Rank"
 			onChange={ handleChange }
-			modalForm={ ( decorator ) => ( <>
-				{ decorator( 'meta.rank', {
+			modalForm={ ( { getFieldDecorator } ) => ( <>
+				{ getFieldDecorator( 'meta.rank', {
 					initialValue: seaman.meta.rank,
 				} )(
 					<Select style={ { width: '100%' } } placeholder="Select a rank">
