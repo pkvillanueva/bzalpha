@@ -7,7 +7,9 @@ export const prepareValues = ( values ) => {
 	}
 
 	values = mapValues( values, ( value ) => {
-		if ( isNull( value ) || value instanceof moment ) {
+		if ( isNull( value ) ) {
+			return undefined;
+		} else if ( value instanceof moment ) {
 			return value;
 		} else if ( isPlainObject( value ) ) {
 			const tempID = getID( value );
