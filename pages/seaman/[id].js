@@ -92,7 +92,6 @@ const Page = () => {
 		validateFields,
 		isSaving,
 		setIsSaving,
-		getFieldDecorator,
 		resetFields,
 		isFieldsTouched,
 		isSeamanTouched,
