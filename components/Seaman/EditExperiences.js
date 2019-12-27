@@ -29,13 +29,13 @@ const Experiences = () => {
 			title: 'Date Start',
 			dataIndex: 'date_start',
 			key: 'date_start',
-			render: dateFormat,
+			render: ( date ) => dateFormat( date, 'll' ),
 		},
 		{
 			title: 'Date End',
 			dataIndex: 'date_end',
 			key: 'date_end',
-			render: dateFormat,
+			render: ( date ) => dateFormat( date, 'll' ),
 		},
 		{
 			title: 'Sea Time',
