@@ -1,11 +1,12 @@
 const path = require( 'path' );
 const antdLessLoader = require( 'next-antd-aza-less' );
+const withBundleAnalyzer = require('@next/bundle-analyzer');
 
 if ( typeof require !== 'undefined' ) {
 	require.extensions[ '.less' ] = () => {};
 }
 
-module.exports = antdLessLoader( {
+const config = antdLessLoader( {
 	env: {
 		API_URL: process.env.NODE_ENV === 'production' ? 'http://api.bzalpha.com' : 'http://bzalpha.test',
 	},
@@ -48,3 +49,7 @@ module.exports = antdLessLoader( {
 		return config;
 	},
 } );
+
+module.exports = withBundleAnalyzer( {
+	enabled: process.env.ANALYZE === 'true',
+} )( config );
