@@ -139,12 +139,6 @@ const Page = () => {
 		];
 	};
 
-	getFieldDecorator( 'meta.relatives', { initialValue: seaman.meta.relatives } );
-	getFieldDecorator( 'meta.educations', { initialValue: seaman.meta.educations } );
-	getFieldDecorator( 'meta.passports', { initialValue: seaman.meta.passports } );
-	getFieldDecorator( 'meta.visas', { initialValue: seaman.meta.visas } );
-	getFieldDecorator( 'meta.licenses', { initialValue: seaman.meta.licenses } );
-
 	return (
 		<Layout
 			title="Edit Seaman"
