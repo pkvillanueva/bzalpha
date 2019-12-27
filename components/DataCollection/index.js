@@ -48,34 +48,40 @@ const DataCollection = Form.create()( ( props ) => {
 	};
 
 	const handleSave = () => {
-		const { getFieldsValue } = form;
-		let values = getFieldsValue();
-		const records = [ ...data ];
+		const { validateFields } = form;
 
-		if ( isEmpty( values ) ) {
-			values = {};
-		}
+		validateFields( ( errors, values ) => {
+			if ( errors ) {
+				return;
+			}
 
-		if ( isEditing() ) {
-			records.splice( editIndex, 1, values );
-		} else {
-			records.push( values );
-		}
+			const records = [ ...data ];
 
-		if ( onSave ) {
-			setLoading( true );
+			if ( isEmpty( values ) ) {
+				values = {};
+			}
 
-			onSave( {
-				values: records,
-				success() {
-					setVisible( false );
-					setData( records );
-				},
-				error() {
-					setLoading( false );
-				},
-			} );
-		}
+			if ( isEditing() ) {
+				records.splice( editIndex, 1, values );
+			} else {
+				records.push( values );
+			}
+
+			if ( onSave ) {
+				setLoading( true );
+
+				onSave( {
+					values: records,
+					success() {
+						setVisible( false );
+						setData( records );
+					},
+					error() {
+						setLoading( false );
+					},
+				} );
+			}
+		} );
 	};
 
 	const handleCancel = () => {
