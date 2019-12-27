@@ -40,18 +40,18 @@ export const getOrderDetails = ( order ) => {
 	let text = '';
 
 	if ( status === 'pending' ) {
-		text += `${ sign_on ? `Join Date: ${ moment( sign_on ).format( 'MMM D YY' ) } ` : '' }`;
-		text += `${ deadline ? `/ Deadline: ${ moment( deadline ).format( 'MMM D YY' ) } ` : '' }`;
+		text += `${ sign_on ? `Join Date: ${ moment( sign_on ).format( 'll' ) } ` : '' }`;
+		text += `${ deadline ? `/ Deadline: ${ moment( deadline ).format( 'll' ) } ` : '' }`;
 		text += `${ remark ? `(Remark: ${ remark })` : '' }`;
 		return text;
 	}
 
-	text += `${ sign_on ? `${ status === 'processing' ? 'Join Date:' : 'Joined Date:' } ${ moment( sign_on ).format( 'MMM D YY' ) } ` : '' }`;
+	text += `${ sign_on ? `${ status === 'processing' ? 'Join Date:' : 'Joined Date:' } ${ moment( sign_on ).format( 'll' ) } ` : '' }`;
 	text += `${ port ? `@ ${ port } ` : '' }`;
 	text += `${ wage ? `[${ getCurrencySymbol( currency ) }${ wage }] ` : '' }`;
 	text += `${ contract_plus ? `${ contract_plus } +/- ` : '' }`;
 	text += `${ contract_plus && contract_minus ? `${ contract_minus } ` : '' }`;
-	text += `${ sign_off ? `Until: ${ moment( sign_off ).format( 'MMM D YY' ) } ` : '' }`;
+	text += `${ sign_off ? `Until: ${ moment( sign_off ).format( 'll' ) } ` : '' }`;
 	text += `${ return_port ? `@ ${ return_port } ` : '' }`;
 	text += `${ remark ? `(Remark: ${ remark })` : '' }`;
 	return text;

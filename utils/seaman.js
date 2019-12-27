@@ -28,7 +28,11 @@ export const getCurrentAge = ( birthDate ) => {
 	return moment().diff( birthDate, 'years' ) || '';
 };
 
-export const getTotalTime = ( start, end ) => {
+export const getDateDuration = ( start, end ) => {
+	if ( ! start || ! end ) {
+		return 0;
+	}
+
 	let total = 0;
 
 	start = moment( start );
@@ -46,10 +50,10 @@ export const getTotalTime = ( start, end ) => {
 	const days = Math.floor( total );
 
 	return `
-    ${ years ? `${ years }y ` : '' }
-    ${ months ? `${ months }m ` : '' }
-    ${ days }d
-  `;
+		${ years ? `${ years }y ` : '' }
+		${ months ? `${ months }m ` : '' }
+		${ days ? `${ days }d ` : '' }
+	`;
 };
 
 export const getTotalSeaTime = ( exp ) => {

@@ -1,4 +1,4 @@
-import { map, mapValues, isEmpty, isPlainObject, isNull, isArray } from 'lodash';
+import { map, mapValues, isEmpty, isPlainObject, isNull, isArray, isString } from 'lodash';
 import moment from 'moment';
 
 export const prepareValues = ( values ) => {
@@ -7,7 +7,9 @@ export const prepareValues = ( values ) => {
 	}
 
 	values = mapValues( values, ( value ) => {
-		if ( isNull( value ) || value instanceof moment ) {
+		if ( isNull( value ) ) {
+			return undefined;
+		} else if ( value instanceof moment ) {
 			return value;
 		} else if ( isPlainObject( value ) ) {
 			const tempID = getID( value );
@@ -46,5 +48,9 @@ export const parseMoment = ( value ) => {
 };
 
 export const dateFormat = ( date, format ) => {
-	return date && moment( date ).format( format || 'YYYY-MM-DD' );
+	if ( ! format || ! isString( format ) ) {
+		format = 'YYYY-MM-DD';
+	}
+
+	return date && moment( date ).format( format );
 };

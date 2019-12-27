@@ -1,69 +1,71 @@
 /**
  * External dependencies.
  */
-import { Tabs } from 'antd';
+import { Tabs, Card } from 'antd';
 const { TabPane } = Tabs;
 
 /**
  * Internal dependencies.
  */
-import BlockCard from '~/components/BlockCard';
-import PersonalInformation from './Tabs/PersonalInformation';
-import ContactInformation from './Tabs/ContactInformation';
-import Relatives from './Tabs/Relatives';
-import Educations from './Tabs/Educations';
-import Passports from './Tabs/Passports';
-import Visas from './Tabs/Visas';
-import Experiences from './Tabs/Experiences';
-import Licenses from './Tabs/Licenses';
-import BMI from './Tabs/BMI';
+import BlockCard from '../BlockCard';
+import EditPersonal from './EditPersonal';
+import EditContact from './EditContact';
+import EditRelatives from './EditRelatives';
+import EditEducations from './EditEducations';
+import EditPassports from './EditPassports';
+import EditVisas from './EditVisas';
+import EditExperiences from './EditExperiences';
+import EditLicenses from './EditLicenses';
+import EditBMI from './EditBMI';
 
-const SeamanEdit = () => {
-	return (
-		<Tabs defaultActiveKey="general">
-			<TabPane tab="General" key="general">
-				<BlockCard>
-					<PersonalInformation />
-				</BlockCard>
-				<BlockCard>
-					<ContactInformation />
-				</BlockCard>
-			</TabPane>
-			<TabPane tab="Experiences" key="experiences">
-				<BlockCard>
-					<Experiences />
-				</BlockCard>
-			</TabPane>
-			<TabPane tab="Passports" key="passports">
-				<BlockCard>
-					<Passports />
-				</BlockCard>
-				<BlockCard>
-					<Visas />
-				</BlockCard>
-			</TabPane>
-			<TabPane tab="Licenses" key="documents">
-				<BlockCard>
-					<Licenses />
-				</BlockCard>
-			</TabPane>
-			<TabPane tab="Educations" key="educations">
-				<BlockCard>
-					<Educations />
-				</BlockCard>
-			</TabPane>
-			<TabPane tab="Relatives" key="relatives">
-				<BlockCard>
-					<Relatives />
-				</BlockCard>
-			</TabPane>
-			<TabPane tab="BMI" key="bmi">
-				<BlockCard>
-					<BMI />
-				</BlockCard>
-			</TabPane>
-		</Tabs>
-	);
-};
+const SeamanEdit = () => (
+	<Tabs defaultActiveKey="general">
+		<TabPane tab="General" key="general">
+			<BlockCard>
+				<EditPersonal />
+			</BlockCard>
+			<BlockCard>
+				<EditContact />
+			</BlockCard>
+		</TabPane>
+		<TabPane tab="Experiences" key="experiences">
+			<Card title="Experiences">
+				<EditExperiences />
+			</Card>
+		</TabPane>
+		<TabPane tab="Passports" key="passports">
+			<BlockCard>
+				<Card title="Passports">
+					<EditPassports />
+				</Card>
+			</BlockCard>
+			<BlockCard>
+				<Card title="VISAS">
+					<EditVisas />
+				</Card>
+			</BlockCard>
+		</TabPane>
+		<TabPane tab="Licenses" key="documents">
+			<Card title="Licenses">
+				<EditLicenses />
+			</Card>
+		</TabPane>
+		<TabPane tab="Educations" key="educations">
+			<Card title="Educations">
+				<EditEducations />
+			</Card>
+		</TabPane>
+		<TabPane tab="Relatives" key="relatives">
+			<Card title="Relatives">
+				<EditRelatives />
+			</Card>
+		</TabPane>
+		<TabPane tab="BMI" key="bmi">
+			<BlockCard>
+				<EditBMI />
+			</BlockCard>
+		</TabPane>
+	</Tabs>
+);
 
 export default SeamanEdit;
