@@ -33,13 +33,13 @@ const EditVisas = () => {
 			title: 'Issue Date',
 			dataIndex: 'issue_date',
 			key: 'issue_date',
-			render: dateFormat,
+			render: ( date ) => dateFormat( date, 'll' ),
 		},
 		{
 			title: 'Valid Till',
 			dataIndex: 'valid_till',
 			key: 'valid_till',
-			render: dateFormat,
+			render: ( date ) => dateFormat( date, 'll' ),
 		},
 		{
 			title: 'Issued By',

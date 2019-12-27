@@ -33,13 +33,13 @@ const Licenses = () => {
 			title: 'Issue Date',
 			dataIndex: 'issue_date',
 			key: 'issue_date',
-			render: dateFormat,
+			render: ( date ) => dateFormat( date, 'll' ),
 		},
 		{
 			title: 'Valid Until',
 			dataIndex: 'valid_until',
 			key: 'valid_until',
-			render: dateFormat,
+			render: ( date ) => dateFormat( date, 'll' ),
 		},
 		{
 			title: 'Issued By',
