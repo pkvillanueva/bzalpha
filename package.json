@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=development next",
     "build": "NODE_ENV=production next build",
+    "build-analyze": "ANALYZE=true NODE_ENV=production next build",
     "start": "next start",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix"
@@ -14,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@next/bundle-analyzer": "^9.1.6",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-less": "^1.0.1",
     "antd": "^3.24.2",
