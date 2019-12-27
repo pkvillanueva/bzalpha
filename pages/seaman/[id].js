@@ -11,14 +11,14 @@ import { Row, Col, Statistic, Badge, Button, Card, Tag, Tooltip, Icon } from 'an
  * Internal dependencies
  */
 import Layout from '~/components/Layout';
-import SeamanEdit from '~/components/Seaman/SeamanEdit';
-import EditDateAvailable from '~/components/Seaman/Modals/EditDateAvailable';
-import EditRank from '~/components/Seaman/Modals/EditRank';
-import EditMinWage from '~/components/Seaman/Modals/EditMinWage';
+import SeamanEdit from '../../components/Seaman/SeamanEdit';
+import EditDateAvailable from '../../components/Seaman/EditDateAvailable';
+import EditRank from '../../components/Seaman/EditRank';
+import EditMinWage from '../../components/Seaman/EditMinWage';
 import AvatarUpload from '~/components/AvatarUpload';
 import Stats from '~/components/Stats';
 import BlockCard from '~/components/BlockCard';
-import { SeamanProvider, SeamanContext } from '~/components/Seaman/store/seaman';
+import { SeamanProvider, SeamanContext } from '../../components/Seaman/store/seaman';
 import withAuth from '~/utils/withAuth';
 import withProvider from '~/utils/withProvider';
 import formatBreadcrumb from '~/utils/formatBreadcrumb';
