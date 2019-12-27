@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import classnames from 'classnames';
-import { Upload, Icon, message, Avatar } from 'antd';
+import { Upload, Icon, message, Avatar, Spin } from 'antd';
 import { parseCookies } from 'nookies';
 
 /**
@@ -67,7 +67,7 @@ class AvatarUpload extends Component {
 		const { token } = parseCookies();
 		const uploadButton = (
 			<div>
-				<Icon type={ this.state.loading ? 'loading' : 'plus' } />
+				<Icon type="plus" />
 				<div className="ant-upload-text">Upload</div>
 			</div>
 		);
@@ -76,7 +76,8 @@ class AvatarUpload extends Component {
 		className = classnames(
 			className,
 			'avatar-uploader',
-			{ [ `${ styles.hasFile }` ]: imageUrl }
+			{ [ `${ styles.hasFile }` ]: imageUrl },
+			[ 'loading', this.state.loading ],
 		);
 		return (
 			<Upload
@@ -93,7 +94,9 @@ class AvatarUpload extends Component {
 				beforeUpload={ beforeUpload }
 				onChange={ this.handleChange }
 			>
-				{ imageUrl ? <Avatar src={ imageUrl } size={ 97 } shape="square" /> : uploadButton }
+				<Spin spinning={ this.state.loading }>
+					{ imageUrl ? <Avatar src={ imageUrl } size={ 97 } shape="square" /> : uploadButton }
+				</Spin>
 			</Upload>
 		);
 	}
