@@ -10,10 +10,10 @@ const { TabPane } = Tabs;
 import BlockCard from '~/components/BlockCard';
 import PersonalInformation from './Tabs/PersonalInformation';
 import ContactInformation from './Tabs/ContactInformation';
-import Relatives from './Tabs/Relatives';
+import EditRelatives from './EditRelatives';
 import Educations from './Tabs/Educations';
 import EditPassports from './EditPassports';
-import Visas from './Tabs/Visas';
+import EditVisas from './EditVisas';
 import EditExperiences from './EditExperiences';
 import Licenses from './Tabs/Licenses';
 import BMI from './Tabs/BMI';
@@ -40,9 +40,14 @@ const SeamanEdit = () => {
 						<EditPassports />
 					</Card>
 				</BlockCard>
-				{/* <BlockCard>
-					<Visas />
-				</BlockCard> */}
+				<BlockCard>
+					<Card title="VISAS">
+						<EditVisas />
+					</Card>
+				</BlockCard>
+				{ /* <BlockCard>
+					<EditVisas />
+				</BlockCard> */ }
 			</TabPane>
 			<TabPane tab="Licenses" key="documents">
 				<BlockCard>
@@ -56,7 +61,7 @@ const SeamanEdit = () => {
 			</TabPane>
 			<TabPane tab="Relatives" key="relatives">
 				<BlockCard>
-					<Relatives />
+					<EditRelatives />
 				</BlockCard>
 			</TabPane>
 			<TabPane tab="BMI" key="bmi">
