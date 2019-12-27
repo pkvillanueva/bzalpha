@@ -15,7 +15,7 @@ import EditEducations from './EditEducations';
 import EditPassports from './EditPassports';
 import EditVisas from './EditVisas';
 import EditExperiences from './EditExperiences';
-import Licenses from './Tabs/Licenses';
+import EditLicenses from './EditLicenses';
 import BMI from './Tabs/BMI';
 
 const SeamanEdit = () => (
@@ -46,9 +46,9 @@ const SeamanEdit = () => (
 			</BlockCard>
 		</TabPane>
 		<TabPane tab="Licenses" key="documents">
-			<BlockCard>
-				<Licenses />
-			</BlockCard>
+			<Card title="Licenses">
+				<EditLicenses />
+			</Card>
 		</TabPane>
 		<TabPane tab="Educations" key="educations">
 			<Card title="Educations">
