@@ -2,103 +2,33 @@
  * External dependencies.
  */
 import React, { useContext } from 'react';
-import { useRouter } from 'next/router';
-import { parseCookies } from 'nookies';
-import axios from 'axios';
-import { Row, Col, Statistic, Badge, Button, Card, Tag, Tooltip, Icon } from 'antd';
+import { Row, Col, Statistic, Badge, Button, Card, message } from 'antd';
 
 /**
  * Internal dependencies
  */
 import Layout from '~/components/Layout';
-import SeamanEdit from '~/components/Seaman/SeamanEdit';
-import EditDateAvailable from '~/components/Seaman/Modals/EditDateAvailable';
-import EditRank from '~/components/Seaman/Modals/EditRank';
-import EditMinWage from '~/components/Seaman/Modals/EditMinWage';
-import AvatarUpload from '~/components/AvatarUpload';
-import Stats from '~/components/Stats';
+import SeamanEdit from '../../components/Seaman/SeamanEdit';
+import EditPageHeader from '../../components/Seaman/EditPageHeader';
+import EditDateAvailable from '../../components/Seaman/EditDateAvailable';
+import EditRank from '../../components/Seaman/EditRank';
+import EditMinWage from '../../components/Seaman/EditMinWage';
 import BlockCard from '~/components/BlockCard';
-import { SeamanProvider, SeamanContext } from '~/store/seaman';
+import { SeamanProvider, SeamanContext } from '../../components/Seaman/store/seaman';
 import withAuth from '~/utils/withAuth';
 import withProvider from '~/utils/withProvider';
 import formatBreadcrumb from '~/utils/formatBreadcrumb';
-import { getStatus, getRankName, getTotalSeaTime, getRankTotalSeaTime, getCurrentAge, getContact } from '~/utils/seaman';
-import styles from './styles.less';
-import { dateFormat, prepareValues } from '../../utils/api';
+import { getStatus, getRankName } from '~/utils/seaman';
+import { dateFormat } from '../../utils/api';
 
-const PageHeader = () => {
-	const { seaman, getFieldDecorator } = useContext( SeamanContext );
-	const status = getStatus( seaman.job_status );
+const SeamanPage = () => {
+	const { seaman, validateFieldsAndScroll, isSaving, setIsSaving, resetFields, isFieldsTouched, isSeamanTouched, setIsSeamanTouched, updateSeaman } = useContext( SeamanContext );
 
-	return (
-		<div className={ styles.pageHeaderContent }>
-			<div className={ styles.pageHeaderAvatar }>
-				{ getFieldDecorator( 'featured_image', {
-					getValueFromEvent: ( fileId ) => {
-						return fileId;
-					},
-				} )(
-					<AvatarUpload src={ seaman.avatar } />
-				) }
-			</div>
-			<div className={ styles.pageHeaderMainContent }>
-				<h1 className={ styles.pageHeaderTitle }>
-					<span className={ styles.pageHeaderName }>{ seaman.title }</span>
-					{ seaman.meta.rank && <Tag color="blue">{ getRankName( seaman.meta.rank ) }</Tag> }
-				</h1>
-				{ seaman.job_status === 'onboard' ? (
-					<p>
-						<Badge status={ status.state } /> { status.name }
-						<Tooltip title="Joined Oct 20, 2019 to Feb 15, 2020">
-							<Icon style={ { marginLeft: 8 } } type="info-circle" />
-						</Tooltip>
-					</p>
-				) : (
-					<p><Badge status={ status.state } /> { status.name }</p>
-				) }
-			</div>
-			<div className={ styles.pageHeaderExtraContent }>
-				<Stats align="right">
-					<Statistic
-						title="Age"
-						groupSeparator=""
-						value={ getCurrentAge( seaman.meta.birth_date ) }
-					/>
-					<Statistic
-						title="Contact"
-						groupSeparator=""
-						value={ getContact( seaman ) }
-					/>
-					<Statistic
-						title="Total Sea Time"
-						groupSeparator=""
-						value={ getTotalSeaTime( seaman.meta.experiences ) }
-					/>
-					{ seaman.meta.rank && <Statistic
-						groupSeparator=""
-						title={ `As ${ seaman.meta.rank }` }
-						value={ getRankTotalSeaTime( seaman.meta.rank, seaman.meta.experiences ) }
-					/> }
-				</Stats>
-			</div>
-		</div>
-	);
-};
+	const breadcrumb = [
+		{ path: '/seaman', breadcrumbName: 'Seaman List' },
+		{ breadcrumbName: seaman.title },
+	];
 
-const Page = () => {
-	const {
-		seaman,
-		setSeaman,
-		validateFields,
-		isSaving,
-		setIsSaving,
-		getFieldDecorator,
-		resetFields,
-		isFieldsTouched,
-		isSeamanTouched,
-		setIsSeamanTouched,
-	} = useContext( SeamanContext );
-	const { query } = useRouter();
 	const status = getStatus( seaman.job_status );
 
 	const handleSave = () => {
@@ -106,51 +36,32 @@ const Page = () => {
 			return;
 		}
 
-		validateFields( ( err, values ) => {
+		validateFieldsAndScroll( ( err, values ) => {
 			if ( err ) {
+				message.error( 'Error while saving, please check the fields.' );
 				return;
 			}
 
 			setIsSaving( true );
-			values = prepareValues( values );
 
-			const cookies = parseCookies();
-			axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/seaman/${ query.id }`, values, {
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${ cookies.token }`,
+			updateSeaman( {
+				values,
+				success() {
+					resetFields();
 				},
-			} ).then( ( res ) => {
-				setSeaman( res.data );
-				resetFields();
-				setIsSaving( false );
-				setIsSeamanTouched( false );
-			} ).catch( () => {
-				setIsSaving( false );
-				setIsSeamanTouched( false );
+				done() {
+					setIsSaving( false );
+					setIsSeamanTouched( false );
+				},
 			} );
 		} );
 	};
 
-	const getBreadcrumb = () => {
-		return [
-			{ path: '/seaman', breadcrumbName: 'Seaman List' },
-			{ breadcrumbName: seaman.title },
-		];
-	};
-
-	getFieldDecorator( 'meta.relatives', { initialValue: seaman.meta.relatives } );
-	getFieldDecorator( 'meta.educations', { initialValue: seaman.meta.educations } );
-	getFieldDecorator( 'meta.passports', { initialValue: seaman.meta.passports } );
-	getFieldDecorator( 'meta.visas', { initialValue: seaman.meta.visas } );
-	getFieldDecorator( 'meta.experiences', { initialValue: seaman.meta.experiences } );
-	getFieldDecorator( 'meta.licenses', { initialValue: seaman.meta.licenses } );
-
 	return (
 		<Layout
 			title="Edit Seaman"
-			breadcrumb={ formatBreadcrumb( getBreadcrumb() ) }
-			pageHeaderContent={ <PageHeader /> }
+			breadcrumb={ formatBreadcrumb( breadcrumb ) }
+			pageHeaderContent={ <EditPageHeader /> }
 			extra={ [
 				<Button type="primary" key="save" onClick={ handleSave } disabled={ ( ! isSeamanTouched && ! isFieldsTouched() ) } loading={ isSaving }>Save</Button>,
 			] }
@@ -162,7 +73,7 @@ const Page = () => {
 							<Statistic
 								title="Status"
 								prefix={ <Badge status={ status.state } /> }
-								value={ status.name }
+								value={ 'Stand By' }
 							/>
 						</Card>
 					</Col>
@@ -201,4 +112,4 @@ const Page = () => {
 	);
 };
 
-export default withAuth( withProvider( SeamanProvider, Page ) );
+export default withAuth( withProvider( SeamanProvider, SeamanPage ) );

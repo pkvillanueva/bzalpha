@@ -6,7 +6,7 @@ import { Modal, Form } from 'antd';
 
 const ModalForm = Form.create()( ( props ) => {
 	const { modalForm, title, form, children, onChange, onSave, onCancel, okText, ...restProps } = props;
-	const { getFieldDecorator, validateFields, resetFields } = form;
+	const { validateFields, resetFields } = form;
 	const [ visible, setVisible ] = useState( false );
 	const [ loading, setLoading ] = useState( false );
 
@@ -16,25 +16,23 @@ const ModalForm = Form.create()( ( props ) => {
 				return;
 			}
 
-			setLoading( true );
-
 			if ( onChange ) {
-				onChange( values, () => {
-					setVisible( false );
-					setLoading( false );
+				onChange( {
+					values,
+					done() {
+						setVisible( false );
+					},
 				} );
 			} else if ( onSave ) {
+				setLoading( true );
+
 				onSave( {
 					values,
 					form,
 					success() {
 						setVisible( false );
-						setLoading( false );
 					},
 					error() {
-						setLoading( false );
-					},
-					done() {
 						setLoading( false );
 					},
 				} );
@@ -53,21 +51,29 @@ const ModalForm = Form.create()( ( props ) => {
 		}
 	};
 
+	const afterClose = () => {
+		setLoading( false );
+	};
+
 	return (
 		<>
 			<Modal
 				{ ...restProps }
+				afterClose={ afterClose }
 				visible={ visible }
 				title={ title }
 				okText={ okText || 'Save' }
 				onOk={ handleOk }
 				onCancel={ handleCancel }
 				maskClosable={ false }
+				cancelButtonProps={ {
+					disabled: loading,
+				} }
 				okButtonProps={ {
 					loading,
 				} }
 			>
-				{ modalForm( getFieldDecorator, form ) }
+				{ modalForm( form ) }
 			</Modal>
 			{ cloneElement( children, { onClick: () => setVisible( true ) } ) }
 		</>
