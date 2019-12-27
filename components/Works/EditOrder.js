@@ -51,7 +51,7 @@ const EditOrder = ( { title, saveValues, order, children } ) => {
 			className={ styles.editOrderModal }
 			width={ '100%' }
 			onSave={ handleSave }
-			modalForm={ ( getFieldDecorator ) => (
+			modalForm={ ( { getFieldDecorator } ) => (
 				<Form>
 					<Row gutter={ 36 }>
 						<Col lg={ 12 }>

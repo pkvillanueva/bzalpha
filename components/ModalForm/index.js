@@ -73,7 +73,7 @@ const ModalForm = Form.create()( ( props ) => {
 					loading,
 				} }
 			>
-				{ modalForm( getFieldDecorator, form ) }
+				{ modalForm( form ) }
 			</Modal>
 			{ cloneElement( children, { onClick: () => setVisible( true ) } ) }
 		</>
