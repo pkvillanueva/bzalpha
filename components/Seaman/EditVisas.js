@@ -2,7 +2,7 @@
  * External dependencies.
  */
 import React, { useContext } from 'react';
-import { Form, Input, DatePicker, Button, Select, Row, Col } from 'antd';
+import { Form, Input, DatePicker, Button, Row, Col } from 'antd';
 
 /**
  * Internal dependencies.
@@ -13,20 +13,22 @@ import FileUpload from '~/components/FileUpload';
 import { isEmpty } from 'lodash';
 import { dateFormat, parseMoment } from '~/utils/api';
 
-const Passports = () => {
+const EditVisas = () => {
 	const { seaman, updateSeaman } = useContext( SeamanContext );
 	const { meta } = seaman;
-	const { passports } = meta;
+	const { visas } = meta;
 
 	const columns = [
 		{
 			title: 'Type',
 			dataIndex: 'type',
-			key: 'type' },
+			key: 'type',
+		},
 		{
 			title: 'Number',
 			dataIndex: 'num',
-			key: 'num' },
+			key: 'num',
+		},
 		{
 			title: 'Issue Date',
 			dataIndex: 'issue_date',
@@ -42,7 +44,8 @@ const Passports = () => {
 		{
 			title: 'Issued By',
 			dataIndex: 'issued_by',
-			key: 'issued_by' },
+			key: 'issued_by',
+		},
 		{
 			title: 'File',
 			dataIndex: 'file',
@@ -57,24 +60,22 @@ const Passports = () => {
 			error,
 			values: {
 				meta: {
-					passports: values,
+					visas: values,
 				},
 			},
 		} );
 	};
 
 	return (
-		<div style={ { marginBottom: 24 } }>
-			<DataCollection
-				dataSource={ passports }
-				columns={ columns }
-				onSave={ handleSave }
-				modalProps={ {
-					title: 'Passport',
-					form: modalForm,
-				} }
-			/>
-		</div>
+		<DataCollection
+			columns={ columns }
+			dataSource={ visas }
+			onSave={ handleSave }
+			modalProps={ {
+				title: 'VISA',
+				form: modalForm,
+			} }
+		/>
 	);
 };
 
@@ -85,14 +86,7 @@ const modalForm = ( { getFieldDecorator }, initialValues ) => (
 				<Form.Item key="type" label="Type">
 					{ getFieldDecorator( 'type', {
 						initialValue: initialValues.type,
-					} )( <Select placeholder="Select type" style={ { width: '100%' } }>
-						<Select.Option value="S/Book">S/Book</Select.Option>
-						<Select.Option value="Travel Passport">Travel Passport</Select.Option>
-						<Select.Option value="Travel Passport BIO">Travel Passport BIO</Select.Option>
-						<Select.Option value="UA">UA</Select.Option>
-						<Select.Option value="Inn">Inn</Select.Option>
-						<Select.Option value="E-REG">E-REG</Select.Option>
-					</Select> ) }
+					} )( <Input /> ) }
 				</Form.Item>
 			</Col>
 			<Col lg={ 12 }>
@@ -146,4 +140,4 @@ const renderFile = ( file ) => {
 	);
 };
 
-export default Passports;
+export default EditVisas;
