@@ -7,25 +7,25 @@ const { TabPane } = Tabs;
 /**
  * Internal dependencies.
  */
-import BlockCard from '~/components/BlockCard';
-import PersonalInformation from './Tabs/PersonalInformation';
-import ContactInformation from './Tabs/ContactInformation';
+import BlockCard from '../BlockCard';
+import EditPersonal from './EditPersonal';
+import EditContact from './EditContact';
 import EditRelatives from './EditRelatives';
 import EditEducations from './EditEducations';
 import EditPassports from './EditPassports';
 import EditVisas from './EditVisas';
 import EditExperiences from './EditExperiences';
 import EditLicenses from './EditLicenses';
-import BMI from './Tabs/BMI';
+import EditBMI from './EditBMI';
 
 const SeamanEdit = () => (
 	<Tabs defaultActiveKey="general">
 		<TabPane tab="General" key="general">
 			<BlockCard>
-				<PersonalInformation />
+				<EditPersonal />
 			</BlockCard>
 			<BlockCard>
-				<ContactInformation />
+				<EditContact />
 			</BlockCard>
 		</TabPane>
 		<TabPane tab="Experiences" key="experiences">
@@ -62,7 +62,7 @@ const SeamanEdit = () => (
 		</TabPane>
 		<TabPane tab="BMI" key="bmi">
 			<BlockCard>
-				<BMI />
+				<EditBMI />
 			</BlockCard>
 		</TabPane>
 	</Tabs>
