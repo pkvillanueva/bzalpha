@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Modal, Table, Divider } from 'antd';
 import { filter, map, isEmpty } from 'lodash';
 
@@ -11,34 +11,26 @@ import { filter, map, isEmpty } from 'lodash';
 import styles from './styles.less';
 
 const DataCollection = Form.create()( ( props ) => {
-	const {	onSave, initialData, form, modalProps = {}, tableProps = {}, buttonProps = {} } = props;
-	const [ data, setData ] = useState( [] );
+	const {	onSave, dataSource, form, modalProps = {}, tableProps = {}, buttonProps = {} } = props;
 	const [ visible, setVisible ] = useState( false );
 	const [ loading, setLoading ] = useState( false );
 	const [ editIndex, setEditIndex ] = useState( -1 );
 	let { columns = [] } = props;
-
-	useEffect( () => {
-		setData( initialData );
-	}, [] );
 
 	const isEditing = () => {
 		return editIndex >= 0;
 	};
 
 	const getEditingValues = () => {
-		return editIndex < 0 ? {} : data[ editIndex ];
+		return editIndex < 0 ? {} : dataSource[ editIndex ];
 	};
 
 	const deleteRecord = ( index ) => {
-		const records = filter( data, ( record, i ) => i !== index );
+		const records = filter( dataSource, ( record, i ) => i !== index );
 
 		if ( onSave ) {
 			onSave( {
 				values: records,
-				success() {
-					setData( records );
-				},
 			} );
 		}
 	};
@@ -55,7 +47,7 @@ const DataCollection = Form.create()( ( props ) => {
 				return;
 			}
 
-			const records = [ ...data ];
+			const records = [ ...dataSource ];
 
 			if ( isEmpty( values ) ) {
 				values = {};
@@ -74,7 +66,6 @@ const DataCollection = Form.create()( ( props ) => {
 					values: records,
 					success() {
 						setVisible( false );
-						setData( records );
 					},
 					error() {
 						setLoading( false );
@@ -123,6 +114,15 @@ const DataCollection = Form.create()( ( props ) => {
 		),
 	} ];
 
+	columns = map( columns, ( column ) => {
+		if ( column.render && typeof column.render === 'function' ) {
+			const { render } = column;
+			column.render = ( text, record, index ) => render( text, record, index, dataSource );
+		}
+
+		return column;
+	} );
+
 	return (
 		<>
 			<Modal
@@ -150,7 +150,7 @@ const DataCollection = Form.create()( ( props ) => {
 			/>
 			<Table
 				className={ styles.table }
-				dataSource={ map( data, ( record, i ) => ( { key: i, ...record } ) ) }
+				dataSource={ map( dataSource, ( record, i ) => ( { key: i, ...record } ) ) }
 				pagination={ false }
 				scroll={ { x: 'max-content' } }
 				{ ...tableProps }
