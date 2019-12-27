@@ -7,7 +7,7 @@ import { Form, Input, Row, Col, Card } from 'antd';
 /**
  * Internal dependencies.
  */
-import { SeamanContext } from '~/store/seaman';
+import { SeamanContext } from '../store/seaman';
 
 const ContactInformation = () => {
 	const { seaman, getFieldDecorator } = useContext( SeamanContext );

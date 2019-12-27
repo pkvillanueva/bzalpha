@@ -16,7 +16,7 @@ import { map } from 'lodash';
 /**
  * Internal dependencies.
  */
-import { SeamanContext } from '~/store/seaman';
+import { SeamanContext } from '../store/seaman';
 import nationalities from '~/utils/nationalities';
 import { parseMoment } from '~/utils/api';
 

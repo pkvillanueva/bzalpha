@@ -18,7 +18,7 @@ import EditMinWage from '~/components/Seaman/Modals/EditMinWage';
 import AvatarUpload from '~/components/AvatarUpload';
 import Stats from '~/components/Stats';
 import BlockCard from '~/components/BlockCard';
-import { SeamanProvider, SeamanContext } from '~/store/seaman';
+import { SeamanProvider, SeamanContext } from '~/components/Seaman/store/seaman';
 import withAuth from '~/utils/withAuth';
 import withProvider from '~/utils/withProvider';
 import formatBreadcrumb from '~/utils/formatBreadcrumb';
@@ -143,7 +143,6 @@ const Page = () => {
 	getFieldDecorator( 'meta.educations', { initialValue: seaman.meta.educations } );
 	getFieldDecorator( 'meta.passports', { initialValue: seaman.meta.passports } );
 	getFieldDecorator( 'meta.visas', { initialValue: seaman.meta.visas } );
-	getFieldDecorator( 'meta.experiences', { initialValue: seaman.meta.experiences } );
 	getFieldDecorator( 'meta.licenses', { initialValue: seaman.meta.licenses } );
 
 	return (
