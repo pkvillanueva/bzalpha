@@ -6,7 +6,7 @@ import { Modal, Form } from 'antd';
 
 const ModalForm = Form.create()( ( props ) => {
 	const { modalForm, title, form, children, onChange, onSave, onCancel, okText, ...restProps } = props;
-	const { getFieldDecorator, validateFields, resetFields } = form;
+	const { validateFields, resetFields } = form;
 	const [ visible, setVisible ] = useState( false );
 	const [ loading, setLoading ] = useState( false );
 

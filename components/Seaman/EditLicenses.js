@@ -10,7 +10,7 @@ import { Form, Input, DatePicker, Button, Row, Col } from 'antd';
 import { SeamanContext } from './store/seaman';
 import DataCollection from '~/components/DataCollection';
 import FileUpload from '~/components/FileUpload';
-import { isEmpty, omit, map } from 'lodash';
+import { isEmpty } from 'lodash';
 import { parseMoment, dateFormat } from '~/utils/api';
 
 const Licenses = () => {
@@ -22,35 +22,35 @@ const Licenses = () => {
 		{
 			title: 'Name',
 			dataIndex: 'name',
-			key: 'name'
+			key: 'name',
 		},
 		{
 			title: 'Number',
 			dataIndex: 'num',
-			key: 'num'
+			key: 'num',
 		},
 		{
 			title: 'Issue Date',
 			dataIndex: 'issue_date',
 			key: 'issue_date',
-			render: dateFormat
+			render: dateFormat,
 		},
 		{
 			title: 'Valid Until',
 			dataIndex: 'valid_until',
 			key: 'valid_until',
-			render: dateFormat
+			render: dateFormat,
 		},
 		{
 			title: 'Issued By',
 			dataIndex: 'issued_by',
-			key: 'issued_by'
+			key: 'issued_by',
 		},
 		{
 			title: 'File',
 			dataIndex: 'file',
 			key: 'file',
-			render: renderFile
+			render: renderFile,
 		},
 	];
 
