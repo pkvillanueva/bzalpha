@@ -329,6 +329,10 @@ const modalForm = ( { getFieldDecorator }, initialValues ) => (
 );
 
 const sortExperiences = ( experiences ) => {
+	if ( ! experiences ) {
+		return [];
+	}
+
 	return experiences.sort( ( a, b ) => {
 		return moment( b.date_start ).unix() - moment( a.date_start ).unix();
 	} );
