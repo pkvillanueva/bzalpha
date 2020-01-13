@@ -60,7 +60,11 @@ const Information = () => {
 					{ getFieldDecorator( 'meta.flag', {
 						initialValue: meta.flag,
 					} )(
-						<Select showSearch>
+						<Select
+							filterOption={ true }
+							optionFilterProp="children"
+							showSearch={ true }
+						>
 							{ map( countries, ( country ) => <Select.Option key={ country.code } value={ country.code }>{ country.name }</Select.Option> ) }
 						</Select>
 					) }
