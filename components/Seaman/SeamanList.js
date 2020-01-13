@@ -22,11 +22,11 @@ const columns = [
 	{
 		title: 'Name',
 		dataIndex: 'title',
-		render: ( title, { avatar, id } ) => (
+		render: ( title, { avatar, id, meta } ) => (
 			<>
 				<Avatar className={ styles.tableAvatar } src={ avatar } shape="square" icon="user" />
 				<a href={ `/seaman/${ id }` }>
-					{ title || '<No Name>' }
+					{ `${ meta.last_name } ${ meta.first_name } ${ meta.middle_name }` }
 				</a>
 			</>
 		),

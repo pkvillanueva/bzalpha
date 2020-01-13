@@ -22,7 +22,7 @@ const Candidates = () => {
 			title: 'Seaman',
 			dataIndex: 'seaman',
 			key: 'seaman',
-			render: ( seaman ) => seaman && seaman.title,
+			render: ( seaman ) => seaman && `${ seaman.meta.last_name } ${ seaman.meta.first_name } ${ seaman.meta.middle_name }`,
 		},
 		{
 			title: 'Type',
