@@ -106,6 +106,8 @@ const CreateOrder = ( { children } ) => {
 									<Select
 										mode="multiple"
 										placeholder="Select positions"
+										filterOption={ true }
+										optionFilterProp="children"
 										showSearch={ true }
 									>
 										{ map( ranks, ( rank ) => (

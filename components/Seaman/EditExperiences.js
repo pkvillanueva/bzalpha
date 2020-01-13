@@ -170,9 +170,16 @@ const modalForm = ( { getFieldDecorator }, initialValues ) => (
 							{ getFieldDecorator( 'rank', {
 								rules: [ { required: true, message: 'Rank is required.' } ],
 								initialValue: initialValues.rank,
-							} )( <Select style={ { width: '100%' } }>
-								{ map( ranks, ( rank ) => <Select.Option value={ rank.value } key={ rank.value }>{ rank.name }</Select.Option> ) }
-							</Select> ) }
+							} )(
+								<Select
+									style={ { width: '100%' } }
+									filterOption={ true }
+									optionFilterProp="children"
+									showSearch={ true }
+								>
+									{ map( ranks, ( rank ) => <Select.Option value={ rank.value } key={ rank.value }>{ rank.name }</Select.Option> ) }
+								</Select>
+							) }
 						</Form.Item>
 					</Col>
 					<Col lg={ 12 }>
