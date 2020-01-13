@@ -61,6 +61,11 @@ const Experiences = () => {
 			key: 'end_of_contract',
 		},
 		{
+			title: 'Crewing Agency',
+			dataIndex: 'crewing_agency',
+			key: 'crewing_agency',
+		},
+		{
 			title: 'Owner',
 			dataIndex: 'owner',
 			key: 'owner',
@@ -80,6 +85,11 @@ const Experiences = () => {
 			dataIndex: 'flag',
 			key: 'flag',
 			render: renderFlag,
+		},
+		{
+			title: 'Year Built',
+			dataIndex: 'year_built',
+			key: 'year_built',
 		},
 		{
 			title: 'IMO',
@@ -233,6 +243,17 @@ const modalForm = ( { getFieldDecorator }, initialValues ) => (
 					</Col>
 				</Row>
 			</Col>
+			<Col lg={ 12 }>
+				<Row gutter={ 36 }>
+					<Col lg={ 12 }>
+						<Form.Item label="Crewing Agency">
+							{ getFieldDecorator( 'crewing_agency', {
+								initialValue: initialValues.crewing_agency,
+							} )( <Input /> ) }
+						</Form.Item>
+					</Col>
+				</Row>
+			</Col>
 		</Row>
 		<Row gutter={ 36 }>
 			<Col lg={ 12 }>
@@ -290,16 +311,16 @@ const modalForm = ( { getFieldDecorator }, initialValues ) => (
 			<Col lg={ 12 }>
 				<Row gutter={ 36 }>
 					<Col lg={ 12 }>
-						<Form.Item label="IMO">
-							{ getFieldDecorator( 'imo', {
-								initialValue: initialValues.imo,
+						<Form.Item label="Year Built">
+							{ getFieldDecorator( 'year_built', {
+								initialValue: initialValues.year_built,
 							} )( <Input /> ) }
 						</Form.Item>
 					</Col>
 					<Col lg={ 12 }>
-						<Form.Item label="GRT">
-							{ getFieldDecorator( 'grt', {
-								initialValue: initialValues.grt,
+						<Form.Item label="IMO">
+							{ getFieldDecorator( 'imo', {
+								initialValue: initialValues.imo,
 							} )( <Input /> ) }
 						</Form.Item>
 					</Col>
@@ -308,16 +329,16 @@ const modalForm = ( { getFieldDecorator }, initialValues ) => (
 			<Col lg={ 12 }>
 				<Row gutter={ 36 }>
 					<Col lg={ 12 }>
-						<Form.Item label="DWT">
-							{ getFieldDecorator( 'dwt', {
-								initialValue: initialValues.dwt,
+						<Form.Item label="GRT">
+							{ getFieldDecorator( 'grt', {
+								initialValue: initialValues.grt,
 							} )( <Input /> ) }
 						</Form.Item>
 					</Col>
 					<Col lg={ 12 }>
-						<Form.Item label="KW">
-							{ getFieldDecorator( 'kw', {
-								initialValue: initialValues.kw,
+						<Form.Item label="DWT">
+							{ getFieldDecorator( 'dwt', {
+								initialValue: initialValues.dwt,
 							} )( <Input /> ) }
 						</Form.Item>
 					</Col>
@@ -328,12 +349,23 @@ const modalForm = ( { getFieldDecorator }, initialValues ) => (
 			<Col lg={ 12 }>
 				<Row gutter={ 36 }>
 					<Col lg={ 12 }>
+						<Form.Item label="KW">
+							{ getFieldDecorator( 'kw', {
+								initialValue: initialValues.kw,
+							} )( <Input /> ) }
+						</Form.Item>
+					</Col>
+					<Col lg={ 12 }>
 						<Form.Item label="HP">
 							{ getFieldDecorator( 'hp', {
 								initialValue: initialValues.hp,
 							} )( <Input /> ) }
 						</Form.Item>
 					</Col>
+				</Row>
+			</Col>
+			<Col lg={ 12 }>
+				<Row gutter={ 36 }>
 					<Col lg={ 12 }>
 						<Form.Item label="Engine">
 							{ getFieldDecorator( 'engine', {
