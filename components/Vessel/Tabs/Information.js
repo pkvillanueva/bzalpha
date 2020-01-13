@@ -70,6 +70,13 @@ const Information = () => {
 					) }
 					{ getFieldValue( 'flag' ) && <ReactCountryFlag code={ getFieldValue( 'flag' ).toLowerCase() } svg /> }
 				</Form.Item>
+				<Form.Item label="Year Built">
+					{ getFieldDecorator( 'meta.year_built', {
+						initialValue: meta.year_built,
+					} )(
+						<Input />
+					) }
+				</Form.Item>
 				<Form.Item label="(IMO) International Maritime Organization">
 					{ getFieldDecorator( 'meta.imo', {
 						initialValue: meta.imo,
