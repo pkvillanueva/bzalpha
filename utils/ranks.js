@@ -18,4 +18,8 @@ export const ranks = [
 	{ value: 'E/C', name: 'Engine Cadet' },
 	{ value: 'C/C', name: 'Chief Cook' },
 	{ value: 'MSM', name: 'Mesman' },
+	{ value: 'ETR', name: 'Electro Technical Ratings' },
+	{ value: 'ETO', name: 'Electro Technical Officer' },
+	{ value: 'E/E', name: 'Electrician' },
+	{ value: 'BSN', name: 'Bosun' },
 ];
