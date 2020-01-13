@@ -76,7 +76,11 @@ const PrincipalNew = Form.create()( ( { form, visible, onCancel } ) => {
 					{ getFieldDecorator( 'meta.country', {
 						rules: [ { required: true, message: 'Country is required.' } ],
 					} )(
-						<Select placeholder="Select country" showSearch>
+						<Select
+							filterOption={ true }
+							optionFilterProp="children"
+							showSearch={ true }
+						>
 							{ map( countries, ( country ) => <Select.Option key={ country.code } value={ country.code }>{ country.name }</Select.Option> ) }
 						</Select>
 					) }

@@ -266,9 +266,16 @@ const modalForm = ( { getFieldDecorator }, initialValues ) => (
 						<Form.Item label="Flag">
 							{ getFieldDecorator( 'flag', {
 								initialValue: initialValues.flag,
-							} )( <Select style={ { width: '100%' } }>
-								{ map( countries, ( country ) => <Select.Option value={ country.code } key={ country.code }>{ country.name }</Select.Option> ) }
-							</Select> ) }
+							} )(
+								<Select
+									style={ { width: '100%' } }
+									filterOption={ true }
+									optionFilterProp="children"
+									showSearch={ true }
+								>
+									{ map( countries, ( country ) => <Select.Option value={ country.code } key={ country.code }>{ country.name }</Select.Option> ) }
+								</Select>
+							) }
 						</Form.Item>
 					</Col>
 				</Row>
