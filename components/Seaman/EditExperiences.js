@@ -256,7 +256,7 @@ const modalForm = ( { getFieldDecorator }, initialValues ) => (
 							{ getFieldDecorator( 'type', {
 								initialValue: initialValues.type,
 							} )(
-								<Select style={ { width: '100%' } }>
+								<Select	style={ { width: '100%' } }	showSearch={ true }>
 									{ map( vesselType, ( type ) => <Select.Option key={ type.value } value={ type.value }>{ type.name }</Select.Option> ) }
 								</Select>
 							) }

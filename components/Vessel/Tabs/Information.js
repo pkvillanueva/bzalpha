@@ -51,7 +51,7 @@ const Information = () => {
 					{ getFieldDecorator( 'meta.type', {
 						initialValue: meta.type,
 					} )(
-						<Select>
+						<Select showSearch>
 							{ map( vesselType, ( type ) => <Select.Option key={ type.value } value={ type.value }>{ type.name }</Select.Option> ) }
 						</Select>
 					) }
