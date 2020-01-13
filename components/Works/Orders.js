@@ -45,7 +45,7 @@ const Orders = ( { vessel } ) => {
 			dataIndex: 'meta.seaman',
 			key: 'seaman',
 			className: styles.compactColumn,
-			render: ( seaman ) => seaman && <Button type="link" size="small">{ seaman.title }</Button>,
+			render: ( seaman ) => seaman && <Button type="link" size="small" target="_blank" href={ `/seaman/${ seaman.id }` }>{ seaman.title }</Button>,
 		},
 		{
 			title: 'Status',
