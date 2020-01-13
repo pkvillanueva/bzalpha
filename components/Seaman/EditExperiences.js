@@ -209,7 +209,12 @@ const modalForm = ( { getFieldDecorator }, initialValues ) => (
 							{ getFieldDecorator( 'currency', {
 								initialValue: initialValues.currency,
 							} )(
-								<Select style={ { width: '100%' } }>
+								<Select
+									style={ { width: '100%' } }
+									filterOption={ true }
+									optionFilterProp="children"
+									showSearch={ true }
+								>
 									{ map( currencies, ( currency ) => (
 										<Select.Option value={ currency.code } key={ currency.code }>
 											{ `(${ currency.symbol }) ${ currency.name }` }

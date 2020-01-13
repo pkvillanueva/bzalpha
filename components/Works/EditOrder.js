@@ -71,7 +71,11 @@ const EditOrder = ( { title, saveValues, order, children } ) => {
 										{ getFieldDecorator( 'meta.currency', {
 											initialValue: meta.currency,
 										} )(
-											<Select>
+											<Select
+												filterOption={ true }
+												optionFilterProp="children"
+												showSearch={ true }
+											>
 												{ map( currencies, ( currency ) => (
 													<Select.Option value={ currency.code } key={ currency.code }>
 														{ `(${ currency.symbol }) ${ currency.name }` }

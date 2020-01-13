@@ -88,7 +88,11 @@ const CreateOrder = ( { children } ) => {
 										{ getFieldDecorator( 'currency', {
 											initialValue: 'USD',
 										} )(
-											<Select>
+											<Select
+												filterOption={ true }
+												optionFilterProp="children"
+												showSearch={ true }
+											>
 												{ map( currencies, ( currency ) => (
 													<Select.Option value={ currency.code } key={ currency.code }>
 														{ `(${ currency.symbol }) ${ currency.name }` }
