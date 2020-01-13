@@ -22,7 +22,7 @@ const Candidates = () => {
 			title: 'Seaman',
 			dataIndex: 'seaman',
 			key: 'seaman',
-			render: ( seaman ) => seaman && seaman.title,
+			render: ( seaman ) => seaman && seaman && <Button type="link" size="small" target="_blank" href={ `/seaman/${ seaman.id }` }>{ seaman.title }</Button>,
 		},
 		{
 			title: 'Type',
