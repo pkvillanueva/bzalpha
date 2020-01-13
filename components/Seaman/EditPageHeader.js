@@ -25,7 +25,7 @@ const EditPageHeader = () => {
 			</div>
 			<div className={ styles.mainContent }>
 				<h1 className={ styles.title }>
-					<span>{ seaman.title }</span>
+					<span>{ `${ meta.first_name } ${ meta.middle_name } ${ meta.last_name }` }</span>
 					{ meta.rank && <Tag color="blue">{ getRankName( meta.rank ) }</Tag> }
 				</h1>
 				{ seaman.job_status === 'onboard' ? (
