@@ -87,7 +87,12 @@ const EditOrder = ( { title, saveValues, order, children } ) => {
 									initialValue: meta.position,
 									rules: [ { required: true, message: 'Position is required.' } ],
 								} )(
-									<Select placeholder="Select position" >
+									<Select
+										placeholder="Select position"
+										filterOption={ true }
+										optionFilterProp="children"
+										showSearch={ true }
+									>
 										{ map( ranks, ( rank ) => (
 											<Select.Option value={ rank.value } key={ rank.value } disabled={ ( isReserve() || isOnboard() ) }>
 												{ rank.name }

@@ -34,7 +34,13 @@ const EditRank = () => {
 			{ getFieldDecorator( 'rank', {
 				initialValue: rank,
 			} )(
-				<Select style={ { width: '100%' } } placeholder="Select a rank">
+				<Select
+					style={ { width: '100%' } }
+					placeholder="Select a rank"
+					filterOption={ true }
+					optionFilterProp="children"
+					showSearch={ true }
+				>
 					{ map( ranks, ( rank ) => <Select.Option value={ rank.value } key={ rank.value }>{ rank.name }</Select.Option> ) }
 				</Select>
 			) }
