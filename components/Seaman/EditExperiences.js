@@ -398,8 +398,8 @@ const renderSeatime = ( seatime, experience, index, experiences ) => {
 
 	let vacant = '';
 
-	if ( experiences[ index - 1 ] && experiences[ index - 1 ].date_end ) {
-		vacant = getDateDuration( experience.date_end, experiences[ index - 1 ].date_end );
+	if ( experiences[ index - 1 ] && experiences[ index - 1 ].date_start ) {
+		vacant = getDateDuration( experience.date_end, experiences[ index - 1 ].date_start );
 	} else {
 		vacant = getDateDuration( experience.date_end, moment() );
 	}
