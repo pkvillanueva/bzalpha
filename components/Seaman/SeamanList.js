@@ -166,12 +166,12 @@ const SeamenList = () => {
 				<FormItem label="Search">
 					<Search onSearch={ handleSearch } placeholder="Name..." />
 				</FormItem>
-				<FormItem label="Status">
+				{/* <FormItem label="Status">
 					<Select className={ styles.selectStatus } allowClear={ true } onChange={ handleStatus } placeholder="Select status">
 						<Option value="onboard">On Board</Option>
 						<Option value="standby">Stand By</Option>
 					</Select>
-				</FormItem>
+				</FormItem> */}
 			</Form>
 		</Block>
 		<Block>
