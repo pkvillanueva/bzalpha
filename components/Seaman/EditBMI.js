@@ -69,6 +69,13 @@ const ContactInformation = () => {
 						} )( <Input /> ) }
 					</Form.Item>
 				</Col>
+				<Col md={ 8 }>
+					<Form.Item label="Overall Size">
+						{ getFieldDecorator( 'meta.overall_size', {
+							initialValue: meta.overall_size,
+						} )( <Input /> ) }
+					</Form.Item>
+				</Col>
 			</Row>
 		</Card>
 	);
