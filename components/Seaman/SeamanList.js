@@ -5,9 +5,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { map } from 'lodash';
-import { Form, Input, Select, Button, Table, Popconfirm, Divider, Badge, Avatar } from 'antd';
+import { Form, Input, Button, Table, Popconfirm, Divider, Badge, Avatar } from 'antd';
 const { Search } = Input;
-const { Option } = Select;
 const { Item: FormItem } = Form;
 
 /**

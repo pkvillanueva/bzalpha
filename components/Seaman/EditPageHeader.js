@@ -2,7 +2,7 @@
  * External dependencies.
  */
 import React, { useContext } from 'react';
-import { Statistic, Badge, Tag, Tooltip, Icon } from 'antd';
+import { Statistic, Badge, Tag } from 'antd';
 
 /**
  * Internal dependencies
