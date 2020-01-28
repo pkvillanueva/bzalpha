@@ -18,8 +18,9 @@ import { SeamanProvider, SeamanContext } from '../../components/Seaman/store/sea
 import withAuth from '~/utils/withAuth';
 import withProvider from '~/utils/withProvider';
 import formatBreadcrumb from '~/utils/formatBreadcrumb';
-import { getStatus, getRankName } from '~/utils/seaman';
+import { getRankName } from '~/utils/seaman';
 import { dateFormat } from '../../utils/api';
+import { getOrderStatus, getOrderStatusColor } from '../../utils/orders';
 
 const SeamanPage = () => {
 	const { seaman, validateFieldsAndScroll, isSaving, setIsSaving, resetFields, isFieldsTouched, isSeamanTouched, setIsSeamanTouched, updateSeaman } = useContext( SeamanContext );
@@ -28,8 +29,6 @@ const SeamanPage = () => {
 		{ path: '/seaman', breadcrumbName: 'Seaman List' },
 		{ breadcrumbName: seaman.title },
 	];
-
-	const status = getStatus( seaman.job_status );
 
 	const handleSave = () => {
 		if ( isSaving ) {
@@ -72,8 +71,8 @@ const SeamanPage = () => {
 						<Card>
 							<Statistic
 								title="Status"
-								prefix={ <Badge status={ status.state } /> }
-								value={ 'Stand By' }
+								prefix={ <Badge status={ getOrderStatusColor( seaman.order ) } /> }
+								value={ getOrderStatus( seaman.order ) }
 							/>
 						</Card>
 					</Col>

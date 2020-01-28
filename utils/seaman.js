@@ -100,17 +100,6 @@ export const getRankTotalSeaTime = ( rank, exp ) => {
 	return getTotalSeaTime( rankExp );
 };
 
-export const getStatus = ( jobStatus ) => {
-	let status = {};
-
-	switch ( jobStatus ) {
-		case 'onboard': status = { state: 'success', name: 'On Board' }; break;
-		default: status = { state: 'default', name: 'Stand By' }; break;
-	}
-
-	return status;
-};
-
 export const getRankName = ( value ) => {
 	const rank = filter( ranks, [ 'value', value ] );
 

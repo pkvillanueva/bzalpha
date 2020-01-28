@@ -15,6 +15,7 @@ const { Item: FormItem } = Form;
  */
 import Block from '~/components/Block';
 import { getCurrentAge, getRankName } from '~/utils/seaman';
+import { getOrderStatus, getOrderStatusColor } from '../../utils/orders';
 import SeamanNew from './SeamanNew';
 import styles from './styles.less';
 
@@ -33,17 +34,10 @@ const columns = [
 	},
 	{
 		title: 'Status',
-		dataIndex: 'status',
-		render: ( t, r ) => {
-			let status = {};
-
-			switch ( r.job_status ) {
-				case 'onboard': status = { status: 'success', name: 'On Board' }; break;
-				default: status = { status: 'default', name: 'Stand By' }; break;
-			}
-
+		dataIndex: 'order',
+		render: ( order ) => {
 			return ( <>
-				<Badge status={ status.status } /> { status.name }
+				<Badge status={ getOrderStatusColor( order ) } /> { getOrderStatus( order ) }
 			</> );
 		},
 	},

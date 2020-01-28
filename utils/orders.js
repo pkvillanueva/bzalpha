@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { isPlainObject, isEmpty } from 'lodash';
 import { getCurrencySymbol } from '~/utils/currencies';
 
 export const candidateTypes = {
@@ -15,12 +16,33 @@ export const orderStatus = {
 	reserved: 'Reserved',
 };
 
+export const orderStatusColor = {
+	processing: 'blue',
+	onboard: 'green',
+};
+
 export const getCandidateType = ( type ) => {
 	return candidateTypes[ type ] || '';
 };
 
 export const getOrderStatus = ( status ) => {
-	return orderStatus[ status ] || '';
+	if ( isEmpty( status ) ) {
+		return 'Stand By';
+	} else if ( isPlainObject( status ) && status.meta ) {
+		status = status.meta.status;
+	}
+
+	return orderStatus[ status ] || 'Stand By';
+};
+
+export const getOrderStatusColor = ( status ) => {
+	if ( isEmpty( status ) ) {
+		return 'default';
+	} else if ( isPlainObject( status ) && status.meta ) {
+		status = status.meta.status;
+	}
+
+	return orderStatusColor[ status ] || 'default';
 };
 
 export const getOrderDetails = ( order ) => {
