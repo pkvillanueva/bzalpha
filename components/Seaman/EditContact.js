@@ -98,17 +98,33 @@ const ContactInformation = () => {
 			</Row>
 			<Row gutter={ [ 32 ] }>
 				<Col md={ 8 }>
-					<Form.Item label="Tel. Number">
-						{ getFieldDecorator( 'meta.tel', {
-							initialValue: meta.tel,
-						} )( <Input /> ) }
-					</Form.Item>
-				</Col>
-				<Col md={ 8 }>
 					<Form.Item label="Phone Number">
 						{ getFieldDecorator( 'meta.phone', {
 							rules: [ { required: true, message: 'Phone number is required.' } ],
 							initialValue: meta.phone,
+						} )( <Input /> ) }
+					</Form.Item>
+				</Col>
+				<Col md={ 8 }>
+					<Form.Item label="Phone Number (2)">
+						{ getFieldDecorator( 'meta.phone_2', {
+							initialValue: meta.phone_2,
+						} )( <Input /> ) }
+					</Form.Item>
+				</Col>
+				<Col md={ 8 }>
+					<Form.Item label="Phone Number (3)">
+						{ getFieldDecorator( 'meta.phone_3', {
+							initialValue: meta.phone_3,
+						} )( <Input /> ) }
+					</Form.Item>
+				</Col>
+			</Row>
+			<Row gutter={ [ 32 ] }>
+				<Col md={ 8 }>
+					<Form.Item label="Tel. Number">
+						{ getFieldDecorator( 'meta.tel', {
+							initialValue: meta.tel,
 						} )( <Input /> ) }
 					</Form.Item>
 				</Col>
@@ -120,8 +136,6 @@ const ContactInformation = () => {
 						} )( <Input /> ) }
 					</Form.Item>
 				</Col>
-			</Row>
-			<Row gutter={ [ 32 ] }>
 				<Col md={ 8 }>
 					<Form.Item label="Skype">
 						{ getFieldDecorator( 'meta.skype', {
