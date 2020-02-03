@@ -71,6 +71,13 @@ const Experiences = () => {
 			key: 'owner',
 		},
 		{
+			title: 'Country (owner)',
+			dataIndex: 'owner_country',
+			key: 'owner_country',
+			align: 'center',
+			render: renderFlag,
+		},
+		{
 			title: 'Vessel',
 			dataIndex: 'vessel',
 			key: 'vessel',
@@ -81,9 +88,10 @@ const Experiences = () => {
 			key: 'type',
 		},
 		{
-			title: 'Flag',
+			title: 'Flag (vessel)',
 			dataIndex: 'flag',
 			key: 'flag',
+			align: 'center',
 			render: renderFlag,
 		},
 		{
@@ -371,6 +379,22 @@ const modalForm = ( { getFieldDecorator }, initialValues ) => (
 							{ getFieldDecorator( 'engine', {
 								initialValue: initialValues.engine,
 							} )( <Input /> ) }
+						</Form.Item>
+					</Col>
+					<Col lg={ 12 }>
+						<Form.Item label="Owner Country">
+							{ getFieldDecorator( 'owner_country', {
+								initialValue: initialValues.owner_country,
+							} )(
+								<Select
+									style={ { width: '100%' } }
+									filterOption={ true }
+									optionFilterProp="children"
+									showSearch={ true }
+								>
+									{ map( countries, ( country ) => <Select.Option value={ country.code } key={ country.code }>{ country.name }</Select.Option> ) }
+								</Select>
+							) }
 						</Form.Item>
 					</Col>
 				</Row>
