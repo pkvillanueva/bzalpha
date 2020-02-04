@@ -1,8 +1,11 @@
 /**
  * External dependencies.
  */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Row, Col, Statistic, Badge, Button, Card, message } from 'antd';
+import axios from 'axios';
+import { parseCookies } from 'nookies';
+const { token } = parseCookies();
 
 /**
  * Internal dependencies
@@ -23,12 +26,42 @@ import { dateFormat } from '../../utils/api';
 import { getOrderStatus, getOrderStatusColor } from '../../utils/orders';
 
 const SeamanPage = () => {
+	const [ isExporting, setIsExporting ] = useState( false );
+
 	const { seaman, validateFieldsAndScroll, isSaving, setIsSaving, resetFields, isFieldsTouched, isSeamanTouched, setIsSeamanTouched, updateSeaman } = useContext( SeamanContext );
 
 	const breadcrumb = [
 		{ path: '/seaman', breadcrumbName: 'Seaman List' },
 		{ breadcrumbName: seaman.title },
 	];
+
+	const handleExport = () => {
+		if ( isExporting ) {
+			return;
+		}
+
+		setIsExporting( true );
+
+		axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/export/seaman`, {
+			id: seaman.id
+		}, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${ token }`,
+			},
+		} ).then( ( res ) => {
+			const { download } = res.data;
+
+			if ( window ) {
+				window.open( download );
+			}
+		} ).catch( ( err ) => {
+			console.log( err );
+			message.error( 'Error exporting, please try again.' );
+		} ).finally( () => {
+			setIsExporting( false );
+		} );
+	};
 
 	const handleSave = () => {
 		if ( isSaving ) {
@@ -62,6 +95,7 @@ const SeamanPage = () => {
 			breadcrumb={ formatBreadcrumb( breadcrumb ) }
 			pageHeaderContent={ <EditPageHeader /> }
 			extra={ [
+				<Button type="dashed" key="export" onClick={ handleExport } disabled={ isExporting } loading={ isExporting }>Export</Button>,
 				<Button type="primary" key="save" onClick={ handleSave } disabled={ ( ! isSeamanTouched && ! isFieldsTouched() ) } loading={ isSaving }>Save</Button>,
 			] }
 		>
