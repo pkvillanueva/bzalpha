@@ -167,7 +167,7 @@ const PrincipalsList = () => {
 				icon="plus"
 				onClick={ handleNew }
 			>
-        New Principal
+				New Principal
 			</Button>
 		</Block>
 		<Table

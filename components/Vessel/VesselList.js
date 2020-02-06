@@ -192,7 +192,7 @@ const VesselsList = ( { basePrincipal, customParams = {} } ) => {
 				icon="plus"
 				onClick={ handleNew }
 			>
-        New Vessel
+				New Vessel
 			</Button>
 		</Block>
 		<Table

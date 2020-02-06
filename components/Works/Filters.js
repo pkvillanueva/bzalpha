@@ -59,7 +59,7 @@ const Filters = () => {
 				</Form.Item>
 				<CreateOrder>
 					<Button icon="plus" type="primary" className={ styles.createOrder }>
-            Create Order
+						Create Order
 					</Button>
 				</CreateOrder>
 			</Form>
