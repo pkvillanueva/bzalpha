@@ -1,6 +1,7 @@
 import moment from 'moment';
-import { isPlainObject, isEmpty } from 'lodash';
+import { map, indexOf, isPlainObject, isEmpty } from 'lodash';
 import { getCurrencySymbol } from '~/utils/currencies';
+import { ranks } from './ranks';
 
 export const candidateTypes = {
 	proposed: 'Proposed',
@@ -93,4 +94,16 @@ export const isOrderExpiring = ( order, date ) => {
 	const today = moment();
 	const days = date.diff( today, 'days' );
 	return days < 60;
+};
+
+export const sortOrders = ( orders ) => {
+	if ( isEmpty( orders ) ) {
+		return orders;
+	}
+
+	const ranksOrder = map( ranks, 'value' );
+
+	return orders.sort( ( prev, next ) => {
+		return indexOf( ranksOrder, prev.meta.position ) - indexOf( ranksOrder, next.meta.position );
+	} );
 };

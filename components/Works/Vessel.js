@@ -9,13 +9,13 @@ import withProvider from '~/utils/withProvider';
 import styles from './styles.less';
 
 const Vessel = ( { vessel, num } ) => {
-	const { orders, setOrders } = useContext( OrdersContext );
+	const { orders, applyOrders } = useContext( OrdersContext );
 	const [ expanded, setExpanded ] = useState( false );
 	const { id, title, meta } = vessel;
 	const { flag } = meta;
 
 	useEffect( () => {
-		setOrders( vessel.orders );
+		applyOrders( vessel.orders );
 	}, [] );
 
 	const Avatars = () => {
