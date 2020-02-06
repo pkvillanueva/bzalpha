@@ -35,8 +35,18 @@ const columns = [
 		title: 'Status',
 		dataIndex: 'order',
 		render: ( order ) => {
+			const { meta } = order;
+
+			if ( meta && meta.vessel ) {
+				return (
+					<a href={ `/?vessel=${ meta.vessel }` } target="_blank">
+						<Badge status={ getOrderStatusColor( order ) } /> { getOrderStatus( order, true ) }
+					</a>
+				);
+			}
+
 			return ( <>
-				<Badge status={ getOrderStatusColor( order ) } /> { getOrderStatus( order ) }
+				<Badge status={ getOrderStatusColor( order ) } /> { getOrderStatus( order, true ) }
 			</> );
 		},
 	},

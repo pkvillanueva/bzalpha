@@ -2,6 +2,7 @@
  * External dependencies
  */
 import React, { createContext, useState } from 'react';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import { message } from 'antd';
 import { map } from 'lodash';
@@ -12,9 +13,10 @@ import { prepareValues } from '~/utils/api';
 export const WorksContext = createContext();
 
 export const WorksProvider = ( { children } ) => {
+	const { query } = useRouter();
 	const [ loading, setLoading ] = useState( true );
 	const [ principal, setPrincipal ] = useState( { id: '', name: '' } );
-	const [ vessel, setVessel ] = useState( { id: '', name: '' } );
+	const [ vessel, setVessel ] = useState( { id: query.vessel || '', name: '' } );
 	const [ vessels, setVessels ] = useState( [] );
 	const signal = axios.CancelToken.source();
 
