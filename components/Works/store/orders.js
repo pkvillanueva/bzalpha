@@ -8,6 +8,7 @@ import { map, filter, find, merge } from 'lodash';
 import { parseCookies } from 'nookies';
 const { token } = parseCookies();
 import { prepareValues } from '~/utils/api';
+import { sortOrders } from '../../../utils/orders';
 
 export const OrdersContext = createContext();
 
@@ -16,6 +17,10 @@ export const OrdersProvider = ( { children } ) => {
 	const [ updating, setUpdating ] = useState( false );
 	const [ orders, setOrders ] = useState( [] );
 	const signal = axios.CancelToken.source();
+
+	const applyOrders = ( orders ) => {
+		setOrders( sortOrders( orders ) );
+	};
 
 	const getOrder = ( id ) => {
 		return find( orders, { id } );
@@ -36,7 +41,7 @@ export const OrdersProvider = ( { children } ) => {
 				Authorization: `Bearer ${ token }`,
 			},
 		} ).then( ( res ) => {
-			setOrders( res.data );
+			applyOrders( res.data );
 		} ).catch( ( err ) => {
 			console.log( err );
 		} ).finally( () => {
@@ -57,7 +62,7 @@ export const OrdersProvider = ( { children } ) => {
 			success && success( res );
 
 			setUpdating( false );
-			setOrders( filter( orders, ( order ) => order.id !== id ) );
+			applyOrders( filter( orders, ( order ) => order.id !== id ) );
 			message.success( 'Order deleted.' );
 		} ).catch( ( err ) => {
 			error && error();
@@ -84,7 +89,7 @@ export const OrdersProvider = ( { children } ) => {
 			success && success( res );
 
 			setUpdating( false );
-			setOrders( map( orders, ( order ) => order.id === id ? res.data : order ) );
+			applyOrders( map( orders, ( order ) => order.id === id ? res.data : order ) );
 			message.success( 'Order updated.' );
 		} ).catch( ( err ) => {
 			error && error();
@@ -127,7 +132,7 @@ export const OrdersProvider = ( { children } ) => {
 			}
 
 			setUpdating( false );
-			setOrders( records );
+			applyOrders( records );
 			message.success( 'Order updated.' );
 		} ).catch( ( err ) => {
 			error && error();
@@ -172,7 +177,7 @@ export const OrdersProvider = ( { children } ) => {
 			}
 
 			setUpdating( false );
-			setOrders( records );
+			applyOrders( records );
 			message.success( 'Order updated.' );
 		} ).catch( ( err ) => {
 			error && error();
@@ -192,7 +197,7 @@ export const OrdersProvider = ( { children } ) => {
 		setUpdating,
 		fetchOrders,
 		orders,
-		setOrders,
+		applyOrders,
 		getOrder,
 		deleteOrder,
 		updateOrder,
