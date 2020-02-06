@@ -112,12 +112,12 @@ const SeamenList = () => {
 		} );
 	};
 
-	const handleStatus = ( value ) => {
-		fetchData( {
-			job_status: value,
-			page: 1,
-		} );
-	};
+	// const handleStatus = ( value ) => {
+	// 	fetchData( {
+	// 		job_status: value,
+	// 		page: 1,
+	// 	} );
+	// };
 
 	const handleDelete = ( id ) => {
 		const { token } = parseCookies();
@@ -159,12 +159,12 @@ const SeamenList = () => {
 				<FormItem label="Search">
 					<Search onSearch={ handleSearch } placeholder="Name..." />
 				</FormItem>
-				{/* <FormItem label="Status">
+				{ /* <FormItem label="Status">
 					<Select className={ styles.selectStatus } allowClear={ true } onChange={ handleStatus } placeholder="Select status">
 						<Option value="onboard">On Board</Option>
 						<Option value="standby">Stand By</Option>
 					</Select>
-				</FormItem> */}
+				</FormItem> */ }
 			</Form>
 		</Block>
 		<Block>
@@ -177,7 +177,7 @@ const SeamenList = () => {
 				icon="plus"
 				onClick={ handleNew }
 			>
-        New Seaman
+				New Seaman
 			</Button>
 		</Block>
 		<Table

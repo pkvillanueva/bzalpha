@@ -81,7 +81,7 @@ const Candidates = () => {
 					</Form.Item>
 					<Form.Item>
 						<Button onClick={ createCandidate } type="primary">
-                Add Candidate
+							Add Candidate
 						</Button>
 					</Form.Item>
 				</>

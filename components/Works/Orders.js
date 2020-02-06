@@ -141,19 +141,19 @@ const Actions = ( { order } ) => {
 	if ( status === 'processing' ) {
 		buttons.push(
 			<Button size="small" type="primary" onClick={ handleOnboard }>
-        Onboard
+				Onboard
 			</Button>
 		);
 	} else if ( status === 'onboard' && child_order && getOrder( child_order ) ) {
 		buttons.push(
 			<Button size="small" type="primary" onClick={ handleClose }>
-        Switch
+				Switch
 			</Button>
 		);
 	} else if ( status === 'onboard' ) {
 		buttons.push(
 			<Button size="small" type="default" onClick={ handleClose }>
-        Close
+				Close
 			</Button>
 		);
 	}
