@@ -30,7 +30,7 @@ const EditPageHeader = () => {
 				</h1>
 				<p>
 					<Badge status={ getOrderStatusColor( seaman.order ) } />
-					{ getOrderStatus( seaman.order ) }
+					{ getOrderStatus( seaman.order, true ) }
 				</p>
 			</div>
 			<div className={ styles.extraContent }>

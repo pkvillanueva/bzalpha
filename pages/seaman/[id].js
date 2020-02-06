@@ -2,7 +2,7 @@
  * External dependencies.
  */
 import React, { useContext, useState } from 'react';
-import { Row, Col, Statistic, Badge, Button, Card, message } from 'antd';
+import { Row, Col, Statistic, Badge, Button, Card, Icon, message } from 'antd';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 const { token } = parseCookies();
@@ -89,6 +89,8 @@ const SeamanPage = () => {
 		} );
 	};
 
+	const { order } = seaman;
+
 	return (
 		<Layout
 			title="Edit Seaman"
@@ -105,8 +107,9 @@ const SeamanPage = () => {
 						<Card>
 							<Statistic
 								title="Status"
-								prefix={ <Badge status={ getOrderStatusColor( seaman.order ) } /> }
-								value={ getOrderStatus( seaman.order ) }
+								prefix={ <Badge status={ getOrderStatusColor( order ) } /> }
+								suffix={ order.meta && order.meta.vessel ? <a href={ `/?vessel=${ order.meta.vessel }` } target="_blank"><Icon type="link" /></a> : null }
+								value={ getOrderStatus( order ) }
 							/>
 						</Card>
 					</Col>
