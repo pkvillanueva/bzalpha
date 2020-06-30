@@ -170,13 +170,13 @@ const LayoutContent = ( props ) => {
 
 	return (
 		<Content className={ styles.content }>
-			{ ! isEmpty( headerProps ) ?
-				<div className={ styles.pageHeader }>
+			{ ! isEmpty( headerProps )
+				? <div className={ styles.pageHeader }>
 					<Container>
 						<PageHeader className={ styles.pageHeaderInner } { ...headerProps } />
 					</Container>
-				</div> :
-				undefined
+				</div>
+				: undefined
 			}
 			<Container>
 				{ children }

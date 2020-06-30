@@ -9,8 +9,9 @@
     "build": "NODE_ENV=production next build",
     "build-analyze": "ANALYZE=true NODE_ENV=production next build",
     "start": "next start",
-    "lint": "eslint .",
-    "lint-fix": "eslint . --fix"
+    "lint": "npm run lint:js",
+    "lint:js": "eslint .",
+    "format:js": "eslint . --fix"
   },
   "author": "Patrick Villanueva",
   "license": "MIT",

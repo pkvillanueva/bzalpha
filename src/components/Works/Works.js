@@ -34,9 +34,9 @@ const Works = () => {
 	return (
 		<>
 			<Filters />
-			{ ( principal.id || vessel.id ) ?
-				<Vessels /> :
-				<Result
+			{ ( principal.id || vessel.id )
+				? <Vessels />
+				: <Result
 					title="Select an owner or a vessel"
 				/>
 			}

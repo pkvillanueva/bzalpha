@@ -39,6 +39,7 @@ const columns = [
 
 			if ( meta && meta.vessel ) {
 				return (
+					// eslint-disable-next-line react/jsx-no-target-blank
 					<a href={ `/?vessel=${ meta.vessel }` } target="_blank">
 						<Badge status={ getOrderStatusColor( order ) } /> { getOrderStatus( order, true ) }
 					</a>

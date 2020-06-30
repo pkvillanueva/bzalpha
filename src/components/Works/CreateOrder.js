@@ -40,12 +40,12 @@ const CreateOrder = ( { children } ) => {
 					<Row gutter={ 36 }>
 						<Col lg={ 12 }>
 							<Form.Item label="Owner">
-								{ ! isEmpty( principal.id ) || ! isEmpty( vessel.id ) ?
-									<SelectFetch
+								{ ! isEmpty( principal.id ) || ! isEmpty( vessel.id )
+									? <SelectFetch
 										disabled={ true }
 										placeholder={ principal.name }
-									/> :
-									<SelectFetch
+									/>
+									: <SelectFetch
 										value={ principalValue }
 										allowClear={ true }
 										placeholder="Select owner"

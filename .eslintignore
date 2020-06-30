@@ -1,0 +1,5 @@
+.docker
+.next
+assets
+includes
+node_modules

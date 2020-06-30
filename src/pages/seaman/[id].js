@@ -43,7 +43,7 @@ const SeamanPage = () => {
 		setIsExporting( true );
 
 		axios.post( `${ process.env.API_URL }/wp-json/bzalpha/v1/export/seaman`, {
-			id: seaman.id
+			id: seaman.id,
 		}, {
 			headers: {
 				'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ const SeamanPage = () => {
 							<Statistic
 								title="Status"
 								prefix={ <Badge status={ getOrderStatusColor( order ) } /> }
-								suffix={ order.meta && order.meta.vessel ? <a href={ `/?vessel=${ order.meta.vessel }` } target="_blank"><Icon type="link" /></a> : null }
+								suffix={ order.meta && order.meta.vessel ? <a href={ `/?vessel=${ order.meta.vessel }` } target="_blank"><Icon type="link" /></a> : null /* eslint-disable-line react/jsx-no-target-blank */ }
 								value={ getOrderStatus( order ) }
 							/>
 						</Card>
