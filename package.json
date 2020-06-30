@@ -1,9 +1,10 @@
 {
   "name": "bzalpha-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "BZ Alpha application.",
+  "private": true,
   "scripts": {
+    "wp-env": "npx wp-env start",
     "dev": "NODE_ENV=development next",
     "build": "NODE_ENV=production next build",
     "build-analyze": "ANALYZE=true NODE_ENV=production next build",
@@ -11,35 +12,34 @@
     "lint": "eslint .",
     "lint-fix": "eslint . --fix"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Patrick Villanueva",
+  "license": "MIT",
   "dependencies": {
-    "@next/bundle-analyzer": "^9.1.6",
-    "@zeit/next-css": "^1.0.1",
-    "@zeit/next-less": "^1.0.1",
-    "antd": "^3.24.2",
+    "antd": "^4.4.0",
     "axios": "^0.19.0",
-    "babel-plugin-import": "^1.12.2",
     "classnames": "^2.2.6",
     "cookie": "^0.4.0",
     "deep-object-diff": "^1.1.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "next": "^9.1.6-canary.9",
-    "next-antd-aza-less": "^1.0.2",
-    "next-compose-plugins": "^2.2.0",
-    "node-sass": "^4.12.0",
     "nookies": "^2.0.8",
-    "null-loader": "^3.0.0",
     "parse-full-name": "^1.2.4",
     "react": "^16.9.0",
-    "react-country-flag": "^1.1.0",
+    "react-country-flag": "^2.2.0",
     "react-dom": "^16.9.0",
     "react-responsive": "^8.0.1"
   },
   "devDependencies": {
-    "@wordpress/eslint-plugin": "^3.3.0",
-    "eslint": "^6.8.0"
+    "@next/bundle-analyzer": "^9.4.4",
+    "@wordpress/env": "^1.6.0",
+    "@wordpress/eslint-plugin": "^7.1.0",
+    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-less": "^1.0.1",
+    "babel-plugin-import": "^1.13.0",
+    "eslint": "^7.3.1",
+    "next-antd-aza-less": "^1.0.2",
+    "node-sass": "^4.14.1",
+    "null-loader": "^4.0.0"
   }
 }

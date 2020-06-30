@@ -44,7 +44,7 @@ const config = antdLessLoader( {
 			} );
 		}
 
-		config.resolve.alias[ '~' ] = path.join( __dirname );
+		config.resolve.alias[ '~' ] = path.join( __dirname, 'src' );
 
 		return config;
 	},
