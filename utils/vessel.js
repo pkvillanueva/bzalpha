@@ -20,4 +20,7 @@ export const vesselType = [
 	{ name: 'PCC', value: 'PCC' },
 	{ name: 'LCT', value: 'LCT' },
 	{ name: 'AHTS', value: 'AHTS' },
+	{ name: 'Product Tanker', value: 'Product Tanker' },
+	{ name: 'Oil Chemical Tanker', value: 'Oil Chemical Tanker' },
+	{ name: 'Oil Tanker', value: 'Oil Tanker' },
 ];
