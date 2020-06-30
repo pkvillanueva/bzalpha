@@ -6,12 +6,13 @@ if ( typeof require !== 'undefined' ) {
 	require.extensions[ '.less' ] = () => {};
 }
 
+const API_URL = process.env.NODE_ENV === 'production'
+	? process.env.API_URL
+	: 'http://localhost:8888';
+
 const config = antdLessLoader( {
 	env: {
-		API_URL:
-			process.env.NODE_ENV === 'production'
-				? 'http://api.bzalpha.com'
-				: 'http://bzalpha.test',
+		API_URL,
 	},
 	cssModules: true,
 	cssLoaderOptions: {
