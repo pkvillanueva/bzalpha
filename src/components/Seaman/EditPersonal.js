@@ -2,15 +2,9 @@
  * External dependencies.
  */
 import React, { useContext } from 'react';
-import {
-	Form,
-	Input,
-	Select,
-	DatePicker,
-	Row,
-	Col,
-	Card,
-} from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Select, DatePicker, Row, Col, Card } from 'antd';
 import { map } from 'lodash';
 
 /**

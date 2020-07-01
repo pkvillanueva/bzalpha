@@ -2,7 +2,10 @@
  * External dependencies.
  */
 import React, { useContext } from 'react';
-import { Form, Input, DatePicker, Button, Row, Col } from 'antd';
+import { FileOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, DatePicker, Button, Row, Col } from 'antd';
 
 /**
  * Internal dependencies.
@@ -135,9 +138,7 @@ const modalForm = ( { getFieldDecorator }, initialValues ) => (
 );
 
 const renderFile = ( file ) => {
-	return (
-		file && file.source_url && <Button icon="file" size="small" href={ file.source_url } target="_blank" />
-	);
+	return file && file.source_url && <Button icon={<FileOutlined />} size="small" href={ file.source_url } target="_blank" />;
 };
 
 export default EditVisas;

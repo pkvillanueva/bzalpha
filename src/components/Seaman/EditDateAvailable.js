@@ -2,7 +2,8 @@
  * External dependencies.
  */
 import React, { useContext } from 'react';
-import { Icon, DatePicker } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
+import { DatePicker } from 'antd';
 
 /**
  * Internal dependencies.
@@ -37,14 +38,14 @@ const EditDateAvailable = () => {
 	);
 
 	return (
-		<ModalForm
+        <ModalForm
 			title="Edit Date Available"
 			onSave={ handleSave }
 			modalForm={ modalForm }
 		>
-			<Icon style={ { opacity: 0.3 } } type="edit" />
+			<EditOutlined style={ { opacity: 0.3 } } />
 		</ModalForm>
-	);
+    );
 };
 
 export default EditDateAvailable;

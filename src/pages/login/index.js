@@ -3,7 +3,10 @@
  */
 import React, { useState } from 'react';
 import { setCookie } from 'nookies';
-import { Form, Icon, Input, Button, Checkbox, Card, Layout, Alert } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Button, Checkbox, Card, Layout, Alert } from 'antd';
 import axios from 'axios';
 import Router from 'next/router';
 
@@ -53,7 +56,7 @@ const Login = ( { form } ) => {
 	};
 
 	return (
-		<Layout>
+        <Layout>
 			<Layout.Content className={ styles.content }>
 				<img className={ styles.logo } alt="BZ Alpha" src="./static/bzalpha-logo.svg" />
 				<Card className={ styles.card }>
@@ -66,7 +69,7 @@ const Login = ( { form } ) => {
 								rules: [ { required: true, message: 'Please enter your username.' } ],
 							} )(
 								<Input
-									prefix={ <Icon type="user" className={ styles.icon } /> }
+									prefix={ <UserOutlined className={ styles.icon } /> }
 									placeholder="Username"
 								/>,
 							) }
@@ -76,7 +79,7 @@ const Login = ( { form } ) => {
 								rules: [ { required: true, message: 'Please enter your password.' } ],
 							} )(
 								<Input
-									prefix={ <Icon type="lock" className={ styles.icon } /> }
+									prefix={ <LockOutlined className={ styles.icon } /> }
 									type="password"
 									placeholder="Password"
 								/>,
@@ -101,7 +104,7 @@ const Login = ( { form } ) => {
 				</Card>
 			</Layout.Content>
 		</Layout>
-	);
+    );
 };
 
 export default withNoAuth( Form.create( { name: 'login' } )( Login ) );

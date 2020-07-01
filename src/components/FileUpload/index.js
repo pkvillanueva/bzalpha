@@ -2,6 +2,7 @@
  * External dependencies.
  */
 import React, { Component, forwardRef } from 'react';
+import { UploadOutlined } from '@ant-design/icons';
 import { Upload, Button } from 'antd';
 import { parseCookies } from 'nookies';
 const { token } = parseCookies();
@@ -89,12 +90,12 @@ class FileUpload extends Component {
 		};
 
 		return (
-			<Upload { ...props } fileList={ this.state.fileList }>
-				<Button icon="upload" block>
+            <Upload { ...props } fileList={ this.state.fileList }>
+				<Button icon={<UploadOutlined />} block>
 					{ text }
 				</Button>
 			</Upload>
-		);
+        );
 	}
 }
 

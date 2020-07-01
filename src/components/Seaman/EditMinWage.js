@@ -2,7 +2,8 @@
  * External dependencies.
  */
 import React, { useContext } from 'react';
-import { Icon, InputNumber } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
+import { InputNumber } from 'antd';
 
 /**
  * Internal dependencies.
@@ -36,14 +37,14 @@ const EditMinWage = () => {
 	);
 
 	return (
-		<ModalForm
+        <ModalForm
 			title="Edit Minimum Wage"
 			onSave={ handleSave }
 			modalForm={ modalForm }
 		>
-			<Icon style={ { opacity: 0.3 } } type="edit" />
+			<EditOutlined style={ { opacity: 0.3 } } />
 		</ModalForm>
-	);
+    );
 };
 
 export default EditMinWage;

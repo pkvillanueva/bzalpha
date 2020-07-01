@@ -7,7 +7,9 @@ import axios from 'axios';
 import { parseCookies } from 'nookies';
 const { token } = parseCookies();
 import { map } from 'lodash';
-import { Modal, Form, Input, Select } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Input, Select } from 'antd';
 import ReactCountryFlag from 'react-country-flag';
 
 /**

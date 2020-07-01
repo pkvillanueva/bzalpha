@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react';
-import { Table, Tag, Button, Divider, Icon, Modal } from 'antd';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Table, Tag, Button, Divider, Modal } from 'antd';
 import { map, filter, isEmpty } from 'lodash';
 import RankAvatar from './RankAvatar';
 import Candidates from './Candidates';
@@ -160,12 +161,12 @@ const Actions = ( { order } ) => {
 
 	buttons.push(
 		<EditOrder order={ order }>
-			<Icon type="edit" />
+			<EditOutlined />
 		</EditOrder>
 	);
 
 	buttons.push(
-		<Icon type="delete" onClick={ handleDelete } />
+		<DeleteOutlined onClick={ handleDelete } />
 	);
 
 	return map( buttons, ( button, i ) => (

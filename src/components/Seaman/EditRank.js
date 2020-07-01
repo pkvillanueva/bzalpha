@@ -2,7 +2,8 @@
  * External dependencies.
  */
 import React, { useContext } from 'react';
-import { Icon, Select } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
+import { Select } from 'antd';
 import { map } from 'lodash';
 import { ranks } from '~/utils/ranks';
 
@@ -48,14 +49,14 @@ const EditRank = () => {
 	);
 
 	return (
-		<ModalForm
+        <ModalForm
 			title="Edit Rank"
 			onSave={ handleSave }
 			modalForm={ modalForm }
 		>
-			<Icon style={ { opacity: 0.3 } } type="edit" />
+			<EditOutlined style={ { opacity: 0.3 } } />
 		</ModalForm>
-	);
+    );
 };
 
 export default EditRank;

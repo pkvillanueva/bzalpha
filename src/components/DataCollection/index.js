@@ -2,7 +2,10 @@
  * External dependencies.
  */
 import React, { useState } from 'react';
-import { Form, Button, Modal, Table, Divider } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Modal, Table, Divider } from 'antd';
 import { filter, map, isEmpty } from 'lodash';
 
 /**
@@ -125,50 +128,48 @@ const DataCollection = Form.create()( ( props ) => {
 		return column;
 	} );
 
-	return (
-		<>
-			<Modal
-				maskClosable={ false }
-				okText={ 'Save' }
-				{ ...modalProps }
-				title={ isEditing() ? `Edit ${ modalProps.title }` : `New ${ modalProps.title }` }
-				onOk={ handleSave }
-				onCancel={ handleCancel }
-				visible={ visible }
-				okButtonProps={ { loading } }
-				cancelButtonProps={ { disabled: loading } }
-				afterClose={ afterClose }
-			>
-				{ modalProps.form( form, getEditingValues() ) }
-			</Modal>
-			<Button
-				className={ styles.newButton }
-				block={ true }
-				type="dashed"
-				icon="plus"
-				children={ 'Add New' }
-				{ ...buttonProps }
-				onClick={ handleAdd }
-			/>
-			<Table
-				className={ styles.table }
-				dataSource={ map( dataSource, ( record, i ) => ( { key: i, ...record } ) ) }
-				pagination={ false }
-				scroll={ { x: 'max-content' } }
-				{ ...tableProps }
-				columns={ columns }
-			/>
-			<Button
-				className={ styles.newButton }
-				block={ true }
-				type="dashed"
-				icon="plus"
-				children={ 'Add New' }
-				{ ...buttonProps }
-				onClick={ handleAdd }
-			/>
-		</>
-	);
+	return <>
+        <Modal
+            maskClosable={ false }
+            okText={ 'Save' }
+            { ...modalProps }
+            title={ isEditing() ? `Edit ${ modalProps.title }` : `New ${ modalProps.title }` }
+            onOk={ handleSave }
+            onCancel={ handleCancel }
+            visible={ visible }
+            okButtonProps={ { loading } }
+            cancelButtonProps={ { disabled: loading } }
+            afterClose={ afterClose }
+        >
+            { modalProps.form( form, getEditingValues() ) }
+        </Modal>
+        <Button
+            className={ styles.newButton }
+            block={ true }
+            type="dashed"
+            icon={<PlusOutlined />}
+            children={ 'Add New' }
+            { ...buttonProps }
+            onClick={ handleAdd }
+        />
+        <Table
+            className={ styles.table }
+            dataSource={ map( dataSource, ( record, i ) => ( { key: i, ...record } ) ) }
+            pagination={ false }
+            scroll={ { x: 'max-content' } }
+            { ...tableProps }
+            columns={ columns }
+        />
+        <Button
+            className={ styles.newButton }
+            block={ true }
+            type="dashed"
+            icon={<PlusOutlined />}
+            children={ 'Add New' }
+            { ...buttonProps }
+            onClick={ handleAdd }
+        />
+    </>;
 } );
 
 export default DataCollection;

@@ -3,7 +3,8 @@
  */
 import React, { Component } from 'react';
 import classnames from 'classnames';
-import { Upload, Icon, message, Avatar, Spin } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Upload, message, Avatar, Spin } from 'antd';
 import { parseCookies } from 'nookies';
 
 /**
@@ -67,7 +68,7 @@ class AvatarUpload extends Component {
 		const { token } = parseCookies();
 		const uploadButton = (
 			<div>
-				<Icon type="plus" />
+				<PlusOutlined />
 				<div className="ant-upload-text">Upload</div>
 			</div>
 		);

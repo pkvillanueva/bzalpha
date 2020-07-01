@@ -2,7 +2,9 @@
  * External dependencies.
  */
 import React, { useState, cloneElement } from 'react';
-import { Modal, Form } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal } from 'antd';
 
 const ModalForm = Form.create()( ( props ) => {
 	const { modalForm, title, form, children, onChange, onSave, onCancel, okText, ...restProps } = props;

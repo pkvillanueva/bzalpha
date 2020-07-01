@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 import { map, isEmpty } from 'lodash';
-import { Form, Button, Table, Tag, Select, Input, Popconfirm, Icon, Divider } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Table, Tag, Select, Input, Popconfirm, Divider } from 'antd';
 import SelectFetch from '~/components/SelectFetch';
 import { candidateTypes, getCandidateType } from '~/utils/orders';
 import { CandidatesProvider, CandidatesContext } from './store/candidates';
@@ -176,7 +179,7 @@ const Actions = ( { candidate } ) => {
 	buttons.push(
 		<Popconfirm
 			title="Are you sure?"
-			icon={ <Icon type="question-circle-o" /> }
+			icon={ <QuestionCircleOutlined /> }
 			onConfirm={ () => deleteCandidate( candidate.index ) }
 		>
 			<Button type="link" size="small">Delete</Button>

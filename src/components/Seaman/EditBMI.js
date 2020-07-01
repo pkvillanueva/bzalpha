@@ -2,7 +2,9 @@
  * External dependencies.
  */
 import React, { useContext } from 'react';
-import { Form, Input, InputNumber, Row, Col, Card } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, InputNumber, Row, Col, Card } from 'antd';
 
 /**
  * Internal dependencies.

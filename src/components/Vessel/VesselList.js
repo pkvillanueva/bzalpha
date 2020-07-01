@@ -6,7 +6,10 @@ import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { map } from 'lodash';
 import ReactCountryFlag from 'react-country-flag';
-import { Form, Input, Button, Table, Popconfirm, Divider } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Button, Table, Popconfirm, Divider } from 'antd';
 const { Search } = Input;
 const { Item: FormItem } = Form;
 
@@ -160,7 +163,7 @@ const VesselsList = ( { basePrincipal, customParams = {} } ) => {
 		columns.push( actionColumn );
 	}
 
-	return ( <>
+	return <>
 		<Block>
 			<Form layout="inline">
 				<FormItem label="Search">
@@ -189,7 +192,7 @@ const VesselsList = ( { basePrincipal, customParams = {} } ) => {
 			/>
 			<Button
 				type="primary"
-				icon="plus"
+				icon={<PlusOutlined />}
 				onClick={ handleNew }
 			>
 				New Vessel
@@ -204,7 +207,7 @@ const VesselsList = ( { basePrincipal, customParams = {} } ) => {
 				total,
 			} }
 		/>
-	</> );
+	</>;
 };
 
 export default VesselsList;

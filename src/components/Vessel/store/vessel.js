@@ -4,7 +4,8 @@
 import React, { createContext, useState } from 'react';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
-import { Form } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
 
 export const VesselContext = createContext();
 

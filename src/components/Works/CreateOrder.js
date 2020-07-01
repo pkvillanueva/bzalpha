@@ -3,7 +3,9 @@
  */
 import React, { useState, useContext } from 'react';
 import { map, isEmpty } from 'lodash';
-import { Row, Col, Form, Input, InputNumber, Select, Checkbox, DatePicker } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row, Col, Input, InputNumber, Select, Checkbox, DatePicker } from 'antd';
 import { ranks } from '~/utils/ranks';
 import { currencies } from '~/utils/currencies';
 import SelectFetch from '~/components/SelectFetch';

@@ -5,7 +5,9 @@ import React, { useState } from 'react';
 import Router from 'next/router';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
-import { Modal, Form, Input } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Input } from 'antd';
 
 /**
  * Internal dependencies.

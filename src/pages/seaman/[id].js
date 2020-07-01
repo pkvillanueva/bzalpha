@@ -2,7 +2,8 @@
  * External dependencies.
  */
 import React, { useContext, useState } from 'react';
-import { Row, Col, Statistic, Badge, Button, Card, Icon, message } from 'antd';
+import { LinkOutlined } from '@ant-design/icons';
+import { Row, Col, Statistic, Badge, Button, Card, message } from 'antd';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 const { token } = parseCookies();
@@ -92,7 +93,7 @@ const SeamanPage = () => {
 	const { order } = seaman;
 
 	return (
-		<Layout
+        <Layout
 			title="Edit Seaman"
 			breadcrumb={ formatBreadcrumb( breadcrumb ) }
 			pageHeaderContent={ <EditPageHeader /> }
@@ -108,7 +109,7 @@ const SeamanPage = () => {
 							<Statistic
 								title="Status"
 								prefix={ <Badge status={ getOrderStatusColor( order ) } /> }
-								suffix={ order.meta && order.meta.vessel ? <a href={ `/?vessel=${ order.meta.vessel }` } target="_blank"><Icon type="link" /></a> : null /* eslint-disable-line react/jsx-no-target-blank */ }
+								suffix={ order.meta && order.meta.vessel ? <a href={ `/?vessel=${ order.meta.vessel }` } target="_blank"><LinkOutlined /></a> : null /* eslint-disable-line react/jsx-no-target-blank */ }
 								value={ getOrderStatus( order ) }
 							/>
 						</Card>
@@ -145,7 +146,7 @@ const SeamanPage = () => {
 			</BlockCard>
 			<SeamanEdit />
 		</Layout>
-	);
+    );
 };
 
 export default withAuth( withProvider( SeamanProvider, SeamanPage ) );

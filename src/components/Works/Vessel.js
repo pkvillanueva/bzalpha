@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Collapse, Icon } from 'antd';
+import { CaretRightOutlined } from '@ant-design/icons';
+import { Collapse } from 'antd';
 import { map, isEmpty } from 'lodash';
 import ReactCountryFlag from 'react-country-flag';
 import RankAvatar from './RankAvatar';
@@ -56,10 +57,10 @@ const Vessel = ( { vessel, num } ) => {
 	);
 
 	return (
-		<Collapse
+        <Collapse
 			className={ styles.vessel }
 			bordered={ false }
-			expandIcon={ ( { isActive } ) => <Icon type="caret-right" rotate={ isActive ? 90 : 0 } /> }
+			expandIcon={ ( { isActive } ) => <CaretRightOutlined rotate={ isActive ? 90 : 0 } /> }
 			accordion={ true }
 			onChange={ ( expanded ) => setExpanded( expanded || '' ) }
 		>
@@ -70,7 +71,7 @@ const Vessel = ( { vessel, num } ) => {
 				{ expanded && <Orders vessel={ id } /> }
 			</Collapse.Panel>
 		</Collapse>
-	);
+    );
 };
 
 export default withProvider( OrdersProvider, Vessel );

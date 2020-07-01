@@ -2,7 +2,9 @@
  * External dependencies.
  */
 import React, { useContext } from 'react';
-import { Form, Card, Input, Select } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Card, Input, Select } from 'antd';
 import { map, mapValues } from 'lodash';
 import ReactCountryFlag from 'react-country-flag';
 

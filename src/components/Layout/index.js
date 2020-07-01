@@ -4,7 +4,8 @@
 import React, { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
-import { Layout, Menu, Icon, Drawer, Dropdown, Avatar, PageHeader } from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Layout, Menu, Drawer, Dropdown, Avatar, PageHeader } from 'antd';
 const { Header, Sider, Content } = Layout;
 
 /**
@@ -57,7 +58,7 @@ const LayoutSider = ( { collapsed, isMobile } ) => {
 	};
 
 	return (
-		<Sider { ...props }>
+        <Sider { ...props }>
 			<div className={ styles.siderLogo }>
 				<a href="/">
 					<img alt="BZ Alpha" src="/static/logo.svg" />
@@ -68,14 +69,14 @@ const LayoutSider = ( { collapsed, isMobile } ) => {
 				{ map( headerMenu, ( menu ) => (
 					<Menu.Item key={ menu.icon }>
 						<a href={ menu.href }>
-							<Icon type={ menu.icon } />
+							<LegacyIcon type={ menu.icon } />
 							<span>{ menu.title }</span>
 						</a>
 					</Menu.Item>
 				) ) }
 			</Menu>
 		</Sider>
-	);
+    );
 };
 
 const withMobileDrawer = ( Component, props ) => {
@@ -111,7 +112,7 @@ const LayoutHeader = ( { isMobile, display_name, collapsed, handleCollapsed, tri
 	);
 
 	return (
-		<Header className={ styles.header }>
+        <Header className={ styles.header }>
 			<Container>
 				<div className={ styles.headerInner }>
 					<div className={ styles.logo }>
@@ -121,13 +122,13 @@ const LayoutHeader = ( { isMobile, display_name, collapsed, handleCollapsed, tri
 						</a>
 					</div>
 					{ isMobile && <span className={ styles.headerTrigger } onClick={ () => handleCollapsed( ! collapsed ) }>
-						<Icon { ...triggerProps } />
+						<LegacyIcon { ...triggerProps } />
 					</span> }
 					{ ! isMobile && <Menu selectedKeys={ activeKeys } className={ styles.headerMenu } theme="dark" mode="horizontal">
 						{ map( headerMenu, ( menu ) => (
 							<Menu.Item key={ menu.icon }>
 								<a href={ menu.href }>
-									<Icon type={ menu.icon } />
+									<LegacyIcon type={ menu.icon } />
 									<span>{ menu.title }</span>
 								</a>
 							</Menu.Item>
@@ -146,7 +147,7 @@ const LayoutHeader = ( { isMobile, display_name, collapsed, handleCollapsed, tri
 				</div>
 			</Container>
 		</Header>
-	);
+    );
 };
 
 const LayoutContent = ( props ) => {

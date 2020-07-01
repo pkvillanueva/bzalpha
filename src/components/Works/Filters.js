@@ -1,5 +1,8 @@
 import React, { useContext } from 'react';
-import { Form, Card, Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Card, Button } from 'antd';
 import SelectFetch from '~/components/SelectFetch';
 import CreateOrder from './CreateOrder';
 import { WorksContext } from './store/works';
@@ -28,7 +31,7 @@ const Filters = () => {
 	};
 
 	return (
-		<Card className={ styles.filters }>
+        <Card className={ styles.filters }>
 			<Form layout="inline">
 				<Form.Item label="Owner">
 					<SelectFetch
@@ -58,13 +61,13 @@ const Filters = () => {
 					/>
 				</Form.Item>
 				<CreateOrder>
-					<Button icon="plus" type="primary" className={ styles.createOrder }>
+					<Button icon={<PlusOutlined />} type="primary" className={ styles.createOrder }>
 						Create Order
 					</Button>
 				</CreateOrder>
 			</Form>
 		</Card>
-	);
+    );
 };
 
 export default Filters;

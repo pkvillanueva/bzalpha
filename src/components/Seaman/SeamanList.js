@@ -5,7 +5,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { map } from 'lodash';
-import { Form, Input, Button, Table, Popconfirm, Divider, Badge, Avatar } from 'antd';
+import { PlusOutlined, UserOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Button, Table, Popconfirm, Divider, Badge, Avatar } from 'antd';
 const { Search } = Input;
 const { Item: FormItem } = Form;
 
@@ -24,7 +27,7 @@ const columns = [
 		dataIndex: 'title',
 		render: ( title, { avatar, id } ) => (
 			<>
-				<Avatar className={ styles.tableAvatar } src={ avatar } shape="square" icon="user" />
+				<Avatar className={ styles.tableAvatar } src={ avatar } shape="square" icon={<UserOutlined />} />
 				<a href={ `/seaman/${ id }` }>
 					{ title || '<No Name>' }
 				</a>
@@ -164,7 +167,7 @@ const SeamenList = () => {
 		columns.push( actionColumn );
 	}
 
-	return ( <>
+	return <>
 		<Block>
 			<Form layout="inline">
 				<FormItem label="Search">
@@ -185,7 +188,7 @@ const SeamenList = () => {
 			/>
 			<Button
 				type="primary"
-				icon="plus"
+				icon={<PlusOutlined />}
 				onClick={ handleNew }
 			>
 				New Seaman
@@ -200,7 +203,7 @@ const SeamenList = () => {
 				total,
 			} }
 		/>
-	</> );
+	</>;
 };
 
 export default SeamenList;
