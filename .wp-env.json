@@ -5,6 +5,10 @@
     "."
   ],
   "mappings": {
-    "../../../usr/local/etc/php/conf.d/uploads.ini": "./.docker/uploads.ini"
+    "../../../usr/local/etc/php/conf.d/uploads.ini": "./.docker/uploads.ini",
+    ".htaccess": "./.docker/.htaccess"
+  },
+  "config": {
+    "JWT_AUTH_SECRET_KEY": "XXXXXX"
   }
 }
