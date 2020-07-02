@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { map, merge } from 'lodash';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Row, Col, Input, InputNumber, Select, DatePicker, Checkbox } from 'antd';
 import ModalForm from '~/components/ModalForm';
 import { OrdersContext } from './store/orders';

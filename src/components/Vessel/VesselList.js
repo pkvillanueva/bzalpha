@@ -8,7 +8,6 @@ import { map } from 'lodash';
 import ReactCountryFlag from 'react-country-flag';
 import { PlusOutlined } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Input, Button, Table, Popconfirm, Divider } from 'antd';
 const { Search } = Input;
 const { Item: FormItem } = Form;

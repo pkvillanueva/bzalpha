@@ -3,7 +3,6 @@
  */
 import React, { useContext } from 'react';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Input, DatePicker, Select, InputNumber, Row, Col } from 'antd';
 import moment from 'moment';
 import { map } from 'lodash';

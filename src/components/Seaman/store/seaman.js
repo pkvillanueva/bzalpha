@@ -6,7 +6,6 @@ import axios from 'axios';
 import { parseCookies } from 'nookies';
 const { token } = parseCookies();
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { message } from 'antd';
 
 /**

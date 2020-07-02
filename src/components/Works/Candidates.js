@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { map, isEmpty } from 'lodash';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Button, Table, Tag, Select, Input, Popconfirm, Divider } from 'antd';
 import SelectFetch from '~/components/SelectFetch';
 import { candidateTypes, getCandidateType } from '~/utils/orders';

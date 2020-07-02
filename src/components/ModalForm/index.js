@@ -3,7 +3,6 @@
  */
 import React, { useState, cloneElement } from 'react';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Modal } from 'antd';
 
 const ModalForm = Form.create()( ( props ) => {

@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Card, Button } from 'antd';
 import SelectFetch from '~/components/SelectFetch';
 import CreateOrder from './CreateOrder';

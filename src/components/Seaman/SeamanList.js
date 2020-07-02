@@ -7,7 +7,6 @@ import { parseCookies } from 'nookies';
 import { map } from 'lodash';
 import { PlusOutlined, UserOutlined } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Input, Button, Table, Popconfirm, Divider, Badge, Avatar } from 'antd';
 const { Search } = Input;
 const { Item: FormItem } = Form;

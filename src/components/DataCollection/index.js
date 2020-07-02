@@ -4,7 +4,6 @@
 import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Button, Modal, Table, Divider } from 'antd';
 import { filter, map, isEmpty } from 'lodash';
 

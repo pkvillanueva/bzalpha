@@ -3,11 +3,14 @@
  */
 import App from 'next/app';
 import { parseCookies } from 'nookies';
+import { ReactQueryConfigProvider } from 'react-query';
 
 /**
  * Internal dependencies.
  */
 import { UserProvider } from '../store/user';
+
+const QUERY_CONFIG = {};
 
 class _App extends App {
 	static async getInitialProps( { Component, ctx } ) {
@@ -24,9 +27,11 @@ class _App extends App {
 		const { Component, cookies, ...pageProps } = this.props;
 
 		return (
-			<UserProvider cookies={ cookies }>
-				<Component { ...pageProps } />
-			</UserProvider>
+			<ReactQueryConfigProvider config={ QUERY_CONFIG }>
+				<UserProvider cookies={ cookies }>
+					<Component { ...pageProps } />
+				</UserProvider>
+			</ReactQueryConfigProvider>
 		);
 	}
 }

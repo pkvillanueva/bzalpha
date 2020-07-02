@@ -4,7 +4,6 @@
 import React, { useContext } from 'react';
 import { FileOutlined } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Input, DatePicker, Button, Select, Row, Col } from 'antd';
 
 /**
