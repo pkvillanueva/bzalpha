@@ -23,4 +23,5 @@ export const vesselType = [
 	{ name: 'Product Tanker', value: 'Product Tanker' },
 	{ name: 'Oil Chemical Tanker', value: 'Oil Chemical Tanker' },
 	{ name: 'Oil Tanker', value: 'Oil Tanker' },
+	{ name: 'VLCC', value: 'VLCC' },
 ];
